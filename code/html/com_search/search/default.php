@@ -1,17 +1,30 @@
 <?php
 /**
- * @version		$Id: default.php 22355 2011-11-07 05:11:58Z github_bot $
- * @package		Joomla.Site
- * @subpackage	mod_menu
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Joomla.Site
+ * @subpackage  com_search
+ *
+ * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access.
 defined('_JEXEC') or die;
-
-$app = JFactory::getApplication();
-
-require_once(JPATH_THEMES.'/'.$app->getTemplate().'/'.'wright'.'/'.'html'.'/'.'overrider.php');
-include(Overrider::getOverride('com_search.search'));
 ?>
+
+<div class="search<?php echo $this->pageclass_sfx; ?>">
+<?php if ($this->params->get('show_page_heading', 1)) : ?>
+<h1 class="page-title">
+	<?php if ($this->escape($this->params->get('page_heading'))) :?>
+		<?php echo $this->escape($this->params->get('page_heading')); ?>
+	<?php else : ?>
+		<?php echo $this->escape($this->params->get('page_title')); ?>
+	<?php endif; ?>
+</h1>
+<?php endif; ?>
+
+<?php echo $this->loadTemplate('form'); ?>
+<?php if ($this->error == null && count($this->results) > 0) :
+	echo $this->loadTemplate('results');
+else :
+	echo $this->loadTemplate('error');
+endif; ?>
+</div>

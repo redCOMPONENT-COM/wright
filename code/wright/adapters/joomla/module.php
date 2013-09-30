@@ -1,9 +1,27 @@
 <?php
 
+jimport( 'joomla.application.module.helper' );
 class WrightAdapterJoomlaModule
 {
 	public function render($args)
 	{
+        //Hidden module
+        $wr = Wright::getInstance();
+        if($wr->browser->isMobile())
+        {
+            $hiddenmodule = $wr->params->get('hiddenmodule', array());
+
+            $modules = JModuleHelper::getModules($args['name']);
+
+            foreach($modules as $module)
+            {
+                if(in_array($module->id, $hiddenmodule))
+                {
+                    $module->position = 'hiddenmodule';
+                }
+            }
+        }
+
 		// Set display type
 		if (!isset($args['type'])) $args['type'] = 'single';
 		// Set module name

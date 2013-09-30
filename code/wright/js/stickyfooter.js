@@ -5,6 +5,12 @@ jQuery(document).ready(function() {
 			jQuery('.wrapper-footer').height(h);
 		}
 	}
+	jQuery(window).load(function () {
+		jQuery('#footer.sticky').css('bottom','0')
+			.css('position','absolute')
+			.css('z-index','1000');
+		stickyFooter();
+	});
 	stickyFooter();
 	jQuery(window).resize(function() {
 		stickyFooter();

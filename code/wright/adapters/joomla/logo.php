@@ -16,26 +16,53 @@ class WrightAdapterJoomlaLogo
 		// in any other case, there is always a logo (at least as Wright's default image logo.png)
 		return true;
 	}
-	
+
 	public function renderCompanion($name, $args, $width, $alt = false) {
 		$doc = Wright::getInstance();
+
+        if($doc->browser->isMobile())
+        {
+            $hiddenmodule = $wr->params->get('hiddenmodule', array());
+
+            $modules = JModuleHelper::getModules($name);
+
+            foreach($modules as $module)
+            {
+                if(in_array($module->id, $hiddenmodule))
+                {
+                    $module->position = 'hiddenmodule';
+                }
+            }
+        }
 
 		if ($name == 'menu') {
 			return '
 				<nav id="'.$name.($alt ? '_alt' : '_primary') .'" class="clearfix">
 					<div class="navbar ' . $args['menuWrapClass'] . '">
 						<div class="navbar-inner">
-							<div class="container">
-					            <a class="btn btn-navbar" data-toggle="collapse" data-target="#nav-'.$name.'">
-						            <span class="icon-bar"></span>
-						            <span class="icon-bar"></span>
-						            <span class="icon-bar"></span>
-					            </a>
-					            <div class="nav-collapse" id="nav-'.$name.'">
-									 <jdoc:include type="modules" name="'.$name.'" style="raw" />
-								</div>
+				            <a class="btn btn-navbar collapsed" data-toggle="collapse" data-target="#nav-'.$name.'">
+					            <span class="icon-bar"></span>
+					            <span class="icon-bar"></span>
+					            <span class="icon-bar"></span>
+				            </a>
+				            <div class="nav-collapse" id="nav-'.$name.'">
+								 <jdoc:include type="modules" name="'.$name.'" style="raw" />
 							</div>
 						</div>
+					</div>
+				</nav>
+			';
+		}
+		elseif ($name == 'toolbar') {
+			return '
+				<nav id="'.$name.($alt ? '_alt' : '_primary') .'" class="clearfix">
+		            <a class="btn btn-navbar collapsed" data-toggle="collapse" data-target="#nav-'.$name.'">
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+		            </a>
+		            <div class="nav-collapse" id="nav-'.$name.'">
+						 <jdoc:include type="modules" name="'.$name.'" style="raw" />
 					</div>
 				</nav>
 			';
@@ -44,13 +71,15 @@ class WrightAdapterJoomlaLogo
 			if ($doc->document->params->get('logowidth') !== '12' && $doc->countModules($name)) {
 				return '<div id="'.$name.($alt ? '_alt' : '_primary') . '" class="clearfix"> <jdoc:include type="modules" name="'.$name.'" style="'.$args['style'].'" /> </div>';			}
 		}
-	
+
 		return '';
-	
+
 	}
 
 	public function render($args)
 	{
+		$uniquePosition = false;
+
 		if (!isset($args['name'])) $args['name'] = 'newsflash';
 		if (!isset($args['style'])) $args['style'] = 'xhtml';
 
@@ -69,22 +98,22 @@ class WrightAdapterJoomlaLogo
 		$modulewidth = 12 - $doc->document->params->get('logowidth', '6');
 		$modulewidth2 = $modulewidth;
 		$logowidth = $doc->document->params->get('logowidth', '6');
-		
+
 		$modules = 0;
 		$modulename = (isset($args['name']) ? $args['name'] : "");
-		$modulename2 = (isset($args['name']) ? $args['name'] . 2 : "");		
+		$modulename2 = (isset($args['name']) ? $args['name'] . 2 : "");
 
 		$module2name = (isset($args['name2']) ? $args['name2'] : "");
-		$module2name2 = (isset($args['name2']) ? $args['name2'] . 2 : "");		
-		
+		$module2name2 = (isset($args['name2']) ? $args['name2'] . 2 : "");
+
 		if ($logowidth !== '12' && ($doc->countModules($modulename) || $doc->countModules($module2name))) $modules++;
 		if ($logowidth !== '12' && ($doc->countModules($modulename2) || $doc->countModules($module2name2))) $modules++;
-		
+
 		if ($modules == 2) {
 			$modulewidth2 = floor($modulewidth/2);
 			$modulewidth = ceil($modulewidth/2);
 			$logowidth = 12 - $modulewidth - $modulewidth2;
-			
+
 			if ($doc->document->params->get('logowidth') !== '12' && ($doc->countModules($modulename) || $doc->countModules($module2name))) {
 				$html .= '<div id="'.$modulename.'" class="span'.$modulewidth.'">';
 				$html .= $this->renderCompanion($modulename,$args,$modulewidth);
@@ -95,6 +124,16 @@ class WrightAdapterJoomlaLogo
 		else {
 			$modulename2 = $modulename;
 			$module2name2 = $module2name;
+			$uniquePosition = true;
+		}
+
+		// Toolbar opening
+		if ($uniquePosition && $modulename2 == "toolbar") {
+			$html .= '
+				<div class="navbar ' . $args['menuWrapClass'] . '">
+					<div class="navbar-inner">
+						<div class="' . $args['containerClass'] . '">
+							<div class="' . $args['rowClass'] . '">';
 		}
 
 
@@ -115,7 +154,7 @@ class WrightAdapterJoomlaLogo
 
 		// If user wants just a title, print it out
 		elseif ($doc->document->params->get('logo', 'template') == 'title') {
-		
+
 			$html .= '<div id="logo" class="span'.$doc->document->params->get('logowidth', '6').'"><a href="'.JURI::root().'" class="title">'.$title.'</a></div>';
 
 			if ($doc->document->params->get('logowidth') !== '12' && ($doc->countModules($modulename2) || $doc->countModules($module2name2))) {
@@ -153,17 +192,26 @@ class WrightAdapterJoomlaLogo
 			$logo = JURI::root().'images/'.$doc->document->params->get('logo', 'logo.png');
 		}
 
-
-
 		$html .= '<div id="logo" class="span'.$logowidth.'"><a href="'.JURI::root().'" class="image">'.$title.'<img src="'.$logo.'" alt="" title="" /></a></div>';
-		
+
 		if ($doc->document->params->get('logowidth') !== '12' && ($doc->countModules($modulename2) || $doc->countModules($module2name2))) {
 			$html .= '<div id="'.$modulename2.'" class="span'.$modulewidth2.'">';
 			$html .= $this->renderCompanion($modulename2,$args,$modulewidth2);
 			$html .= $this->renderCompanion($module2name2,$args,$modulewidth2,true);
 			$html .= '</div>';
 		}
-		
+
+		// Toolbar closure
+		if ($uniquePosition && $modulename2 == "toolbar") {
+			$html .= '
+							</div>
+						</div>
+					</div>
+				</div>';
+		}
+
+
+
 		return $html;
 	}
 }

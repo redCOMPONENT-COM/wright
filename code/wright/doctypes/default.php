@@ -35,11 +35,15 @@ abstract class HtmlAdapterAbstract
 	 */
 
 	public function getDoctype($matches) {
-		return '<!DOCTYPE html>';
+        if(isset($matches[1]))
+        {
+            return '<!DOCTYPE html ' . $matches[1] . '>';
+        }
+		return '';
 	}
 
 	public function getHtml($matches) {
-		return '<html>';
+		return '<html ' . $matches[1] . '>';
 	}
 
 	public function getHtmlComments($matches)
@@ -54,7 +58,7 @@ abstract class HtmlAdapterAbstract
 		$browser = new Browser();
 		$browser_version = explode('.', $browser->getVersion());
 		$class = 'is_'.strtolower($browser->getBrowser()) . ' v_' . $browser_version[0];
-
+        $class .= ' on_'.strtolower($browser->getPlatform());
 		$style = "";
 		$data = "";  // added for other data-(0-9) classes
 
@@ -73,7 +77,7 @@ abstract class HtmlAdapterAbstract
 			preg_match_all('/data-([0-9]+)="([^"]*)"/', $matches[1], $dataclasses, PREG_SET_ORDER);
 			if ($dataclasses) {
 				foreach ($dataclasses as $dc) {
-					$data .= ' data-' . $dc[1] . '="' . $dc[2] . '"';					
+					$data .= ' data-' . $dc[1] . '="' . $dc[2] . '"';
 				}
 			}
 		}
@@ -118,6 +122,17 @@ abstract class HtmlAdapterAbstract
 		$app = JFactory::getApplication();
 		$menu = $app->getMenu();
 		if ($menu->getActive() == $menu->getDefault()) $class .= ' home';
+
+		if(isset($menu->getActive()->params))
+		{
+			$p = $menu->getActive()->params;
+			$pageclass_sfx = $p->get('pageclass_sfx', '');
+			if (!empty($pageclass_sfx))
+			{
+				$class .= ' ' . $pageclass_sfx;
+			}
+		}
+
 
 		$class .= " rev_" . $wright->revision;
 
@@ -168,12 +183,12 @@ abstract class HtmlAdapterAbstract
 			}
 
 			$editmode = false;
-			
+
 			// Check editing mode
 			if (JRequest::getVar('task') == 'edit' || JRequest::getVar('layout') == 'form' || JRequest::getVar('layout') == 'edit') {
 				$editmode = true;
 			}
-			
+
 			if (!$forcedSidebar || $editmode)
 				return;
 		}
@@ -292,7 +307,7 @@ abstract class HtmlAdapterAbstract
 
 		$wrightTemplate = null;
 		$editmode = false;
-		
+
 		// Check editing mode
 		if (JRequest::getVar('task') == 'edit' || JRequest::getVar('layout') == 'form' || JRequest::getVar('layout') == 'edit') {
 			$editmode = true;
