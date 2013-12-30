@@ -53,7 +53,7 @@
 
 
 	<config>
-		<fields name="params" addfieldpath="/templates/%%extention%%/wright/parameters/joomla_2.5">
+		<fields name="params" addfieldpath="/templates/%%lwname%%/wright/parameters/joomla_2.5">
 			<fieldset name="basic">
                 <!-- Start of default Wright params -->
 
