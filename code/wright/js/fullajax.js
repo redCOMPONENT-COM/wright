@@ -30,7 +30,7 @@ FLAX.Html.onall('response', function(){new Fx.Scroll(window).toTop();});
 
 var fullAjaxGif = new Element('img',{
 	'id':'fullAjaxGif','alt':'Loading...',
-  	'src':wbaseurl + 'templates/%%name%%/wright/images/ajax-loader.gif',
+  	'src':wbaseurl + 'templates/%%lwname%%/wright/images/ajax-loader.gif',
   	'style': 'position:absolute;left:50%;z-index:99999;'
 });
 
