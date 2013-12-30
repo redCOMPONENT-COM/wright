@@ -19,17 +19,15 @@
 
     <target name="site" description="Copies files to a existing joomla site" depends="prepare">
 
+       <php expression="strtolower(${tpl.name})" returnProperty="nameLcwords"/>
+        <php expression="strtoupper(${tpl.name})" returnProperty="nameUcwords"/>
+
         <filterchain id="file">
             <replaceregexp>
-                <regexp pattern="%%version%%" replace="${tpl.version}" ignoreCase="true" />
-                <regexp pattern="%%name%%" replace="${tpl.name}" ignoreCase="true" />
-            </replaceregexp>
-        </filterchain>
-
-        <php expression="strtoupper(${tpl.name})" returnProperty="nameUcwords"/>
-        <filterchain id="lang">
-            <replaceregexp>
-                <regexp pattern="%%NAME%%" replace="${nameUcwords}" ignoreCase="true" />
+                <regexp pattern="%%version%%" replace="${version}" ignoreCase="true" />
+                <regexp pattern="%%lwname%%" replace="${nameLcwords}" ignoreCase="true" />
+                <regexp pattern="%%UPNAME%%" replace="${nameUcwords}" ignoreCase="true" />
+                <regexp pattern="%%extention%%" replace="${extension}" ignoreCase="true" />
             </replaceregexp>
         </filterchain>
 
@@ -41,10 +39,10 @@
         </copy>
 
         <!-- Languages -->
-        <copy file="${src}/language/en-GB/en-GB.tpl_redcomponent.ini" tofile="${www.dir}/language/en-GB/en-GB.tpl_${tpl.name}.ini" overwrite="true" >
+        <copy file="${src}/language/en-GB/en-GB.tpl_redcomponent.ini" tofile="${www.dir}/language/en-GB/en-GB.tpl_${nameLcwords}.ini" overwrite="true" >
             <filterchain refid="lang" />
         </copy>
-        <copy file="${src}/language/en-GB/en-GB.tpl_redcomponent.sys.ini" tofile="${www.dir}/language/en-GB/en-GB.tpl_${tpl.name}.sys.ini" overwrite="true">
+        <copy file="${src}/language/en-GB/en-GB.tpl_redcomponent.sys.ini" tofile="${www.dir}/language/en-GB/en-GB.tpl_${nameLcwords}.sys.ini" overwrite="true">
             <filterchain refid="lang" />
         </copy>
 

@@ -52,17 +52,15 @@
 
     <target name="build" depends="prepare">
 
+        <php expression="strtolower(${extension})" returnProperty="nameLcwords"/>
+        <php expression="strtoupper(${extension})" returnProperty="nameUcwords"/>
+
         <filterchain id="file">
             <replaceregexp>
                 <regexp pattern="%%version%%" replace="${version}" ignoreCase="true" />
-                <regexp pattern="%%name%%" replace="${extension}" ignoreCase="true" />
-            </replaceregexp>
-        </filterchain>
-
-        <php expression="strtoupper(${extension})" returnProperty="nameUcwords"/>
-        <filterchain id="lang">
-            <replaceregexp>
-                <regexp pattern="%%NAME%%" replace="${nameUcwords}" ignoreCase="true" />
+                <regexp pattern="%%lwname%%" replace="${nameLcwords}" ignoreCase="true" />
+                <regexp pattern="%%UPNAME%%" replace="${nameUcwords}" ignoreCase="true" />
+                <regexp pattern="%%extention%%" replace="${extension}" ignoreCase="true" />
             </replaceregexp>
         </filterchain>
 
@@ -77,11 +75,11 @@
         </copy>
 
         <!-- Languages -->
-        <copy file="${extpath}/language/en-GB/en-GB.tpl_redcomponent.ini" tofile="${targetdir}/language/en-GB/en-GB.tpl_${extension}.ini" overwrite="true">
-            <filterchain refid="lang" />
+        <copy file="${extpath}/language/en-GB/en-GB.tpl_redcomponent.ini" tofile="${targetdir}/language/en-GB/en-GB.tpl_${nameLcwords}.ini" overwrite="true">
+            <filterchain refid="file" />
         </copy>
-        <copy file="${extpath}/language/en-GB/en-GB.tpl_redcomponent.sys.ini" tofile="${targetdir}/language/en-GB/en-GB.tpl_${extension}.sys.ini" overwrite="true">
-            <filterchain refid="lang" />
+        <copy file="${extpath}/language/en-GB/en-GB.tpl_redcomponent.sys.ini" tofile="${targetdir}/language/en-GB/en-GB.tpl_${nameLcwords}.sys.ini" overwrite="true">
+            <filterchain refid="file" />
         </copy>
 
     </target>
