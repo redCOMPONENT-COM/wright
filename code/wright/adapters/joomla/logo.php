@@ -30,11 +30,14 @@ class WrightAdapterJoomlaLogo
 
 			$modules = JModuleHelper::getModules($name);
 
-			foreach ($modules as $module)
+			if (count($modules) > 0 && count($hiddenmodule) > 0)
 			{
-				if (in_array($module->id, $hiddenmodule))
+				foreach ($modules as $module)
 				{
-					$module->position = 'hiddenmodule';
+					if (in_array($module->id, $hiddenmodule))
+					{
+						$module->position = 'hiddenmodule';
+					}
 				}
 			}
 		}

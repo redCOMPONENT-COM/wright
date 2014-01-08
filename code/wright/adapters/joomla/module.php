@@ -13,12 +13,15 @@ class WrightAdapterJoomlaModule
 
             $modules = JModuleHelper::getModules($args['name']);
 
-            foreach($modules as $module)
+            if (count($modules) > 0 && count($hiddenmodule) > 0)
             {
-                if(in_array($module->id, $hiddenmodule))
-                {
-                    $module->position = 'hiddenmodule';
-                }
+            	foreach($modules as $module)
+	            {
+	                if(in_array($module->id, $hiddenmodule))
+	                {
+	                    $module->position = 'hiddenmodule';
+	                }
+	            }
             }
         }
 
