@@ -194,12 +194,6 @@ class Wright
 			$this->addJSScript($this->_urlJS . '/bootstrap.min.js', true);
 		}
 
-		if ($this->browser->isMobile() && !$this->browser->isTablet())
-		{
-			$this->addJSScriptDeclaration("window.wbaseurl = '" . JURI::root() . "';");
-			$this->addJSScript($this->_urlJS . '/fullajax.min.js');
-		}
-
 		$this->addJSScript($this->_urlJS . '/utils.js');
 
 		if ($this->document->params->get('stickyFooter', 1))
