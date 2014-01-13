@@ -161,7 +161,7 @@ class Wright
 
 	public function header()
 	{
-		JHtml::_('behavior.framework', true);
+		//JHtml::_('behavior.framework', true);
 
 		// Load jQuery ?
 		if ($this->loadBootstrap && $loadJquery = $this->document->params->get('jquery', 0))
