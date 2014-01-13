@@ -56,7 +56,7 @@ class Wright
 
 	public $revision = "%%version%%";
 
-	private $loadBootstrap = true;
+	private $loadBootstrap = false;
 
 	private $_jsScripts = array();
 
@@ -87,6 +87,12 @@ class Wright
 		$this->_urlWright = $this->_urlTemplate . '/wright';
 		$this->_urlFontAwesome = $this->_urlWright . '/fontawesome';
 		$this->_urlJS = $this->_urlWright . '/js';
+
+		// Versions under 3.0 must load bootstrap
+		if (version_compare(JVERSION, '3.0', 'lt'))
+		{
+			$this->loadBootstrap = true;
+		}
 
 		$this->author = simplexml_load_file(JPATH_BASE . '/templates/' . $this->document->template . '/templateDetails.xml')->author;
 
