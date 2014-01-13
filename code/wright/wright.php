@@ -56,6 +56,8 @@ class Wright
 
 	public $revision = "%%version%%";
 
+	public $language;
+
 	private $loadBootstrap = false;
 
 	private $_jsScripts = array();
@@ -80,6 +82,7 @@ class Wright
 		$this->document = $document;
 		$this->params = $document->params;
 		$this->baseurl = $document->baseurl;
+		$this->language = $document->language;
 		$this->browser = new WMobile_Detect;
 
 		// Urls
