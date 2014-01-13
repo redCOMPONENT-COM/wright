@@ -75,10 +75,7 @@
 				<field name="columns" type="hidden" default="sidebar1:2;main:7;sidebar2:3" />
 
 				<field name="buttonspacer" label="TPL_%%UPNAME%%_BOOTSTRAP_TITLE_LABEL" description="TPL_%%UPNAME%%_BOOTSTRAP_TITLE_DESC" type="spacer" />
-				<field name="bs_rowmode" type="list" default="row" label="TPL_%%UPNAME%%_FIELD_BOOTSTRAP_ROW_MODE_LABEL" description="TPL_%%UPNAME%%_FIELD_BOOTSTRAP_ROW_MODE_DESC">
-					<option value="row-fluid">TPL_%%UPNAME%%_FIELD_BOOTSTRAP_ROW_MODE_FLUID</option>
-					<option value="row">TPL_%%UPNAME%%_FIELD_BOOTSTRAP_ROW_MODE_DEFAULT</option>
-				</field>
+				<field name="columns" type="columns" default="sidebar1:3;main:6;sidebar2:3" sidebars="2" label="TPL_%%UPNAME%%_FIELD_COLUMNS_LABEL" description="TPL_%%UPNAME%%_FIELD_COLUMNS_LABEL_DESC" />
 				<field name="responsive" type="list" default="1" label="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE" description="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE_DESC">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
