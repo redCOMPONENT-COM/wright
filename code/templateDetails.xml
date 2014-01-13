@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="template" method="upgrade" client="site">
-	<name>%%name%%</name>
-	<creationDate>March 2013</creationDate>
+	<name>%%extention%%</name>
+	<creationDate>Dec 2013</creationDate>
 	<author>redCOMPONENT</author>
 	<authorEmail>mail@redcomponent.com</authorEmail>
 	<authorUrl>http://www.redcomponent.com</authorUrl>
 	<copyright>Copyright redComponent 2013. All rights reserved</copyright>
 	<license>GNU/GPL v.3 or later.</license>
 	<version>%%version%%</version>
-    <description>TPL_REDCOMPONENT_XML_DESCRIPTION</description>
+    <description>TPL_%%UPNAME%%_XML_DESCRIPTION</description>
 
 	<files>
 		<filename>component.php</filename>
@@ -47,40 +47,43 @@
 	</positions>
 
 	<languages folder="language">
-        <language tag="en-GB">en-GB/en-GB.tpl_%%name%%.ini</language>
-        <language tag="en-GB">en-GB/en-GB.tpl_%%name%%.sys.ini</language>
+        <language tag="en-GB">en-GB/en-GB.tpl_%%lwname%%.ini</language>
+        <language tag="en-GB">en-GB/en-GB.tpl_%%lwname%%.sys.ini</language>
     </languages>
 
 
 	<config>
-		<fields name="params" addfieldpath="/templates/%%name%%/wright/parameters/joomla_2.5">
+		<fields name="params" addfieldpath="/templates/%%lwname%%/wright/parameters/joomla_2.5">
 			<fieldset name="basic">
                 <!-- Start of default Wright params -->
 
 				<field name="rebrand" type="hidden" default="yes" />
 				<field name="style" type="hidden" default="generic" />
-				<field name="jquery" type="list" default="1" label="TPL_REDCOMPONENT_FIELD_LOAD_JQUERY_LABEL" description="TPL_REDCOMPONENT_FIELD_LOAD_JQUERY_DESC">
+				<field name="jquery" type="list" default="1" label="TPL_%%UPNAME%%_FIELD_LOAD_JQUERY_LABEL" description="TPL_%%UPNAME%%_FIELD_LOAD_JQUERY_DESC">
 					<option value="0">JNO</option>
-					<option value="1">TPL_REDCOMPONENT_FIELD_LOAD_JQUERY_YES_LOCALLY</option>
-					<option value="2">TPL_REDCOMPONENT_FIELD_LOAD_JQUERY_YES_GOOGLE</option>
+					<option value="1">TPL_%%UPNAME%%_FIELD_LOAD_JQUERY_YES_LOCALLY</option>
+					<option value="2">TPL_%%UPNAME%%_FIELD_LOAD_JQUERY_YES_GOOGLE</option>
 				</field>
-				<field name="javascriptBottom" type="list" default="1" label="TPL_REDCOMPONENT_FIELD_JAVASCRIPT_BOTTOM" description="TPL_REDCOMPONENT_FIELD_JAVASCRIPT_BOTTOM_DESC">
+				<field name="javascriptBottom" type="list" default="1" label="TPL_%%UPNAME%%_FIELD_JAVASCRIPT_BOTTOM" description="TPL_%%UPNAME%%_FIELD_JAVASCRIPT_BOTTOM_DESC">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
-				<field name="logo" type="logo" default="template" label="TPL_REDCOMPONENT_FIELD_LOGO_IMAGE_LABEL" description="TPL_REDCOMPONENT_FIELD_LOGO_IMAGE_DESC" />
-				<field name="logowidth" type="grid" default="6" label="TPL_REDCOMPONENT_FIELD_LOGO_WIDTH_LABEL" description="TPL_REDCOMPONENT_FIELD_LOGO_WIDTH_DESC" />
-				<field name="body_font" type="typography" default="default" label="TPL_REDCOMPONENT_FIELD_BODY_FONT_LABEL" description="TPL_REDCOMPONENT_FIELD_BODY_FONT_DESC" />
-				<field name="header_font" type="typography" default="default" label="TPL_REDCOMPONENT_FIELD_HEADING_FONT_LABEL" description="TPL_REDCOMPONENT_FIELD_HEADING_FONT_DESC" />
-				<field name="buttonspacer" label="TPL_REDCOMPONENT_BOOTSTRAP_TITLE_LABEL" description="TPL_REDCOMPONENT_BOOTSTRAP_TITLE_DESC" type="spacer" />
-				<field name="bs_rowmode" type="list" default="row" label="TPL_REDCOMPONENT_FIELD_BOOTSTRAP_ROW_MODE_LABEL" description="TPL_REDCOMPONENT_FIELD_BOOTSTRAP_ROW_MODE_DESC">
-					<option value="row-fluid">TPL_REDCOMPONENT_FIELD_BOOTSTRAP_ROW_MODE_FLUID</option>
-					<option value="row">TPL_REDCOMPONENT_FIELD_BOOTSTRAP_ROW_MODE_DEFAULT</option>
-				</field>
-				<field name="columns" type="columns" default="sidebar1:3;main:6;sidebar2:3" sidebars="2" label="TPL_REDCOMPONENT_FIELD_COLUMNS_LABEL" description="TPL_REDCOMPONENT_FIELD_COLUMNS_LABEL_DESC" />
+				<field name="logo" type="logo" default="template" label="TPL_%%UPNAME%%_FIELD_LOGO_IMAGE_LABEL" description="TPL_%%UPNAME%%_FIELD_LOGO_IMAGE_DESC" />
+				<field name="logowidth" type="grid" default="6" label="TPL_%%UPNAME%%_FIELD_LOGO_WIDTH_LABEL" description="TPL_%%UPNAME%%_FIELD_LOGO_WIDTH_DESC" />
+				<field name="body_font" type="typography" default="default" label="TPL_%%UPNAME%%_FIELD_BODY_FONT_LABEL" description="TPL_%%UPNAME%%_FIELD_BODY_FONT_DESC" />
+				<field name="header_font" type="typography" default="default" label="TPL_%%UPNAME%%_FIELD_HEADING_FONT_LABEL" description="TPL_%%UPNAME%%_FIELD_HEADING_FONT_DESC" />
+				<field name="columns" type="hidden" default="sidebar1:2;main:7;sidebar2:3" />
 
-				<field name="responsive" type="hidden" default="1" />
-				<field name="stickyFooter" type="list" default="1" label="TPL_REDCOMPONENT_FIELD_STICKY_FOOTER" description="TPL_REDCOMPONENT_FIELD_STICKY_FOOTER_DESC">
+				<field name="buttonspacer" label="TPL_%%UPNAME%%_BOOTSTRAP_TITLE_LABEL" description="TPL_%%UPNAME%%_BOOTSTRAP_TITLE_DESC" type="spacer" />
+				<field name="bs_rowmode" type="list" default="row" label="TPL_%%UPNAME%%_FIELD_BOOTSTRAP_ROW_MODE_LABEL" description="TPL_%%UPNAME%%_FIELD_BOOTSTRAP_ROW_MODE_DESC">
+					<option value="row-fluid">TPL_%%UPNAME%%_FIELD_BOOTSTRAP_ROW_MODE_FLUID</option>
+					<option value="row">TPL_%%UPNAME%%_FIELD_BOOTSTRAP_ROW_MODE_DEFAULT</option>
+				</field>
+				<field name="responsive" type="list" default="1" label="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE" description="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="stickyFooter" type="list" default="1" label="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER" description="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER_DESC">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
