@@ -18,7 +18,7 @@ if ($this->countModules('toolbar'))
 
 ?>
 <!DOCTYPE html>
-	<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
+	<html>
 	<head>
 		<!--
             ##########################################
