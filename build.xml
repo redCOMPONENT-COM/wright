@@ -5,16 +5,6 @@
 <!-- ==================================================================    -->
 <project name="redComponent" default="site" basedir=".">
     <!-- Do initialization stuff -->
-    <property
-            name="extension"
-            value="${tpl.name}"
-            override="true" />
-
-    <property
-            name="version"
-            value="${tpl.version}"
-            override="true" />
-
     <target name="prepare" >
         <property file="build.properties" override="true"/>
         <if>
@@ -43,17 +33,17 @@
 
         <!-- Component -->
         <echo message="Copying template..." />
-        <copy todir="${www.dir}/templates/${nameLcwords}/wright" overwrite="true">
+        <copy todir="${www.dir}/templates/${tpl.name}/wright" overwrite="true">
             <filterchain refid="file" />
             <fileset dir="${src}/wright" />
         </copy>
 
         <!-- Languages -->
         <copy file="${src}/language/en-GB/en-GB.tpl_redcomponent.ini" tofile="${www.dir}/language/en-GB/en-GB.tpl_${nameLcwords}.ini" overwrite="true" >
-            <filterchain refid="file" />
+            <filterchain refid="lang" />
         </copy>
         <copy file="${src}/language/en-GB/en-GB.tpl_redcomponent.sys.ini" tofile="${www.dir}/language/en-GB/en-GB.tpl_${nameLcwords}.sys.ini" overwrite="true">
-            <filterchain refid="file" />
+            <filterchain refid="lang" />
         </copy>
 
     </target>

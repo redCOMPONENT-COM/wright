@@ -48,7 +48,7 @@ function modChrome_wrightflexgrid($module, &$params, &$attribs) {
 
     $spanWidth = getPositionAutospanWidth($attribs['name']);
     $robModules = JModuleHelper::getModules($attribs['name']);
-
+	
 	$extradivs = explode(',',$attribs['extradivs']);
 
 	$class = $params->get('moduleclass_sfx');
@@ -82,10 +82,10 @@ function modChrome_wrightflexgrid($module, &$params, &$attribs) {
     }
     $modulenumbera[$attribs['name']]++;
     ?>
-<div class="module<?php echo $class; ?> <?php if (!$module->showtitle) : ?>no_title <?php endif; ?>col-md-<?php echo ($spanWidth) ?>">
+<div class="module<?php echo $class; ?> <?php if (!$module->showtitle) : ?>no_title <?php endif; ?>span<?php echo ($spanWidth) ?>">
 <?php if ($module->showtitle) : ?>
 	<?php if (in_array('title',$extradivs)) : ?>	<div class="module_title"> <?php endif; ?>
-		<h3><?php echo $module->title; ?></h3>
+		<h3><?php echo $module->title; ?></h3>		
 	<?php if (in_array('title',$extradivs)) : ?>	</div> <?php endif; ?>
 <?php endif; ?>
 <?php

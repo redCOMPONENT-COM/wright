@@ -1,24 +1,17 @@
 <?php
 /**
- * @copyright      Copyright (C) 2013 redComponent
- * @author         redComponent
- * @package        Template
+ * @package    RedCOMPONENT.Template.Framework.
+ *
+ * @copyright  redCOMPONENT 2013 All Rights Reserved.
  *
  */
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-$bodyclass = "";
-
-if ($this->countModules('toolbar'))
-{
-	$bodyclass = "toolbarpadding";
-}
-
 ?>
 <!DOCTYPE html>
-	<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
+	<html>
 	<head>
 		<!--
             ##########################################
@@ -34,16 +27,16 @@ if ($this->countModules('toolbar'))
 
 		<w:head />
 	</head>
-	<body <?php if ($bodyclass != "") : ?> class="<?php echo $bodyclass ?>"<?php endif; ?>>
+	<body <?php if ($bodyclass != "") : ?> class = "<?php echo $bodyclass ?>" <?php endif; ?>>
 	<?php if ($this->countModules('toolbar')) : ?>
 		<!-- menu -->
-		<w:nav containerClass="container" rowClass="row" wrapClass="navbar-fixed-top navbar-inverse" type="toolbar" name="toolbar" />
+		<w:nav containerClass="<?php echo $containerClass ?>" rowClass="<?php echo $gridMode; ?>" wrapClass="navbar-fixed-top navbar-inverse" type="toolbar" name="toolbar" />
 	<?php endif; ?>
 
-	<div class="container">
+	<div class="<?php echo $containerClass ?>">
 		<!-- header -->
 		<header id="header">
-			<div class="row clearfix">
+			<div class="<?php echo $gridMode; ?> clearfix">
                 <w:logo name="top"   />
 				<div class="clear"></div>
 			</div>
@@ -63,16 +56,16 @@ if ($this->countModules('toolbar'))
 		<?php if ($this->countModules('grid-top')) : ?>
 			<!-- grid-top -->
 			<div id="grid-top">
-				<w:module type="row" name="grid-top" chrome="popover" extra="bottom"  />
+				<w:module type="<?php echo $gridMode; ?>" name="grid-top" chrome="popover" extra="bottom"  />
 			</div>
 		<?php endif; ?>
 		<?php if ($this->countModules('grid-top2')) : ?>
 			<!-- grid-top2 -->
 			<div id="grid-top2">
-				<w:module type="row" name="grid-top2" chrome="wrightflexgrid" />
+				<w:module type="<?php echo $gridMode; ?>" name="grid-top2" chrome="wrightflexgrid" />
 			</div>
 		<?php endif; ?>
-		<div id="main-content" class="row">
+		<div id="main-content" class="<?php echo $gridMode; ?>">
 			<!-- sidebar1 -->
 			<aside id="sidebar1">
 				<w:module name="sidebar1" chrome="accordion" />
@@ -108,29 +101,28 @@ if ($this->countModules('toolbar'))
 		<?php if ($this->countModules('grid-bottom')) : ?>
 			<!-- grid-bottom -->
 			<div id="grid-bottom">
-				<w:module type="row" name="grid-bottom" chrome="wrightflexgrid" />
+				<w:module type="<?php echo $gridMode; ?>" name="grid-bottom" chrome="wrightflexgrid" />
 			</div>
 		<?php endif; ?>
 		<?php if ($this->countModules('grid-bottom2')) : ?>
 			<!-- grid-bottom2 -->
 			<div id="grid-bottom2">
-				<w:module type="row" name="grid-bottom2" chrome="wrightflexgrid" />
+				<w:module type="<?php echo $gridMode; ?>" name="grid-bottom2" chrome="wrightflexgrid" />
 			</div>
 		<?php endif; ?>
 		<?php if ($this->countModules('bottom-menu')) : ?>
 			<!-- bottom-menu -->
-			<w:nav containerClass="container" rowClass="row" name="bottom-menu" />
+			<w:nav containerClass="<?php echo $containerClass ?>" rowClass="<?php echo $gridMode; ?>" name="bottom-menu" />
 		<?php endif; ?>
 	</div>
 
 	<!-- footer -->
 	<div class="wrapper-footer">
 		<footer id="footer" <?php if ($this->params->get('stickyFooter', 1)) : ?> class="sticky"<?php endif;?>>
-			<div class="container">
+			<div class="<?php echo $containerClass ?>">
 				<?php if ($this->countModules('footer')) : ?>
-					<w:module type="row" name="footer" chrome="wrightflexgrid" />
+					<w:module type="<?php echo $gridMode; ?>" name="footer" chrome="wrightflexgrid" />
 				<?php endif; ?>
-
 			</div>
 		</footer>
 	</div>

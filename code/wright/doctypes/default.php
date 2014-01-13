@@ -3,27 +3,23 @@
 abstract class HtmlAdapterAbstract
 {
 	protected $columns = array();
-
 	protected $widths = array();
-
 	protected $params;
-
 	public $cols = '';
 
-	protected $tags = array('doctype' 		=>	'/<doctype>/i',
-							'html' 			=>	'/<html(.*)?>/i',
-							'htmlComments' 	=>	'/<!--.*?-->/i',
-							'body' 			=> '/<body(.*)?>/i',
-							'nav' 			=> '/<nav(.*)>(.*)<\/nav>/isU',
-							'sections' 		=> '/<section(.*)>(.*)<\/section>/isU',
-							'asides' 		=> '/<aside(.*)>(.*)<\/aside>/isU',
-							'footer' 		=> '/<footer(.*)>(.*)<\/footer>/isU',
-							'header' 		=> '/<header(.*)>(.*)<\/header>/isU',
-							'toolbar' 		=> '/<div(.*)id="toolbar">(.*)<\/div>/isU',
+	protected $tags = array(	'doctype' =>	'/<doctype>/i',
+								'html' =>		'/<html(.*)?>/i',
+								'htmlComments' =>	'/<!--.*?-->/i',
+								'body' => '/<body(.*)?>/i',
+								'nav' => '/<nav(.*)>(.*)<\/nav>/isU',
+								'sections' => '/<section(.*)>(.*)<\/section>/isU',
+								'asides' => '/<aside(.*)>(.*)<\/aside>/isU',
+								'footer' => '/<footer(.*)>(.*)<\/footer>/isU',
+								'header' => '/<header(.*)>(.*)<\/header>/isU',
+								'toolbar' => '/<div(.*)id="toolbar">(.*)<\/div>/isU',
 		);
 
-	public function  __construct($params)
-	{
+	public function  __construct($params) {
 		$this->params = $params;
 		$this->setupColumns();
 	}
@@ -38,21 +34,16 @@ abstract class HtmlAdapterAbstract
 	 * them in its own way if they don't like the default
 	 */
 
-	public function getDoctype($matches)
-	{
-		if (isset($matches[1]))
-		{
-			return '<!DOCTYPE html ' . $matches[1] . '>';
-		}
-
+	public function getDoctype($matches) {
+        if(isset($matches[1]))
+        {
+            return '<!DOCTYPE html ' . $matches[1] . '>';
+        }
 		return '';
 	}
 
-	public function getHtml($matches)
-	{
-		$wright = Wright::getInstance();
-
-		return '<html lang="' . $wright->language . '" ' . $matches[1] . '>';
+	public function getHtml($matches) {
+		return '<html ' . $matches[1] . '>';
 	}
 
 	public function getHtmlComments($matches)
@@ -63,43 +54,36 @@ abstract class HtmlAdapterAbstract
 	public function getBody($matches)
 	{
 		$wright = Wright::getInstance();
-		require_once JPATH_ROOT . '/templates/' . $wright->document->template . '/wright/includes/browser.php';
-		$browser = new Browser;
+		require_once(JPATH_ROOT.'/'.'templates'.'/'.$wright->document->template.'/'.'wright'.'/'.'includes'.'/'.'browser.php');
+		$browser = new Browser();
 		$browser_version = explode('.', $browser->getVersion());
-		$class = 'is_' . strtolower($browser->getBrowser()) . ' v_' . $browser_version[0];
-		$class .= ' on_' . strtolower($browser->getPlatform());
+		$class = 'is_'.strtolower($browser->getBrowser()) . ' v_' . $browser_version[0];
+        $class .= ' on_'.strtolower($browser->getPlatform());
 		$style = "";
-		$data = "";  // Added for other data-(0-9) classes
+		$data = "";  // added for other data-(0-9) classes
 
-		if (isset($matches[1]))
-		{
-			if (strpos($matches[1], 'class='))
-			{
+		if (isset($matches[1])) {
+			if (strpos($matches[1], 'class=')) {
 				preg_match('/class="([^"]*)"/i', $matches[1], $classes);
 				if (isset($classes[1]))
 					$class .= ' ' . $classes[1];
 			}
-
-			if (strpos($matches[1], 'style='))
-			{
+			if (strpos($matches[1], 'style=')) {
 				preg_match('/style="([^"]*)"/i', $matches[1], $styles);
 				if (isset($styles[1]))
 					$style = $styles[1];
 			}
 
 			preg_match_all('/data-([0-9]+)="([^"]*)"/', $matches[1], $dataclasses, PREG_SET_ORDER);
-
-			if ($dataclasses)
-			{
-				foreach ($dataclasses as $dc)
-				{
+			if ($dataclasses) {
+				foreach ($dataclasses as $dc) {
 					$data .= ' data-' . $dc[1] . '="' . $dc[2] . '"';
 				}
 			}
 		}
 
-		// If specific style add to class list
-		$xml = simplexml_load_file(JPATH_ROOT . '/templates/' . $wright->document->template . '/templateDetails.xml');
+		// if specific style add to class list
+		$xml = simplexml_load_file(JPATH_ROOT.'/'.'templates'.'/'.$wright->document->template.'/'.'templateDetails.xml');
 		$theme = $xml->xpath('//style[@name="'.$wright->params->get('style').'"]');
 		if (count($theme)) $class .= ' '.$theme[0]['type'];
 
@@ -152,7 +136,7 @@ abstract class HtmlAdapterAbstract
 
 		$class .= " rev_" . $wright->revision;
 
-		return '<body class="'.$class.'"' . ($style != '' ? ' style="' . $style . '"' : '') . $data . '>';
+		return '<body id="forFullAjax" class="'.$class.'"' . ($style != '' ? ' style="' . $style . '"' : '') . $data . '>';
 	}
 
 	public function getNav($matches)
@@ -162,7 +146,7 @@ abstract class HtmlAdapterAbstract
 
 	public function getSections($matches)
 	{
-		$class = 'col-md-'.$this->columns['main']->size;
+		$class = 'span'.$this->columns['main']->size;
 		if (strpos($matches[1], 'class=')) {
 			preg_match('/class="(.*)"/i', $matches[1], $classes);
 			$class .= ' ' . $classes[1];
@@ -211,7 +195,7 @@ abstract class HtmlAdapterAbstract
 
 		$this->columns[$id]->exists = true;  // marks that column really exists
 
-		$class = 'col-md-'.$this->columns[$id]->size;
+		$class = 'span'.$this->columns[$id]->size;
 		if (strpos($matches[1], 'class=')) {
 			preg_match('/class="(.*)"/i', $matches[1], $classes);
 			$class .= ' ' . $classes[1];
@@ -222,9 +206,9 @@ abstract class HtmlAdapterAbstract
 		else
 			$sidebar = preg_replace('/<aside/iU', '<aside class="'.$class.'"', $matches[0], 1);
 		// only return sidebar if user has set columns > 0
-		if ($this->columns[$id]->size > 0 ) {
-			return $sidebar;
-		}
+        if ($this->columns[$id]->size > 0 ) {
+		    return $sidebar;
+        }
 	}
 
 	public function getFooter($matches)
@@ -298,9 +282,9 @@ abstract class HtmlAdapterAbstract
 
 		$content = $matches[1] .
 			"<div id=\"columnscontainer\" class=\"container_12 main before_$before after_$after\">" .
-			$matches[2] .
-			"</div>" .
-			$matches[3];
+		 	$matches[2] .
+		 	"</div>" .
+		 	$matches[3];
 		return $content;
 	}
 
@@ -346,7 +330,7 @@ abstract class HtmlAdapterAbstract
 			if ($col !== 'main' && $check == 0) $main++;
 			else $check = 1;
 
-					$this->columns[$col] = new JObject();
+            		$this->columns[$col] = new JObject();
 
 			$this->columns[$col]->name = $col;
 			$this->columns[$col]->size = $val;

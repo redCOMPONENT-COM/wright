@@ -56,8 +56,6 @@ class Wright
 
 	public $revision = "%%version%%";
 
-	public $language;
-
 	private $loadBootstrap = false;
 
 	private $_jsScripts = array();
@@ -82,7 +80,6 @@ class Wright
 		$this->document = $document;
 		$this->params = $document->params;
 		$this->baseurl = $document->baseurl;
-		$this->language = $document->language;
 		$this->browser = new WMobile_Detect;
 
 		// Urls
@@ -95,6 +92,11 @@ class Wright
 		if (version_compare(JVERSION, '3.0', 'lt'))
 		{
 			$this->loadBootstrap = true;
+		}
+		else
+		{
+			// Add JavaScript Frameworks
+			JHtml::_('bootstrap.framework');
 		}
 
 		$this->author = simplexml_load_file(JPATH_BASE . '/templates/' . $this->document->template . '/templateDetails.xml')->author;
@@ -164,7 +166,7 @@ class Wright
 		JHtml::_('behavior.framework', true);
 
 		// Load jQuery ?
-		if ($this->loadBootstrap && $loadJquery = $this->document->params->get('jquery', 0))
+		if ($loadJquery = $this->document->params->get('jquery', 0))
 		{
 			switch ($loadJquery)
 			{
@@ -187,7 +189,10 @@ class Wright
 		}
 
 		// Load bootstrap JS
-		$this->addJSScript($this->_urlJS . '/bootstrap.min.js', true);
+		if ($this->loadBootstrap)
+		{
+			$this->addJSScript($this->_urlJS . '/bootstrap.min.js', true);
+		}
 
 		$this->addJSScript($this->_urlJS . '/utils.js');
 

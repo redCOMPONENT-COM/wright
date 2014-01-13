@@ -5,10 +5,9 @@
  * website   	http://www.redcomponent.com
  */
 
-
 *
 {
-  .box-sizing(border-box);
+	.box-sizing(border-box);
   outline: none;
 }
 
@@ -568,46 +567,4 @@ td span.required
 #sbox-window
 {
   .box-sizing(content-box);
-}
-
-
-@import "mixins.less";
-@import "1200px-min.less";
-
-@import "768px-979px.less";
-
-@import "767px-max.less";
-
-@import "480px-max.less";
-
-@import "360px-max.less";
-
-@import "320px-max.less";
-
-
-@media (max-width: @navbarCollapseWidth) {
-  .navbar .nav li.active.dropdown ul.dropdown-menu,
-  .navbar .nav li:hover ul.dropdown-menu
-  {
-
-    display: block;
-    &.sub-menu
-    {
-      position: static;
-      visibility: visible;
-    }
-  }
-
-  #tablecollapse
-  {
-    .tablecollapse_trdata, .tablecollapse_trtitle
-    {
-      display: table-row;
-    }
-
-    .tablecollapse_trdk
-    {
-      display: none;
-    }
-  }
 }

@@ -4,8 +4,16 @@ if (typeof jQuery != 'undefined' && typeof MooTools != 'undefined' ) {
 			$('.carousel').each(function(index, element) {
 				$(this)[index].slide = null;
 			});
+
+			$("[data-toggle=tooltip]").tooltip();
+    		$("[data-toggle=popover]").popover({html: true});
 		});
 	})(jQuery);
+	(function($) {
+		$$('[data-toggle=collapse]').each(function (e) {
+			$$(e.get('data-target'))[0].hide = null;
+		});
+	})(MooTools);
 }
 
 (function($) {

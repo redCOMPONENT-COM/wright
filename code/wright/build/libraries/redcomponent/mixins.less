@@ -4,31 +4,79 @@
  * website   	http://www.redweb.dk
  */
 
-
 .gridRedWeb
 {
 	.wrapper(@gridMarginLeft)
-	{
-	   width: auto !important;
+    {
+       width: auto !important;
         .clearfix();
-		margin-left: -(@gridMarginLeft / 2);
+        margin-left: -(@gridMarginLeft / 2);
         margin-right: -(@gridMarginLeft / 2);
 
-	}
+    }
 
-	.row(@gridColumns, @gridMarginLeft, @girdColumnHeight)
-	{
-		width: percentage(1/@gridColumns) !important;
+    .row(@gridColumns, @gridMarginLeft, @girdColumnHeight)
+    {
+        width: percentage(1/@gridColumns) !important;
         padding-left: (@gridMarginLeft / 2);
         padding-right: (@gridMarginLeft / 2);
-		float: left;
+        float: left;
         margin: 0px;
         border: 0px;
         min-height: @girdColumnHeight;
-	}
+    }
+
 
 	.grid(@layout)
     {
+
+        #sidebar1.span2
+        {
+            @var : "gridLeftWidth@{layout}";
+            width: @@var;
+            clear: both;
+        }
+
+        #sidebar2.span3
+        {
+            @var : "gridRightWidth@{layout}";
+            width: @@var;
+        }
+
+
+        @var : "gridContentWidth@{layout}";
+        @gridContentWidthL : @@var;
+
+        #main.span12
+        {
+            @gridContent : "gridRowWidth@{layout}";
+            width: @@gridContent;
+        }
+
+        #main.span10
+        {
+            @gridContent : "gridRowWidth@{layout}";
+            @gridLeft : "gridLeftWidth@{layout}";
+            @gridGutter : "gridGutterWidth@{layout}";
+            width: @@gridContent - @@gridLeft - @@gridGutter;
+        }
+
+        #main.span9
+        {
+            @gridContent : "gridRowWidth@{layout}";
+            @gridRight : "gridRightWidth@{layout}";
+            @gridGutter : "gridGutterWidth@{layout}";
+            width: @@gridContent - @@gridRight - @@gridGutter;
+        }
+
+        #main.span7
+        {
+            @gridContent : "gridRowWidth@{layout}";
+            @gridLeft : "gridLeftWidth@{layout}";
+            @gridRight : "gridRightWidth@{layout}";
+            @gridGutter : "gridGutterWidth@{layout}";
+            width: @@gridContent - @@gridLeft - @@gridRight - (@@gridGutter * 2);
+        }
 
         .category_box_wrapper
         {
@@ -44,6 +92,7 @@
 
             .gridRedWeb .row(@@var1, @@var2, @@var3);
         }
+
 
         .category_box_wrapper .category_box_outside_row
         {
@@ -81,6 +130,9 @@
             .gridRedWeb .row(@@var1, @@var2, @@var3);
         }
     }
-
 }
 
+.calcFontsize(@size)
+{
+    font-size: unit((@size / @baseFontSize), em);
+}

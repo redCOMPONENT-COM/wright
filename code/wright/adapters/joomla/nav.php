@@ -5,44 +5,60 @@ class WrightAdapterJoomlaNav
 	public function render($args)
 	{
 		// Set module name
-		if (!isset($args['name']))
-			$args['name'] = 'menu';
+		if (!isset($args['name'])) $args['name'] = 'menu';
+		// Set module name
+		if (!isset($args['style'])) $args['style'] = 'raw';
+
+		if (!isset($args['containerClass'])) $args['containerClass'] = '';
 
 		// Set module name
-		if (!isset($args['style']))
-			$args['style'] = 'raw';
+		if (!isset($args['wrapClass'])) $args['wrapClass'] = '';
+		if (!isset($args['wrapper'])) $args['wrapper'] = 'wrapper-' . $args['name'];
 
-		// Set module name
-		if (!isset($args['wrapClass']))
-			$args['wrapClass'] = 'navbar-default';
+		if (!isset($args['type'])) $args['type'] = 'menu';
 
-		if (!isset($args['wrapper']))
-			$args['wrapper'] = 'wrapper-' . $args['name'];
-
-		if (!isset($args['type']))
-			$args['type'] = 'menu';
-
-		if (!isset($args['containerClass']))
-			$args['containerClass'] = '';
-
-		$nav = '<div class="' . $args['wrapper'] . '">
-					<nav id="' . $args['name'] . '" class="navbar ' . $args['wrapClass'] . '"  role="navigation">
-						<div class="' . $args['containerClass'] . '">
-							<div class="navbar-header">
-							    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-' . $args['name'] . '">
-							      <span class="sr-only">Toggle navigation</span>
-							      <span class="icon-bar"></span>
-							      <span class="icon-bar"></span>
-							      <span class="icon-bar"></span>
-							    </button>
-						  	</div>
-
-		  					<div class="collapse navbar-collapse" id="nav-' . $args['name'] . '" >
-		  						<jdoc:include type="modules" name="' . $args['name'] . '" style="' . $args['style'] . '" />
-		  					</div>
-	  					</div>
+		if ($args['type'] == 'toolbar') {
+			$nav =
+			'<div class="'.$args['wrapper'].'">
+				<nav id="'.$args['name'].'">
+					<div class="navbar ' . $args['wrapClass'] . '">
+						<div class="navbar-inner">
+							<div class="' . $args['containerClass'] . '">
+					            <a class="btn btn-navbar collapsed" data-toggle="collapse" data-target="#nav-'.$args['name'].'">
+						            <span class="icon-bar"></span>
+						            <span class="icon-bar"></span>
+						            <span class="icon-bar"></span>
+					            </a>
+					            <div class="nav-collapse collapse" id="nav-'.$args['name'].'">
+									 <jdoc:include type="modules" name="'.$args['name'].'" style="'.$args['style'].'" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</div>';
+		}
+		else {
+			$nav =
+			'<div class="'.$args['wrapper'].'">
+				<div class="' . $args['containerClass'] . '">
+					<nav id="'.$args['name'].'">
+						<div class="navbar ' . $args['wrapClass'] . '">
+							<div class="navbar-inner">
+					            <a class="btn btn-navbar collapsed" data-toggle="collapse" data-target="#nav-'.$args['name'].'">
+						            <span class="icon-bar"></span>
+						            <span class="icon-bar"></span>
+						            <span class="icon-bar"></span>
+					            </a>
+					            <div class="nav-collapse collapse" id="nav-'.$args['name'].'">
+									 <jdoc:include type="modules" name="'.$args['name'].'" style="'.$args['style'].'" />
+								</div>
+							</div>
+						</div>
 					</nav>
-				</div>';
+				</div>
+			</div>';
+		}
 
 		return $nav;
 	}
