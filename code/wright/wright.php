@@ -99,6 +99,8 @@ class Wright
 
 		$this->author = simplexml_load_file(JPATH_BASE . '/templates/' . $this->document->template . '/templateDetails.xml')->author;
 
+		require_once JPATH_THEMES . '/' . $document->template . '/' . 'wrighttemplate.php';
+
 		if (is_file(JPATH_THEMES . '/' . $document->template . '/functions.php'))
 		{
 			include_once JPATH_THEMES . '/' . $document->template . '/functions.php';

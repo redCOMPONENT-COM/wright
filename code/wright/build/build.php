@@ -82,6 +82,17 @@ class BuildBootstrap extends lessc
 
 			$ds = '@import "../../../less/variables.less"; ';
 			$ds .= '@import "../less/bootstrap.less"; ';
+			$ds .= '@import "../less/joomla.less"; ';
+
+			if (version_compare(JVERSION, '3.0', 'lt'))
+			{
+				$ds .= '@import "../less/joomla25.less"; ';
+			}
+			else
+			{
+				$ds .= '@import "../less/joomla30.less"; ';
+			}
+
 			$ds .= '@import "../less/typography.less"; ';
 			$ds .= '@import "../../../less/template.less"; ';
 

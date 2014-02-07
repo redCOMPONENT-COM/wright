@@ -11,17 +11,18 @@
 defined('_JEXEC') or die('You are not allowed to directly access this file');
 
 class WrightTemplateBase {
+	private $_isThereALogo = null;  // local variable to know if there is a logo for the site
+
+	public $templateName = null; // sets Template Name
 	public $suffixes = false;  // checks if template allows stacked suffixes
 	public $fullHeightSidebars = false;  // checks if this template uses full height sidebars
-
 	public $specialClasses = Array();  // special stacked suffixes classes
-
 	public $forcedSidebar = "";  // optional forced sidebar position, starts with nothing to be decided by fixed position (parameter) or auto setting
 	public $forcedSidebarPositions = Array();  // positions that cause the forced sidebar, must be set here
-
 	public $JDocumentHTML = null;  // if using forced sidebar has to be set with the local JDocumentHTML ($this from inside the template itself)
-
-	private $_isThereALogo = null;  // local variable to know if there is a logo for the site
+	public $useMainSpans = true; // use Bootstrap's span classes for main content and sidebars
+	public $menuPositions = Array('toolbar','menu','bottom-menu');  // menu positions in the template - using the <w:nav> adapter
+	public $includeFooterLink = true; // select wether to include a link with the footer copyright or not
 
 	public static function getInstance() {
 		static $instance = null;
@@ -76,5 +77,38 @@ class WrightTemplateBase {
 		require_once(dirname(__FILE__) . '/../adapters/joomla/logo.php');
 		$this->_isThereALogo = WrightAdapterJoomlaLogo::isThereALogo();
 		return $this->_isThereALogo;
+	}
+
+	public function getTemplate()
+	{
+		static $template;
+
+		if ($this->templateName == '')
+			return false;
+
+		if (!isset($template))
+		{
+			// Load the template name from the database
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('template, s.params');
+			$query->from('#__template_styles as s');
+			$query->leftJoin('#__extensions as e ON e.type='.$db->quote('template').' AND e.element=s.template AND e.client_id=s.client_id');
+			$query->where('e.name = ' . $db->quote($this->templateName), 'AND');
+			$query->order('home');
+			$db->setQuery($query);
+
+			$template = $db->loadObject();
+
+			$template->template = JFilterInput::getInstance()->clean($template->template, 'cmd');
+			$template->params = new JRegistry($template->params);
+
+			if (!file_exists(JPATH_THEMES . '/' . $template->template . '/index.php'))
+			{
+				$template->params = new JRegistry();
+				$template->template = '';
+			}
+		}
+		return $template;
 	}
 }

@@ -1,96 +1,36 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  com_content
+ * @package     Wright
+ * @subpackage  Overrider
  *
- * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2014 Joomlashack. Meritage Assets.  All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+// No direct access.
 defined('_JEXEC') or die;
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
+$app = JFactory::getApplication();
 
-JHtml::_('behavior.caption');
+$this->wrightLeadingIntroItemsClass = ''; //  Class added to the leading and intro articles (adds an extra wrapper)
+$this->wrightLeadingItemsClass = '';  // Class added to the leading items container (all the leading articles)
+$this->wrightLeadingExtraClass = ''; // Class added to each leading article
+$this->wrightIntroItemsClass = '';  // Class added to the intro articles (adds an extra wrapper)
+$this->wrightIntroRowsClass = ''; // Class added to each row of intro articles
+$this->wrightIntroExtraClass = '';  // Class added to each intro article
 
-// If the page class is defined, add to class as suffix.
-// It will be a separate class if the user starts it with a space
+$this->wrightComplementOuterClass = ''; // Class added to the complements (links, subcategories and pagination) - adds an extra wrapper for all of them
+$this->wrightComplementExtraClass = ''; // Class added to each complement (links, subcategories and pagination - as blocks).  Adds an extra wrapper before the "Inner" div
+$this->wrightComplementInnerClass = ''; // Class added to each complement (links, subcategories and pagination - as blocks).  Adds an extra wrapper when needed, or uses the existing one if found
+
+// Optional structures to alter regular order or Joomla structure for leading and/or intro articles.  Possible items: title, icons, article-info, image, content.  Optional divs with IDs (#) and classes (.) can be added.  Divs can be closed with /div.  Every structure must be part of the array.
+$this->wrightLeadingItemElementsStructure = Array();
+$this->wrightIntroItemElementsStructure = Array();
+
+$this->wrightIntroHasImageClass = "";  // optional extra class when image is present
+
+$this->wrightExtraDivH1 = false;  // adds an extra div next to the h1 titles
+
+require_once(JPATH_THEMES.'/'.$app->getTemplate().'/'.'wright'.'/'.'html'.'/'.'overrider.php');
+include(Overrider::getOverride('com_content.featured'));
 ?>
-<div class="blog-featured<?php echo $this->pageclass_sfx;?>">
-<?php if ($this->params->get('show_page_heading') != 0) : ?>
-<div class="page-header">
-	<h1>
-	<?php echo $this->escape($this->params->get('page_heading')); ?>
-	</h1>
-</div>
-<?php endif; ?>
-
-<?php $leadingcount = 0; ?>
-<?php if (!empty($this->lead_items)) : ?>
-<div class="items-leading">
-	<?php foreach ($this->lead_items as &$item) : ?>
-		<div class="leading-<?php echo $leadingcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>">
-			<?php
-				$this->item = &$item;
-				echo $this->loadTemplate('item');
-			?>
-		</div>
-		<div class="clearfix"></div>
-		<?php
-			$leadingcount++;
-		?>
-	<?php endforeach; ?>
-</div>
-<div class="clearfix"></div>
-<?php endif; ?>
-<?php
-	$introcount = (count($this->intro_items));
-	$counter = 0;
-?>
-<?php if (!empty($this->intro_items)) : ?>
-	<?php foreach ($this->intro_items as $key => &$item) : ?>
-
-		<?php
-		$key = ($key - $leadingcount) + 1;
-		$rowcount = (((int) $key - 1) % (int) $this->columns) + 1;
-		$row = $counter / $this->columns;
-
-		if ($rowcount == 1) : ?>
-
-		<div class="items-row cols-<?php echo (int) $this->columns;?> <?php echo 'row-'.$row; ?> row">
-		<?php endif; ?>
-			<div class="item column-<?php echo $rowcount;?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?> col-md-<?php echo round((12 / $this->columns));?>">
-			<?php
-					$this->item = &$item;
-					echo $this->loadTemplate('item');
-			?>
-			</div>
-			<?php $counter++; ?>
-
-			<?php if (($rowcount == $this->columns) or ($counter == $introcount)): ?>
-
-		</div>
-		<?php endif; ?>
-
-	<?php endforeach; ?>
-<?php endif; ?>
-
-<?php if (!empty($this->link_items)) : ?>
-	<div class="items-more">
-	<?php echo $this->loadTemplate('links'); ?>
-	</div>
-<?php endif; ?>
-
-<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->get('pages.total') > 1)) : ?>
-	<div class="pagination">
-
-		<?php if ($this->params->def('show_pagination_results', 1)) : ?>
-			<p class="counter pull-right">
-				<?php echo $this->pagination->getPagesCounter(); ?>
-			</p>
-		<?php  endif; ?>
-				<?php echo $this->pagination->getPagesLinks(); ?>
-	</div>
-<?php endif; ?>
-
-</div>
