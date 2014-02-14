@@ -16,7 +16,8 @@
 		<filename>index.php</filename>
 		<filename>template.php</filename>
 		<filename>templateDetails.xml</filename>
-		<filename>template_thumbnail.png</filename>
+		<filename>wrighttemplate.png</filename>
+		<filename>component.php</filename>
 		<folder>css</folder>
 		<folder>favicons</folder>
 		<folder>html</folder>
