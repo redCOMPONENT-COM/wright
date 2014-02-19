@@ -54,6 +54,7 @@
 
         <php expression="strtolower(${extension})" returnProperty="nameLcwords"/>
         <php expression="strtoupper(${extension})" returnProperty="nameUcwords"/>
+        <php expression="date('Y-m-d')" returnProperty="datebuild"/>
 
         <filterchain id="file">
             <replaceregexp>
@@ -61,6 +62,7 @@
                 <regexp pattern="%%lwname%%" replace="${nameLcwords}" ignoreCase="true" />
                 <regexp pattern="%%UPNAME%%" replace="${nameUcwords}" ignoreCase="true" />
                 <regexp pattern="%%extention%%" replace="${extension}" ignoreCase="true" />
+                <regexp pattern="%%datebuild%%" replace="${datebuild}" ignoreCase="true" />
             </replaceregexp>
         </filterchain>
 

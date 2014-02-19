@@ -21,7 +21,7 @@ defined('_JEXEC') or die('Restricted access');
             ## Danmark                              ##
             ## support@redcomponent.com             ##
             ## http://www.redcomponent.com          ##
-            ## Dato: 2013-04-23                     ##
+            ## Dato: %%datebuild%%                     ##
             ##########################################
         -->
 

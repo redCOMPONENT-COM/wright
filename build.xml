@@ -29,8 +29,9 @@
 
     <target name="site" description="Copies files to a existing joomla site" depends="prepare">
 
-       <php expression="strtolower(${tpl.name})" returnProperty="nameLcwords"/>
+        <php expression="strtolower(${tpl.name})" returnProperty="nameLcwords"/>
         <php expression="strtoupper(${tpl.name})" returnProperty="nameUcwords"/>
+        <php expression="date('Y-m-d')" returnProperty="datebuild"/>
 
         <filterchain id="file">
             <replaceregexp>
@@ -38,14 +39,15 @@
                 <regexp pattern="%%lwname%%" replace="${nameLcwords}" ignoreCase="true" />
                 <regexp pattern="%%UPNAME%%" replace="${nameUcwords}" ignoreCase="true" />
                 <regexp pattern="%%extention%%" replace="${extension}" ignoreCase="true" />
+                <regexp pattern="%%datebuild%%" replace="${datebuild}" ignoreCase="true" />
             </replaceregexp>
         </filterchain>
 
         <!-- Component -->
         <echo message="Copying template..." />
-        <copy todir="${www.dir}/templates/${nameLcwords}/wright" overwrite="true">
+        <copy todir="${www.dir}/templates/${nameLcwords}" overwrite="true">
             <filterchain refid="file" />
-            <fileset dir="${src}/wright" />
+            <fileset dir="${src}" />
         </copy>
 
         <!-- Languages -->
