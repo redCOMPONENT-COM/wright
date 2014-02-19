@@ -4,59 +4,68 @@
 <!-- This PHING build file copies the current extension files form repo    -->
 <!-- ==================================================================    -->
 <project name="redComponent" default="site" basedir=".">
-    <!-- Do initialization stuff -->
-    <property
-            name="extension"
-            value="${tpl.name}"
-            override="true" />
+	<!-- Do initialization stuff -->
+	<property
+			name="extension"
+			value="${tpl.name}"
+			override="true" />
 
-    <property
-            name="version"
-            value="${tpl.version}"
-            override="true" />
+	<property
+			name="version"
+			value="${tpl.version}"
+			override="true" />
 
-    <target name="prepare" >
-        <property file="build.properties" override="true"/>
-        <if>
-            <equals arg1="${extension}" arg2="" />
-            <then>
-                <fail message="Extension not specified, use -Dextension=EXTENSION" />
-            </then>
-        </if>
-    </target>
+	<target name="prepare" >
+		<property file="build.properties" override="true"/>
+		<if>
+			<equals arg1="${extension}" arg2="" />
+			<then>
+				<fail message="Extension not specified, use -Dextension=EXTENSION" />
+			</then>
+		</if>
+	</target>
 
-    <property name="src" value="./code" />
+	<property name="src" value="./code" />
 
-    <target name="site" description="Copies files to a existing joomla site" depends="prepare">
+	<target name="site" description="Copies files to a existing joomla site" depends="prepare">
 
-        <php expression="strtolower(${tpl.name})" returnProperty="nameLcwords"/>
-        <php expression="strtoupper(${tpl.name})" returnProperty="nameUcwords"/>
-        <php expression="date('Y-m-d')" returnProperty="datebuild"/>
+		<php expression="strtolower(${tpl.name})" returnProperty="nameLcwords"/>
+		<php expression="strtoupper(${tpl.name})" returnProperty="nameUcwords"/>
+		<php expression="date('Y-m-d')" returnProperty="datebuild"/>
 
-        <filterchain id="file">
-            <replaceregexp>
-                <regexp pattern="%%version%%" replace="${version}" ignoreCase="true" />
-                <regexp pattern="%%lwname%%" replace="${nameLcwords}" ignoreCase="true" />
-                <regexp pattern="%%UPNAME%%" replace="${nameUcwords}" ignoreCase="true" />
-                <regexp pattern="%%extention%%" replace="${extension}" ignoreCase="true" />
-                <regexp pattern="%%datebuild%%" replace="${datebuild}" ignoreCase="true" />
-            </replaceregexp>
-        </filterchain>
+		<filterchain id="file">
+			<replaceregexp>
+				<regexp pattern="%%version%%" replace="${version}" ignoreCase="true" />
+				<regexp pattern="%%lwname%%" replace="${nameLcwords}" ignoreCase="true" />
+				<regexp pattern="%%UPNAME%%" replace="${nameUcwords}" ignoreCase="true" />
+				<regexp pattern="%%extention%%" replace="${extension}" ignoreCase="true" />
+				<regexp pattern="%%datebuild%%" replace="${datebuild}" ignoreCase="true" />
+			</replaceregexp>
+		</filterchain>
 
-        <!-- Component -->
-        <echo message="Copying template..." />
-        <copy todir="${www.dir}/templates/${nameLcwords}" overwrite="true">
-            <filterchain refid="file" />
-            <fileset dir="${src}" />
-        </copy>
+		<!-- Check if the target folder exists. If not, create it -->
+		<if>
+			<available file="${www.dir}/templates/${nameLcwords}" type="dir" />
+			<then>
+				<echo msg="Removing old ${www.dir}/templates/${nameLcwords}" />
+				<delete dir="${www.dir}/templates/${nameLcwords}" />
+			</then>
+		</if>
 
-        <!-- Languages -->
-        <copy file="${src}/language/en-GB/en-GB.tpl_redcomponent.ini" tofile="${www.dir}/language/en-GB/en-GB.tpl_${nameLcwords}.ini" overwrite="true" >
-            <filterchain refid="file" />
-        </copy>
-        <copy file="${src}/language/en-GB/en-GB.tpl_redcomponent.sys.ini" tofile="${www.dir}/language/en-GB/en-GB.tpl_${nameLcwords}.sys.ini" overwrite="true">
-            <filterchain refid="file" />
-        </copy>
+		<!-- Component -->
+		<echo message="Copying template..." />
+		<copy todir="${www.dir}/templates/${nameLcwords}" overwrite="true">
+			<filterchain refid="file" />
+			<fileset dir="${src}" />
+		</copy>
 
-    </target>
+		<!-- Languages -->
+		<copy file="${src}/language/en-GB/en-GB.tpl_redcomponent.ini" tofile="${www.dir}/language/en-GB/en-GB.tpl_${nameLcwords}.ini" overwrite="true" >
+			<filterchain refid="file" />
+		</copy>
+		<copy file="${src}/language/en-GB/en-GB.tpl_redcomponent.sys.ini" tofile="${www.dir}/language/en-GB/en-GB.tpl_${nameLcwords}.sys.ini" overwrite="true">
+			<filterchain refid="file" />
+		</copy>
+
+	</target>
 </project>
