@@ -1,20 +1,13 @@
 <?php
 /**
- * @copyright      Copyright (C) 2013 redComponent
- * @author         redComponent
- * @package        Template
+ * @package    Template.Template
  *
+ * @copyright  Copyright (C) 2005 - 2014 redCOMPONENT.com. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-
-$bodyclass = "";
-
-if ($this->countModules('toolbar'))
-{
-	$bodyclass = "toolbarpadding";
-}
 
 ?>
 <!DOCTYPE html>
@@ -22,7 +15,7 @@ if ($this->countModules('toolbar'))
 	<head>
 		<!--
             ##########################################
-            ## redComponent ApS                     ##
+            ## redCOMPONENT ApS                     ##
             ## Blangstedgaardsvej 1                 ##
             ## 5220 Odense SØ                       ##
             ## Danmark                              ##
@@ -63,7 +56,7 @@ if ($this->countModules('toolbar'))
 		<?php if ($this->countModules('grid-top')) : ?>
 			<!-- grid-top -->
 			<div id="grid-top">
-				<w:module type="row" name="grid-top" chrome="popover" extra="bottom"  />
+				<w:module type="row" name="grid-top" chrome="wrightflexgrid" />
 			</div>
 		<?php endif; ?>
 		<?php if ($this->countModules('grid-top2')) : ?>
@@ -75,7 +68,7 @@ if ($this->countModules('toolbar'))
 		<div id="main-content" class="row">
 			<!-- sidebar1 -->
 			<aside id="sidebar1">
-				<w:module name="sidebar1" chrome="accordion" />
+				<w:module name="sidebar1" chrome="xhtml" />
 			</aside>
 			<!-- main -->
 			<section id="main">
