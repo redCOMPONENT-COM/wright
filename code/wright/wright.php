@@ -314,6 +314,11 @@ class Wright
 			$styles['template'][] = 'editor.css';
 		}
 
+		if (is_file(JPATH_THEMES . '/' . $this->document->template . '/css/custom.css'))
+		{
+			$styles['template'][] = 'custom.css';
+		}
+
 		// Include FontAwesome
 		$styles['fontawesome'] = Array('font-awesome.min.css');
 
