@@ -11,18 +11,22 @@
             value="${tpl.name}"
             override="true" />
 
-    <property
-            name="version"
-            value="${tpl.version}"
-            override="true" />
-
     <!-- Folder where the redSHOP repository is located  -->
     <property
             name="extpath"
             value="${repo.dir}/code"
             override="true" />
 
-    <!-- Target dir where packages will be created  -->
+    <!-- Load extension property in XML file -->
+    <xmlproperty file="${extpath}/templateDetails.xml" prefix="extensionDetails" keepRoot="false" />
+
+    <!-- Get extension version from XML -->
+    <property
+            name="version"
+            value="${extensionDetails.version}"
+            override="true"/>
+
+     <!-- Target dir where packages will be created  -->
     <property
             name="targetdir"
             value="${package.dir}/package-${extension}-v${version}"

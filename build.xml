@@ -10,10 +10,16 @@
 			value="${tpl.name}"
 			override="true" />
 
-	<property
-			name="version"
-			value="${tpl.version}"
-			override="true" />
+	<property name="src" value="./code" />
+
+	<!-- Load extension property in XML file -->
+    <xmlproperty file="${src}/templateDetails.xml" prefix="extensionDetails" keepRoot="false" />
+
+    <!-- Get extension version from XML -->
+    <property
+            name="version"
+            value="${extensionDetails.version}"
+            override="true"/>
 
 	<target name="prepare" >
 		<property file="build.properties" override="true"/>
@@ -24,8 +30,6 @@
 			</then>
 		</if>
 	</target>
-
-	<property name="src" value="./code" />
 
 	<target name="site" description="Copies files to a existing joomla site" depends="prepare">
 

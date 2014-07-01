@@ -1,5 +1,4 @@
 tpl.name=redcomponent
 www.dir=/var/www/joomla2
-tpl.version=1.2
 repo.dir=/home/git/wright
 package.dir=/home/git
