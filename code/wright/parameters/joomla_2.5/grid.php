@@ -38,7 +38,15 @@ class JFormFieldGrid extends JFormFieldList
 		// Initialize variables.
 		$options = array();
 
-		$size = ($this->element['size']) ? $this->element['size'] : 12;
+		$template = $this->form->getValue('template');
+		$size = 12;
+
+		if (file_exists(JPATH_ROOT . '/templates/' . $template . '/wrighttemplate.php'))
+		{
+			require_once JPATH_ROOT . '/templates/' . $template . '/wrighttemplate.php';
+			$wrightTemplate = WrightTemplate::getInstance();
+			$size = $wrightTemplate->getTemplate()->params->get('columnsNumber', 12);
+		}
 
 		$options = array ();
 

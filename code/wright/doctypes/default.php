@@ -22,6 +22,8 @@ abstract class HtmlAdapterAbstract
 {
 	protected $columns = array();
 
+	protected $columnsNumber = 12;
+
 	protected $widths = array();
 
 	protected $params;
@@ -48,7 +50,8 @@ abstract class HtmlAdapterAbstract
 	 */
 	public function  __construct($params)
 	{
-		$this->params = $params;
+		$this->params        = $params;
+		$this->columnsNumber = $params->get('columnsNumber', 12);
 		$this->setupColumns();
 	}
 
@@ -292,7 +295,7 @@ abstract class HtmlAdapterAbstract
 		// Use main Spans only if allowed by template internal configuration
 		if ($useMainSpans)
 		{
-			$class .= 'span' . $this->columns['main']->size;
+			$class .= 'col-md-' . $this->columns['main']->size;
 		}
 
 		if (preg_match('/class="(.*)"/u', $matches[1], $classes))
@@ -379,7 +382,7 @@ abstract class HtmlAdapterAbstract
 		// Use main Spans only if allowed by template internal configuration
 		if ($useMainSpans)
 		{
-			$class = 'span' . $this->columns[$id]->size;
+			$class = 'col-md-' . $this->columns[$id]->size;
 		}
 
 		if (preg_match('/class="(.*)"/u', $matches[1], $classes))
@@ -634,29 +637,29 @@ abstract class HtmlAdapterAbstract
 		switch (implode('-', $layout))
 		{
 			case 'main':
-				$this->columns['main']->size = 12;
+				$this->columns['main']->size = $this->columnsNumber;
 				$this->cols = 'wide';
 				break;
 
 			case 'main-sidebar1':
-				$this->columns['main']->size = (12 - $this->columns['sidebar1']->size);
+				$this->columns['main']->size = ($this->columnsNumber - $this->columns['sidebar1']->size);
 				$this->cols = 'm_' . $this->columns['main']->size . '_' . $this->columns['sidebar1']->size;
 				break;
 
 			case 'sidebar1-main':
-				$this->columns['main']->size = (12 - $this->columns['sidebar1']->size);
+				$this->columns['main']->size = ($this->columnsNumber - $this->columns['sidebar1']->size);
 				$this->columns['sidebar1']->pull = $this->columns['main']->size;
 				$this->columns['main']->push = $this->columns['sidebar1']->size;
 				$this->cols = 'l_' . $this->columns['main']->size;
 				break;
 
 			case 'main-sidebar2':
-				$this->columns['main']->size = (12 - $this->columns['sidebar2']->size);
+				$this->columns['main']->size = ($this->columnsNumber - $this->columns['sidebar2']->size);
 				$this->cols = 'm_' . $this->columns['main']->size . '_r_' . $this->columns['sidebar2']->size;
 				break;
 
 			case 'sidebar2-main':
-				$this->columns['main']->size = (12 - $this->columns['sidebar2']->size);
+				$this->columns['main']->size = ($this->columnsNumber - $this->columns['sidebar2']->size);
 				$this->columns['sidebar2']->pull = $this->columns['main']->size;
 				$this->columns['main']->push = $this->columns['sidebar2']->size;
 				$this->cols = 'l_' . $this->columns['main']->size;

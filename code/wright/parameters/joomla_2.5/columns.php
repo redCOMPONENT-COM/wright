@@ -43,6 +43,18 @@ class JFormFieldColumns extends JFormField
 			$doc->addStyleDeclaration('.columns.row-fluid [class*="span"] { margin-left: 0 }');
 		}
 
+		$template = $this->form->getValue('template');
+		$tplNumber = 12;
+
+		if (file_exists(JPATH_ROOT . '/templates/' . $template . '/wrighttemplate.php'))
+		{
+			require_once JPATH_ROOT . '/templates/' . $template . '/wrighttemplate.php';
+			$wrightTemplate = WrightTemplate::getInstance();
+			$tplNumber = $wrightTemplate->getTemplate()->params->get('columnsNumber', 12);
+		}
+
+		$doc->addScriptDeclaration('window.TPLNUMBER=' . $tplNumber . ';');
+
 		$values = explode(';', $this->value);
 
 		foreach ($values as $col)
@@ -58,14 +70,14 @@ class JFormFieldColumns extends JFormField
 
 		$options = array ();
 
-		for ($i = 1; $i <= 12; $i++)
+		for ($i = 1; $i <= $tplNumber; $i++)
 		{
 			$val	= $i;
 			$text	= $i;
 			$options[] = JHtml::_('select.option', $val, JText::_($text));
 		}
 
-		$html = '<p id="column_info">' . JText::_('TPL_%%UPNAME%%_FIELD_COLUMNS_USING') . ' <span id="columns_used"></span> ' . JText::_('TPL_%%UPNAME%%_FIELD_COLUMNS_OF') . ' 12 <span id="columns_warning">' . JText::_('TPL_%%UPNAME%%_FIELD_COLUMNS_WARNING') . '</span></p>';
+		$html = '<p id="column_info">' . JText::_('TPL_%%UPNAME%%_FIELD_COLUMNS_USING') . ' <span id="columns_used"></span> ' . JText::_('TPL_%%UPNAME%%_FIELD_COLUMNS_OF') . ' ' . $tplNumber . ' <span id="columns_warning">' . JText::_('TPL_%%UPNAME%%_FIELD_COLUMNS_WARNING') . ' ' . $tplNumber . '</span></p>';
 
 		$html .= '<div class="columns row-fluid">';
 
@@ -78,6 +90,8 @@ class JFormFieldColumns extends JFormField
 		}
 
 		$html .= '<div style="display: none; clear: both;"></div></div>';
+
+		$this->form->setValue('build', 1);
 
 		return $html;
 	}

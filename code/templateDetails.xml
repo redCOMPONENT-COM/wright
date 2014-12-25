@@ -76,7 +76,16 @@
 				<field name="logowidth" type="grid" default="4" label="TPL_%%UPNAME%%_FIELD_LOGO_WIDTH_LABEL" description="TPL_%%UPNAME%%_FIELD_LOGO_WIDTH_DESC" />
 				<field name="body_font" type="typography" default="default" label="TPL_%%UPNAME%%_FIELD_BODY_FONT_LABEL" description="TPL_%%UPNAME%%_FIELD_BODY_FONT_DESC" />
 				<field name="header_font" type="typography" default="default" label="TPL_%%UPNAME%%_FIELD_HEADING_FONT_LABEL" description="TPL_%%UPNAME%%_FIELD_HEADING_FONT_DESC" />
+
+				<field name="columnsNumber" type="list" default="12" label="TPL_%%UPNAME%%_COLUMNSNUMBER_LABEL" description="TPL_%%UPNAME%%_COLUMNSNUMBER_DESC" onchange="onclick=Joomla.submitbutton('style.apply')" >
+					<option value="12">12</option>
+					<option value="24">24</option>
+					<option value="36">36</option>
+					<option value="36">48</option>
+				</field>
+
 				<field name="columns" type="columns" default="sidebar1:3;main:6;sidebar2:3" sidebars="2" label="TPL_%%UPNAME%%_FIELD_COLUMNS_LABEL" description="TPL_%%UPNAME%%_FIELD_COLUMNS_DESC" />
+
 				<field name="stickyFooter" type="list" default="1" label="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER" description="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER_DESC">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
@@ -93,6 +102,8 @@
 					<option value="0">JNO</option>
 				</field>
 				<field name="browsercompatibility" label="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY" description="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_DESC" type="browsercompatibility" />
+
+				<field name="build" type="hidden" default="1" />
                 <!-- End of default Wright params -->
 			</fieldset>
 		</fields>
