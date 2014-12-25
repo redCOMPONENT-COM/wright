@@ -1,5 +1,5 @@
 <?php
-// Wright v.3 Override: Joomla 2.5.17
+// Wright v.3 Override: Joomla 2.5.18
 /**
  * @package     Joomla.Site
  * @subpackage  com_finder
@@ -75,7 +75,7 @@ defined('_JEXEC') or die;
 		<input type="hidden" name="o" value="<?php echo $this->escape($this->state->get('list.ordering')); ?>" />
 	<?php endif; ?>
 
-	<fieldset class="word">  
+	<fieldset class="word">
 		<div class="well well-small"><?php // Wright v.3: Added well ?>
 			<label for="q">
 				<?php echo JText::_('COM_FINDER_SEARCH_TERMS'); ?>
@@ -93,7 +93,7 @@ defined('_JEXEC') or die;
 
 			<?php /* Wright v.3: Moved advanced search button to the form */
 				if ($this->params->get('show_advanced', 1)): ?>
-				<a id="advanced-search-toggle" class="btn">  <?php // Wright v.3: Added btn class ?>
+				<a id="advanced-search-toggle" class="btn btn-primary">  <?php // Wright v.3: Added btn class ?>
 					<span class="icon-list"></span>  <?php // Wright v.3: Added icon ?>
 					<?php echo JText::_('COM_FINDER_ADVANCED_SEARCH_TOGGLE'); ?></a>
 

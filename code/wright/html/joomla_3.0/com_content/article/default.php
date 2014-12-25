@@ -1,5 +1,5 @@
 <?php
-// Wright v.3 Override: Joomla 3.2.1
+// Wright v.3 Override: Joomla 3.2.2
 /**
  * @package     Joomla.Site
  * @subpackage  com_content
@@ -20,9 +20,9 @@ defined('_JEXEC') or die;
 	if (!isset($this->wrightExtraClass)) $this->wrightExtraClass = "";
 	if (!isset($this->wrightLegendTop)) $this->wrightLegendTop= "";
 	if (!isset($this->wrightLegendBottom)) $this->wrightLegendBottom= "";
-	
+
 	if (empty($this->wrightElementsStructure)) $this->wrightElementsStructure = Array("title","icons","article-info","image","legendtop","content","legendbottom");
-	
+
 	$wrightBeforeIcon = '<span class="hidden-phone">';
 	$wrightAfterIcon = '</span>';
 	$wrightBeforeIconM = '<span class="visible-phone">';
@@ -64,13 +64,13 @@ if (!empty($this->item->pagination) && $this->item->pagination && !$this->item->
 ?>
 
 	<?php if (!$useDefList && $this->print) : ?>
-		<div id="pop-print" class="btn">
+		<div id="pop-print" class="btn btn-primary">
 			<?php echo JHtml::_('icon.print_screen', $this->item, $params); ?>
 		</div>
 		<div class="clearfix"> </div>
 	<?php endif; ?>
 
-<?php 
+<?php
 /* Wright v.3: Item elements structure */
 	foreach ($this->wrightElementsStructure as $wrightElement) :
 		switch ($wrightElement) :
@@ -84,9 +84,6 @@ if (!empty($this->item->pagination) && $this->item->pagination && !$this->item->
 		<div class="page-header">
 		<?php endif; /* End Wright v.3: Adds page header if h1 is missing */ ?>
 		<h2>
-			<?php if ($this->item->state == 0) : ?>
-				<span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span>
-			<?php endif; ?>
 			<?php if ($params->get('show_title')) : ?>
 				<?php if ($params->get('link_titles') && !empty($this->item->readmore_link)) : ?>
 					<a href="<?php echo $this->item->readmore_link; ?>"> <?php echo $this->escape($this->item->title); ?></a>
@@ -95,6 +92,17 @@ if (!empty($this->item->pagination) && $this->item->pagination && !$this->item->
 				<?php endif; ?>
 			<?php endif; ?>
 		</h2>
+
+		<?php if ($this->item->state == 0) : ?>
+			<span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span>
+		<?php endif; ?>
+		<?php if (strtotime($this->item->publish_up) > strtotime(JFactory::getDate())) : ?>
+			<span class="label label-warning"><?php echo JText::_('JNOTPUBLISHEDYET'); ?></span>
+		<?php endif; ?>
+		<?php if ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != '0000-00-00 00:00:00') : ?>
+			<span class="label label-warning"><?php echo JText::_('JEXPIRED'); ?></span>
+		<?php endif; ?>
+
 		<?php /* Wright v.3: Adds page header if h1 is missing */
 		if (!$params->get('show_page_heading')) : ?>
 		</div>
@@ -128,7 +136,7 @@ if (!empty($this->item->pagination) && $this->item->pagination && !$this->item->
 		<?php endif; ?>
 	<?php else : ?>
 		<?php if ($useDefList) : ?>
-			<div id="pop-print" class="btn">
+			<div id="pop-print" class="btn btn-primary">
 				<?php echo JHtml::_('icon.print_screen', $this->item, $params); ?>
 			</div>
 		<?php endif; ?>
@@ -434,7 +442,7 @@ if (!empty($this->item->pagination) && $this->item->pagination && $this->item->p
 ?>
 	<?php endif; ?>
 
-<?php 
+<?php
 /* Wright v.3: Item elements structure */
 				break;
 			case "legendtop":
@@ -452,7 +460,7 @@ if (!empty($this->item->pagination) && $this->item->pagination && $this->item->p
 				endif;
 				break;
 			default:
-				
+
 				if (preg_match("/^([\/]?)([a-z0-9-_]+?)([\#]?)([a-z0-9-_]*?)([\.]?)([a-z0-9-]*)$/iU", $wrightElement, $wrightDiv)) {
 					echo '<' . $wrightDiv[1] . $wrightDiv[2] .
 						($wrightDiv[1] != '' ? '' :
@@ -461,7 +469,7 @@ if (!empty($this->item->pagination) && $this->item->pagination && $this->item->p
 						)
 						. '>';
 				}
-				
+
 		endswitch;
 	endforeach;
 /* End Wright v.3: Item elements structure */

@@ -57,9 +57,12 @@
 		<fields name="params" addfieldpath="/templates/%%lwname%%/wright/parameters/joomla_2.5">
 			<fieldset name="basic">
                 <!-- Start of default Wright params -->
-
 				<field name="rebrand" type="hidden" default="yes" />
 				<field name="style" type="hidden" default="generic" />
+				<field name="modal" type="list" default="1" label="TPL_%%UPNAME%%_FIELD_ENABLE_MODAL_LABEL" description="TPL_%%UPNAME%%_FIELD_ENABLE_MODAL_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
 				<field name="jquery" type="list" default="1" label="TPL_%%UPNAME%%_FIELD_LOAD_JQUERY_LABEL" description="TPL_%%UPNAME%%_FIELD_LOAD_JQUERY_DESC">
 					<option value="0">JNO</option>
 					<option value="1">TPL_%%UPNAME%%_FIELD_LOAD_JQUERY_YES_LOCALLY</option>
@@ -70,25 +73,38 @@
 					<option value="0">JNO</option>
 				</field>
 				<field name="logo" type="logo" default="template" label="TPL_%%UPNAME%%_FIELD_LOGO_IMAGE_LABEL" description="TPL_%%UPNAME%%_FIELD_LOGO_IMAGE_DESC" />
-				<field name="logowidth" type="grid" default="6" label="TPL_%%UPNAME%%_FIELD_LOGO_WIDTH_LABEL" description="TPL_%%UPNAME%%_FIELD_LOGO_WIDTH_DESC" />
+				<field name="logowidth" type="grid" default="4" label="TPL_%%UPNAME%%_FIELD_LOGO_WIDTH_LABEL" description="TPL_%%UPNAME%%_FIELD_LOGO_WIDTH_DESC" />
 				<field name="body_font" type="typography" default="default" label="TPL_%%UPNAME%%_FIELD_BODY_FONT_LABEL" description="TPL_%%UPNAME%%_FIELD_BODY_FONT_DESC" />
 				<field name="header_font" type="typography" default="default" label="TPL_%%UPNAME%%_FIELD_HEADING_FONT_LABEL" description="TPL_%%UPNAME%%_FIELD_HEADING_FONT_DESC" />
-				<field name="columns" type="hidden" default="sidebar1:2;main:7;sidebar2:3" />
 
-				<field name="buttonspacer" label="TPL_%%UPNAME%%_BOOTSTRAP_TITLE_LABEL" description="TPL_%%UPNAME%%_BOOTSTRAP_TITLE_DESC" type="spacer" />
-				<field name="columns" type="columns" default="sidebar1:3;main:6;sidebar2:3" sidebars="2" label="TPL_%%UPNAME%%_FIELD_COLUMNS_LABEL" description="TPL_%%UPNAME%%_FIELD_COLUMNS_LABEL_DESC" />
-				<field name="responsive" type="list" default="1" label="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE" description="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE_DESC">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
+				<field name="columnsNumber" type="list" default="12" label="TPL_%%UPNAME%%_COLUMNSNUMBER_LABEL" description="TPL_%%UPNAME%%_COLUMNSNUMBER_DESC" onchange="onclick=Joomla.submitbutton('style.apply')" >
+					<option value="12">12</option>
+					<option value="24">24</option>
+					<option value="36">36</option>
+					<option value="36">48</option>
 				</field>
+
+				<field name="columns" type="columns" default="sidebar1:3;main:6;sidebar2:3" sidebars="2" label="TPL_%%UPNAME%%_FIELD_COLUMNS_LABEL" description="TPL_%%UPNAME%%_FIELD_COLUMNS_DESC" />
+
 				<field name="stickyFooter" type="list" default="1" label="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER" description="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER_DESC">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
+				<field name="wright_bootstrap_images" type="list" default="" label="TPL_%%UPNAME%%_BOOTSTRAP_IMAGES" description="TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_DESC">
+					<option value="">TPL_%%UPNAME%%_NONE</option>
+					<option value="img-rounded">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_ROUNDED</option>
+					<option value="img-circle">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_CIRCLE</option>
+					<option value="img-polaroid">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_POLAROID</option>
+				</field>
+				<field name="browserspacer" label="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_TITLE" description="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_TITLE_DESC" type="spacer" />
+				<field name="browsercompatibilityswitch" type="list" default="0" label="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_SWITCH" description="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_SWITCH_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="browsercompatibility" label="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY" description="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_DESC" type="browsercompatibility" />
+
+				<field name="build" type="hidden" default="1" />
                 <!-- End of default Wright params -->
-
-				<field name="hiddenmodule" type="Modules" multiple="true" size="20" label="Hidden modules in phone" description="Hidden modules in phone" />
-
 			</fieldset>
 		</fields>
 	</config>

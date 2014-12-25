@@ -1,5 +1,5 @@
 <?php
-// Wright v.3 Override: Joomla 3.2.1
+// Wright v.3 Override: Joomla 3.2.2
 /**
  * @package     Joomla.Site
  * @subpackage  com_newsfeeds
@@ -78,7 +78,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 		<?php // Add pagination links ?>
 		<?php if (!empty($this->items)) : ?>
 			<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
-				<div class="divpagination">
+				<div class="pagination">
 					<?php if ($this->params->def('show_pagination_results', 1)) : ?>
 						<p class="counter pull-right">
 							<?php echo $this->pagination->getPagesCounter(); ?>

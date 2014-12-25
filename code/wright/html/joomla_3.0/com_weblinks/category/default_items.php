@@ -1,5 +1,5 @@
 <?php
-// Wright v.3 Override: Joomla 3.2.1
+// Wright v.3 Override: Joomla 3.2.2
 /**
  * @package     Joomla.Site
  * @subpackage  com_weblinks
@@ -165,7 +165,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 			<?php echo JHtml::_('icon.create', $item, $item->params); ?>
 		<?php  endif; */ ?>
 		<?php if ($this->params->get('show_pagination')) : ?>
-		 <div class="divpagination">
+		 <div class="pagination">
 			<?php if ($this->params->def('show_pagination_results', 1)) : ?>
 				<p class="counter">
 					<?php echo $this->pagination->getPagesCounter(); ?>

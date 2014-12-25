@@ -1,5 +1,5 @@
 <?php
-// Wright v.3 Override: Joomla 3.2.1
+// Wright v.3 Override: Joomla 3.2.2
 /**
  * @package     Joomla.Site
  * @subpackage  com_content
@@ -22,11 +22,12 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 $canEdit = $this->item->params->get('access-edit');
 JHtml::_('behavior.framework');
 ?>
-<?php if ($this->item->state == 0) : ?>
-	<span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span>
+<?php if ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(JFactory::getDate())
+	|| ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != '0000-00-00 00:00:00' )) : ?>
+	<div class="system-unpublished">
 <?php endif; ?>
 
-<?php 
+<?php
 /* Wright v.3: Item elements structure */
 	if (empty($this->item->wrightElementsStructure)) $this->item->wrightElementsStructure = Array("title","icons","article-info","image","legendtop","content","legendbottom");
 	$this->item->wrightBootstrapImages = $this->wrightBootstrapImages;
@@ -85,10 +86,15 @@ JHtml::_('behavior.framework');
 /* End Wright v.3: Item elements structure */
 ?>
 
-<?php if (!$params->get('show_intro')) : ?>
+<?php if (!$params->get('show_title')) : ?>
 	<?php echo $this->item->event->afterDisplayTitle; ?>
 <?php endif; ?>
-<?php echo $this->item->event->beforeDisplayContent; ?> <?php echo wrightTransformArticleContent($this->item->introtext);  // Wright v.3: Transform article content's plugins (using helper) ?>
+<?php echo $this->item->event->beforeDisplayContent; ?>
+<?php
+	if ($params->get('show_intro')) : // Wright v3. Added conditional to display intro text
+		echo wrightTransformArticleContent($this->item->introtext);  // Wright v.3: Transform article content's plugins (using helper)
+	endif;
+?>
 
 <?php if ($useDefList) : ?>
 	<?php echo JLayoutHelper::render('joomla.content.info_block.block', array('item' => $this->item, 'params' => $params, 'position' => 'below')); ?>
@@ -107,7 +113,7 @@ JHtml::_('behavior.framework');
 		$link->setVar('return', base64_encode($returnURL));
 	endif; ?>
 
-	<p class="readmore"><a class="btn" href="<?php echo $link; ?>"> <span class="icon-chevron-right"></span>
+	<p class="readmore"><a class="btn btn-primary" href="<?php echo $link; ?>"> <span class="icon-chevron-right"></span>
 
 	<?php if (!$params->get('access-view')) :
 		echo JText::_('COM_CONTENT_REGISTER_TO_READ_MORE');
@@ -127,7 +133,7 @@ JHtml::_('behavior.framework');
 
 <?php endif; ?>
 
-<?php 
+<?php
 /* Wright v.3: Item elements structure */
 				break;
 			case "legendtop":
@@ -145,7 +151,7 @@ JHtml::_('behavior.framework');
 				endif;
 				break;
 			default:
-				
+
 				if (preg_match("/^([\/]?)([a-z0-9-_]+?)([\#]?)([a-z0-9-_]*?)([\.]?)([a-z0-9-]*)$/iU", $wrightElement, $wrightDiv)) {
 					echo '<' . $wrightDiv[1] . $wrightDiv[2] .
 						($wrightDiv[1] != '' ? '' :
@@ -154,10 +160,15 @@ JHtml::_('behavior.framework');
 						)
 						. '>';
 				}
-				
+
 		endswitch;
 	endforeach;
 /* End Wright v.3: Item elements structure */
 ?>
+
+<?php if ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(JFactory::getDate())
+	|| ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != '0000-00-00 00:00:00' )) : ?>
+</div>
+<?php endif; ?>
 
 <?php echo $this->item->event->afterDisplayContent; ?>

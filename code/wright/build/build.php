@@ -28,7 +28,7 @@ class BuildBootstrap extends lessc
 		$less_path = JPATH_THEMES . '/' . $document->template . '/less';
 
 		// Check rebuild less
-		$rebuild = false;
+		$rebuild = $document->params->get('build', false);
 
 		if (is_file(JPATH_THEMES . '/' . $document->template . '/css/style.css'))
 		{
@@ -56,29 +56,17 @@ class BuildBootstrap extends lessc
 		// Build LESS
 		if ($rebuild)
 		{
-			// Get column configuration
-			$left_columns = 1;
-
-			if ($document->countModules('sidebar1') == 0)
-			{
-				$left_columns = 0;
-			}
-
-			$right_columns = 1;
-
-			if ($document->countModules('sidebar2') == 0)
-			{
-				$right_columns = 0;
-			}
-
 			$this->setFormatter("compressed");
+
+			$columnsNumber = $document->params->get('columnsNumber', 12);
+			$this->setVariables(array('grid-columns' => $columnsNumber));
 
 			if (is_file(JPATH_THEMES . '/' . $document->template . '/css/style.css'))
 			{
 				unlink(JPATH_THEMES . '/' . $document->template . '/css/style.css');
 			}
 
-			$df =  dirname(__FILE__) . '/less/build.less';
+			$df = dirname(__FILE__) . '/less/build.less';
 
 			$ds = '@import "../../../less/variables.less"; ';
 			$ds .= '@import "../less/bootstrap.less"; ';
@@ -101,6 +89,20 @@ class BuildBootstrap extends lessc
 			$this->compileFile($df, JPATH_THEMES . '/' . $document->template . '/css/style.css');
 
 			unlink($df);
+
+			$document->params->set('build', false);
+
+			$newParams = new JRegistry(json_decode($document->params));
+
+			$templateId = JFactory::getApplication()->getTemplate(true)->id;
+
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+
+			$query->update($db->quoteName('#__template_styles'))->set($db->quoteName('params') . ' = ' . $db->q($newParams))->where($db->quoteName('id') . ' = ' . $db->q($templateId));
+
+			$db->setQuery($query);
+			$db->execute();
 		}
 	}
 }

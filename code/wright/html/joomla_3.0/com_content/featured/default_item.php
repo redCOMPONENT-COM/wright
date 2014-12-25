@@ -1,5 +1,5 @@
 <?php
-// Wright v.3 Override: Joomla 3.2.1
+// Wright v.3 Override: Joomla 3.2.2
 /**
  * @package     Joomla.Site
  * @subpackage  com_content
@@ -23,11 +23,12 @@ $info    = $this->item->params->get('info_block_position', 0);
 
 ?>
 
-<?php if ($this->item->state == 0) : ?>
+<?php if ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(JFactory::getDate())
+	|| ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != '0000-00-00 00:00:00' )) : ?>
 	<div class="system-unpublished">
 <?php endif; ?>
 
-<?php 
+<?php
 /* Wright v.3: Item elements structure */
 	if (empty($this->item->wrightElementsStructure)) $this->item->wrightElementsStructure = Array("title","icons","article-info","image","legendtop","content","legendbottom");
 	if (!isset($this->item->wrightLegendTop)) $this->item->wrightLegendTop = '';
@@ -44,7 +45,7 @@ $info    = $this->item->params->get('info_block_position', 0);
 	// moved useDefList to the top, to set it throught the switch
 	$useDefList = ($params->get('show_modify_date') || $params->get('show_publish_date') || $params->get('show_create_date')
 	|| $params->get('show_hits') || $params->get('show_category') || $params->get('show_parent_category') || $params->get('show_author') );
-	
+
 	foreach ($this->item->wrightElementsStructure as $wrightElement) :
 		switch ($wrightElement) :
 			case "title":
@@ -63,6 +64,17 @@ $info    = $this->item->params->get('info_block_position', 0);
 
 <?php if ($this->item->state == 0) : ?>
 	<span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span>
+<?php endif; ?>
+
+<?php if (strtotime($this->item->publish_up) > strtotime(JFactory::getDate())) : ?>
+	<span class="label label-warning"><?php echo JText::_('JNOTPUBLISHEDYET'); ?></span>
+<?php endif; ?>
+<?php if ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != '0000-00-00 00:00:00') : ?>
+	<span class="label label-warning"><?php echo JText::_('JEXPIRED'); ?></span>
+<?php endif; ?>
+
+<?php if (!$params->get('show_title')) : ?>
+	<?php echo $this->item->event->afterDisplayTitle; ?>
 <?php endif; ?>
 
 <?php
@@ -110,12 +122,9 @@ $info    = $this->item->params->get('info_block_position', 0);
 			<i class="icon-user"></i> <?php // Wright v.3: Author icon ?>
 				<?php $author = $this->item->author; ?>
 				<?php $author = ($this->item->created_by_alias ? $this->item->created_by_alias : $author); ?>
-				<?php if (!empty($this->item->contactid ) && $params->get('link_author') == true) : ?>
-					<?php
-					echo $wrightBeforeIcon . JText::sprintf('COM_CONTENT_WRITTEN_BY',
-						JHtml::_('link', JRoute::_('index.php?option=com_contact&view=contact&id='.$this->item->contactid), $author)) . $wrightAfterIcon; // Wright v.3: Icon for non-mobile version ?>
-					<?php
-					echo $wrightBeforeIconM . JText::sprintf(JHtml::_('link', JRoute::_('index.php?option=com_contact&view=contact&id='.$this->item->contactid), $author)) . $wrightAfterIconM; // Wright v.3: Icon for mobile version ?>
+				<?php if (!empty($this->item->contact_link) && $params->get('link_author') == true) : ?>
+					<?php echo $wrightBeforeIcon . JText::sprintf('COM_CONTENT_WRITTEN_BY', JHtml::_('link', $this->item->contact_link, $author)) . $wrightAfterIcon; ?>
+					<?php echo $wrightBeforeIconM . JText::sprintf(JHtml::_('link', $this->item->contact_link, $author)) . $wrightAfterIconM; // Wright v.3: Icon for mobile version ?>
 				<?php else :?>
 					<?php echo $wrightBeforeIcon . JText::sprintf('COM_CONTENT_WRITTEN_BY', $author) . $wrightAfterIcon; // Wright v.3: Icon for non-mobile version ?>
 					<?php echo $wrightBeforeIconM . JText::sprintf($author) . $wrightAfterIconM; // Wright v.3: Icon for mobile version ?>
@@ -188,7 +197,7 @@ $info    = $this->item->params->get('info_block_position', 0);
 
 		<?php endif; ?>
 	</dl>
-	
+
 	<?php
 		/* Wright v.3: Added tags */
 	 if ($this->params->get('show_tags', 1)) : ?>
@@ -248,12 +257,12 @@ $info    = $this->item->params->get('info_block_position', 0);
 /* End Wright v.3: Item elements structure */
 ?>
 
-<?php if (!$params->get('show_intro')) : ?>
-	<?php echo $this->item->event->afterDisplayTitle; ?>
-<?php endif; ?>
 <?php echo $this->item->event->beforeDisplayContent; ?>
-<?php echo wrightTransformArticleContent($this->item->introtext);  // Wright v.3: Transform article content's plugins (using helper) ?>
-
+<?php
+	if ($params->get('show_intro')) : // Wright v3. Added conditional to display intro text
+		echo wrightTransformArticleContent($this->item->introtext);  // Wright v.3: Transform article content's plugins (using helper)
+	endif;
+?>
 <?php
 /* Wright v.3: Item elements structure */
 				if ($infoBelow) :
@@ -358,7 +367,7 @@ $info    = $this->item->params->get('info_block_position', 0);
 		$link->setVar('return', base64_encode($returnURL));
 	endif; ?>
 
-	<p class="readmore"><a class="btn" href="<?php echo $link; ?>"> <span class="icon-chevron-right"></span>
+	<p class="readmore"><a class="btn btn-primary" href="<?php echo $link; ?>"> <span class="icon-chevron-right"></span>
 
 	<?php if (!$params->get('access-view')) :
 		echo JText::_('COM_CONTENT_REGISTER_TO_READ_MORE');
@@ -378,7 +387,7 @@ $info    = $this->item->params->get('info_block_position', 0);
 
 <?php endif; ?>
 
-<?php 
+<?php
 /* Wright v.3: Item elements structure */
 				break;
 			case "legendtop":
@@ -405,13 +414,14 @@ $info    = $this->item->params->get('info_block_position', 0);
 						)
 						. '>';
 				}
-				
+
 		endswitch;
 	endforeach;
 /* End Wright v.3: Item elements structure */
 ?>
 
-<?php if ($this->item->state == 0) : ?>
+<?php if ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(JFactory::getDate())
+	|| ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != '0000-00-00 00:00:00' )) : ?>
 </div>
 <?php endif; ?>
 

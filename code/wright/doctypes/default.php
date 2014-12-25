@@ -1,8 +1,28 @@
 <?php
+/**
+ * @package     Wright
+ * @subpackage  Adapters
+ *
+ * @copyright   Copyright (C) 2005 - 2014 Joomlashack. Meritage Assets.  All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ */
 
+// No direct access
+defined('_JEXEC') or die('Restricted access');
+
+/**
+ * HTML default doctype
+ *
+ * @package     Wright
+ * @subpackage  Main Package
+ * @since       2.0
+ */
 abstract class HtmlAdapterAbstract
 {
 	protected $columns = array();
+
+	protected $columnsNumber = 12;
 
 	protected $widths = array();
 
@@ -10,66 +30,100 @@ abstract class HtmlAdapterAbstract
 
 	public $cols = '';
 
-	protected $tags = array('doctype' 		=>	'/<doctype>/i',
-							'html' 			=>	'/<html(.*)?>/i',
-							'htmlComments' 	=>	'/<!--.*?-->/i',
-							'body' 			=> '/<body(.*)?>/i',
-							'nav' 			=> '/<nav(.*)>(.*)<\/nav>/isU',
-							'sections' 		=> '/<section(.*)>(.*)<\/section>/isU',
-							'asides' 		=> '/<aside(.*)>(.*)<\/aside>/isU',
-							'footer' 		=> '/<footer(.*)>(.*)<\/footer>/isU',
-							'header' 		=> '/<header(.*)>(.*)<\/header>/isU',
-							'toolbar' 		=> '/<div(.*)id="toolbar">(.*)<\/div>/isU',
+	protected $tags = array(	'doctype' => '/<doctype>/i',
+								'html' => '/<html(.*)?>/i',
+								'htmlComments' => '/<!--.*?-->/i',
+								'body' => '/<body(.*)?>/i',
+								'nav' => '/<nav(.*)>(.*)<\/nav>/isU',
+								'sections' => '/<section(.*)>(.*)<\/section>/isU',
+								'asides' => '/<aside(.*)>(.*)<\/aside>/isU',
+								'footer' => '/<footer(.*)>(.*)<\/footer>/isU',
+								'header' => '/<header(.*)>(.*)<\/header>/isU',
+								'toolbar' => '/<div(.*)id="toolbar">(.*)<\/div>/isU',
+								'bodyclose' => '/<\/body>/i'
 		);
 
+	/**
+	 * Constructor
+	 *
+	 * @param   array  $params  Parameters
+	 */
 	public function  __construct($params)
 	{
-		$this->params = $params;
+		$this->params        = $params;
+		$this->columnsNumber = $params->get('columnsNumber', 12);
 		$this->setupColumns();
 	}
 
+	/**
+	 * Gets all the tags
+	 *
+	 * @return  array
+	 */
 	public function getTags()
 	{
 		return $this->tags;
 	}
 
 	/**
-	 * Functions below are in leu of an interface, each adapter will implement
-	 * them in its own way if they don't like the default
+	 *  Gets and modifies the doctype
+	 *
+	 * @param   array  $matches  Matches of the regular expression in $tags
+	 *
+	 * @return  string
 	 */
-
 	public function getDoctype($matches)
 	{
-		if (isset($matches[1]))
-		{
-			return '<!DOCTYPE html ' . $matches[1] . '>';
-		}
-
-		return '';
+		return '<!DOCTYPE html>';
 	}
 
+	/**
+	 *  Gets and modifies the HTML main tag
+	 *
+	 * @param   array  $matches  Matches of the regular expression in $tags
+	 *
+	 * @return  string
+	 */
 	public function getHtml($matches)
 	{
-		$wright = Wright::getInstance();
+		$lang = JFactory::getLanguage();
+		$tag = $lang->getTag();
+		$dir = ($lang->isRTL() ? "rtl" : "ltr");
 
-		return '<html lang="' . $wright->language . '" ' . $matches[1] . '>';
+		return '<html lang="' . $tag . '" dir="' . $dir . '">';
 	}
 
+	/**
+	 *  Gets and modifies the HTML comments
+	 *
+	 * @param   array  $matches  Matches of the regular expression in $tags
+	 *
+	 * @return  string
+	 */
 	public function getHtmlComments($matches)
 	{
 		return '';
 	}
 
+	/**
+	 *  Gets and modifies the body tag
+	 *
+	 * @param   array  $matches  Matches of the regular expression in $tags
+	 *
+	 * @return  string
+	 */
 	public function getBody($matches)
 	{
 		$wright = Wright::getInstance();
-		require_once JPATH_ROOT . '/templates/' . $wright->document->template . '/wright/includes/browser.php';
 		$browser = new Browser;
 		$browser_version = explode('.', $browser->getVersion());
 		$class = 'is_' . strtolower($browser->getBrowser()) . ' v_' . $browser_version[0];
 		$class .= ' on_' . strtolower($browser->getPlatform());
+
 		$style = "";
-		$data = "";  // Added for other data-(0-9) classes
+
+		// Added for other data-(0-9) classes
+		$data = "";
 
 		if (isset($matches[1]))
 		{
@@ -97,87 +151,180 @@ abstract class HtmlAdapterAbstract
 				}
 			}
 		}
+		else
+		{
+		}
 
 		// If specific style add to class list
 		$xml = simplexml_load_file(JPATH_ROOT . '/templates/' . $wright->document->template . '/templateDetails.xml');
-		$theme = $xml->xpath('//style[@name="'.$wright->params->get('style').'"]');
-		if (count($theme)) $class .= ' '.$theme[0]['type'];
+		$theme = $xml->xpath('//style[@name="' . $wright->params->get('style') . '"]');
+
+		if (count($theme))
+		{
+			$class .= ' ' . $theme[0]['type'];
+		}
+		else
+		{
+		}
 
 		// If user has custom typography selected, we need to add the classes to trigger it
-		if ($this->params->get('body_font', 'default') !== 'default') {
-			if ($this->params->get('body_font') == 'googlefonts') {
-				if (strpos($this->params->get('body_googlefont'), ',')) {
+		if ($this->params->get('body_font', 'default') !== 'default')
+		{
+			if ($this->params->get('body_font') == 'googlefonts')
+			{
+				if (strpos($this->params->get('body_googlefont'), ','))
+				{
 					$gfont = substr($this->params->get('body_googlefont', 'Cuprum'), 0, strpos($this->params->get('body_googlefont', 'Cuprum'), ','));
 				}
-				else {
+				else
+				{
 					$gfont = $this->params->get('body_googlefont', 'Cuprum');
 				}
+
 				$class .= ' b_' . strtolower(str_replace('+', '', $gfont));
 			}
-			else {
+			else
+			{
 				$class .= ' b_' . $this->params->get('body_font', 'verdana');
 			}
 		}
-		if ($this->params->get('header_font', 'default') !== 'default') {
-			if ($this->params->get('header_font') == 'googlefonts') {
-				if (strpos($this->params->get('header_googlefont'), ',')) {
+		else
+		{
+		}
+
+		if ($this->params->get('header_font', 'default') !== 'default')
+		{
+			if ($this->params->get('header_font') == 'googlefonts')
+			{
+				if (strpos($this->params->get('header_googlefont'), ','))
+				{
 					$gfont = substr($this->params->get('header_googlefont', 'Cuprum'), 0, strpos($this->params->get('header_googlefont', 'Cuprum'), ','));
 				}
-				else {
+				else
+				{
 					$gfont = $this->params->get('header_googlefont', 'Cuprum');
 				}
 
 				$class .= ' h_' . strtolower(str_replace('+', '', $gfont));
 			}
-			else {
+			else
+			{
 				$class .= ' h_' . $this->params->get('header_font', 'helvetica');
 			}
 		}
-		if (JRequest::getVar('Itemid')) $class .= ' id_'.JRequest::getVar('Itemid');
+
+		if (JRequest::getVar('Itemid'))
+		{
+			$class .= ' id_' . JRequest::getVar('Itemid');
+		}
 
 		$app = JFactory::getApplication();
 		$menu = $app->getMenu();
-		if ($menu->getActive() == $menu->getDefault()) $class .= ' home';
 
-		if(isset($menu->getActive()->params))
+		if ($menu->getActive() == $menu->getDefault())
 		{
-			$p = $menu->getActive()->params;
-			$pageclass_sfx = $p->get('pageclass_sfx', '');
-			if (!empty($pageclass_sfx))
-			{
-				$class .= ' ' . $pageclass_sfx;
-			}
+			$class .= ' home';
 		}
-
 
 		$class .= " rev_" . $wright->revision;
 
-		return '<body class="'.$class.'"' . ($style != '' ? ' style="' . $style . '"' : '') . $data . '>';
+		return '<body class="' . $class . '"' . ($style != '' ? ' style="' . $style . '"' : '') . $data . '>';
 	}
 
+	/**
+	 *  Gets and modifies the body close tag
+	 *
+	 * @param   array  $matches  Matches of the regular expression in $tags
+	 *
+	 * @return  string
+	 */
+	public function getBodyclose($matches)
+	{
+		$doc = Wright::getInstance();
+		$js = $doc->generateJS();
+		$browserWarning = '';
+
+		if ($doc->_showBrowserWarning)
+		{
+			ob_start();
+			include JPATH_SITE . '/templates/' . $doc->document->template . '/wright/includes/browserwarning.php';
+			$browserWarning = ob_get_clean();
+		}
+
+		return $browserWarning . $js . '</body>';
+	}
+
+	/**
+	 *  Gets and modifies the nav tag
+	 *
+	 * @param   array  $matches  Matches of the regular expression in $tags
+	 *
+	 * @return  string
+	 */
 	public function getNav($matches)
 	{
 		return $matches[0];
 	}
 
+	/**
+	 *  Gets and modifies the section tags
+	 *
+	 * @param   array  $matches  Matches of the regular expression in $tags
+	 *
+	 * @return  string
+	 */
 	public function getSections($matches)
 	{
-		$class = 'col-md-'.$this->columns['main']->size;
-		if (strpos($matches[1], 'class=')) {
-			preg_match('/class="(.*)"/i', $matches[1], $classes);
+		$useMainSpans = true;
+
+		if (class_exists("WrightTemplate"))
+		{
+			if (property_exists("WrightTemplate", "useMainSpans"))
+			{
+				$wrightTemplate = WrightTemplate::getInstance();
+
+				if (!$wrightTemplate->useMainSpans)
+				{
+					$useMainSpans = false;
+				}
+			}
+		}
+
+		$class = "";
+
+		// Use main Spans only if allowed by template internal configuration
+		if ($useMainSpans)
+		{
+			$class .= 'col-md-' . $this->columns['main']->size;
+		}
+
+		if (preg_match('/class="(.*)"/u', $matches[1], $classes))
+		{
 			$class .= ' ' . $classes[1];
 		}
 
-		$this->columns['main']->exists = true;  // marks that column really exists
+		// Marks that column really exists
+		$this->columns['main']->exists = true;
 
 		if (strpos($matches[1], 'class='))
-			$main = preg_replace('/class=\".*\"/iU', 'class="'.$class.'"', $matches[0], 1);
+		{
+			$main = preg_replace('/class=\".*\"/iU', 'class="' . $class . '"', $matches[0], 1);
+		}
 		else
-			$main = preg_replace('/<section/iU', '<section class="'.$class.'"', $matches[0], 1);
+		{
+			$main = preg_replace('/<section/iU', '<section class="' . $class . '"', $matches[0], 1);
+		}
 
 		return $main;
 	}
 
+	/**
+	 *  Gets and modifies the aside tags
+	 *
+	 * @param   array  $matches  Matches of the regular expression in $tags
+	 *
+	 * @return  string
+	 */
 	public function getAsides($matches)
 	{
 		// Get id and decide if to even bother
@@ -186,12 +333,15 @@ abstract class HtmlAdapterAbstract
 
 		$doc = Wright::getInstance();
 
-		if (!$doc->document->countModules($id)) {
-			// addition for forcing a sidebar (if it is a template which must have a sidebar for some of its positions)
+		if (!$doc->document->countModules($id))
+		{
+			// Addition for forcing a sidebar (if it is a template which must have a sidebar for some of its positions)
 			$forcedSidebar = false;
 
-			if (class_exists("WrightTemplate")) {
-				if (property_exists("WrightTemplate", "forcedSidebar")) {
+			if (class_exists("WrightTemplate"))
+			{
+				if (property_exists("WrightTemplate", "forcedSidebar"))
+				{
 					$wrightTemplate = WrightTemplate::getInstance();
 					if ($id == $wrightTemplate->forcedSidebar)
 						$forcedSidebar = true;
@@ -201,80 +351,144 @@ abstract class HtmlAdapterAbstract
 			$editmode = false;
 
 			// Check editing mode
-			if (JRequest::getVar('task') == 'edit' || JRequest::getVar('layout') == 'form' || JRequest::getVar('layout') == 'edit') {
+			if (JRequest::getVar('task') == 'edit' || JRequest::getVar('layout') == 'form' || JRequest::getVar('layout') == 'edit')
+			{
 				$editmode = true;
 			}
 
 			if (!$forcedSidebar || $editmode)
+			{
 				return;
+			}
 		}
 
-		$this->columns[$id]->exists = true;  // marks that column really exists
+		// Marks that column really exists
+		$this->columns[$id]->exists = true;
 
-		$class = 'col-md-'.$this->columns[$id]->size;
-		if (strpos($matches[1], 'class=')) {
-			preg_match('/class="(.*)"/i', $matches[1], $classes);
+		$useMainSpans = true;
+
+		if (class_exists("WrightTemplate"))
+		{
+			if (property_exists("WrightTemplate", "useMainSpans"))
+			{
+				$wrightTemplate = WrightTemplate::getInstance();
+				if (!$wrightTemplate->useMainSpans)
+					$useMainSpans = false;
+			}
+		}
+
+		$class = "";
+
+		// Use main Spans only if allowed by template internal configuration
+		if ($useMainSpans)
+		{
+			$class = 'col-md-' . $this->columns[$id]->size;
+		}
+
+		if (preg_match('/class="(.*)"/u', $matches[1], $classes))
+		{
 			$class .= ' ' . $classes[1];
 		}
 
 		if (strpos($matches[1], 'class='))
-			$sidebar = preg_replace('/class=\".*\"/iU', 'class="'.$class.'"', $matches[0], 1);
+		{
+			$sidebar = preg_replace('/class=\".*\"/iU', 'class="' . $class . '"', $matches[0], 1);
+		}
 		else
-			$sidebar = preg_replace('/<aside/iU', '<aside class="'.$class.'"', $matches[0], 1);
-		// only return sidebar if user has set columns > 0
-		if ($this->columns[$id]->size > 0 ) {
+		{
+			$sidebar = preg_replace('/<aside/iU', '<aside class="' . $class . '"', $matches[0], 1);
+		}
+
+		// Only return sidebar if user has set columns > 0
+		if ($this->columns[$id]->size > 0)
+		{
 			return $sidebar;
 		}
 	}
 
+	/**
+	 *  Gets and modifies the footer tag
+	 *
+	 * @param   array  $matches  Matches of the regular expression in $tags
+	 *
+	 * @return  string
+	 */
 	public function getFooter($matches)
 	{
 		$class = 'footer';
 		$footer = $matches[0];
 
 		// Footer attributes contain classes?
-		if (strpos($matches[1], 'class=')) {
+		if (strpos($matches[1], 'class='))
+		{
 			// Get aditional classes
 			preg_match('/class="(.*)"/i', $matches[1], $classes);
 			$class .= ' ' . $classes[1];
-			//
-			$footer = preg_replace('/class=\".*\"/iU', 'class="'.$class.'"', $matches[0], 1);
+
+			$footer = preg_replace('/class=\".*\"/iU', 'class="' . $class . '"', $matches[0], 1);
 		}
 		// Doesn't contain classes. Insert it
 		else
 		{
-			$footer = preg_replace('/<footer/iU','<footer class="' . $class . '"', $matches[0], 1);
+			$footer = preg_replace('/<footer/iU', '<footer class="' . $class . '"', $matches[0], 1);
 		}
 
 		return $footer;
 	}
 
+	/**
+	 *  Gets and modifies the header tag
+	 *
+	 * @param   array  $matches  Matches of the regular expression in $tags
+	 *
+	 * @return  string
+	 */
 	public function getHeader($matches)
 	{
-
 		$class = 'header';
 		$header = $matches[0];
 
-		if (strpos($matches[1], 'class=')) {
+		if (strpos($matches[1], 'class='))
+		{
 			preg_match('/class="(.*)"/i', $matches[1], $classes);
 			$class .= ' ' . $classes[1];
 		}
+		else
+		{
+		}
 
 		if (strpos($matches[1], 'class='))
-			$header = preg_replace('/class=\".*\"/iU', 'class="'.$class.'"', $matches[0], 1);
+		{
+			$header = preg_replace('/class=\".*\"/iU', 'class="' . $class . '"', $matches[0], 1);
+		}
+		else
+		{
+		}
 
 		return $header;
 	}
 
-	// Full Height Columns (sidebars)
-	public function getFullHeightColumns($matches) {
+	/**
+	 *  Process full Height Columns (Wright v.2)
+	 *
+	 * @param   array  $matches  Matches of the regular expression in $tags
+	 *
+	 * @return  string
+	 */
+	public function getFullHeightColumns($matches)
+	{
 		$before = 0;
 		$after = 0;
 
 		$i = 0;
-		foreach ($this->columns as $col) {
-			if ($col->exists) {  // only counts the column if really exists
-				switch ($i) {
+
+		foreach ($this->columns as $col)
+		{
+			// Only counts the column if really exists
+			if ($col->exists)
+			{
+				switch ($i)
+				{
 					case 0:
 						if ($col->name == "sidebar1" || $col->name == "sidebar2")
 							$before += $col->size;
@@ -292,25 +506,41 @@ abstract class HtmlAdapterAbstract
 						break;
 				}
 			}
+			else
+			{
+			}
+
 			$i++;
 		}
-
 
 		$content = $matches[1] .
 			"<div id=\"columnscontainer\" class=\"container_12 main before_$before after_$after\">" .
 			$matches[2] .
 			"</div>" .
 			$matches[3];
+
 		return $content;
 	}
 
-	function getToolbar($matches){
+	/**
+	 *  Gets and modifies the toolbar tag
+	 *
+	 * @param   array  $matches  Matches of the regular expression in $tags
+	 *
+	 * @return  string
+	 */
+	function getToolbar($matches)
+	{
 		$toolbar = $matches[0];
-		//var_dump($matches);
-		return $toolbar;
 
+		return $toolbar;
 	}
 
+	/**
+	 *  Sets up the main columns (main and sidebars)
+	 *
+	 * @return  string
+	 */
 	private function setupColumns()
 	{
 		$doc = Wright::getInstance();
@@ -325,124 +555,151 @@ abstract class HtmlAdapterAbstract
 		$editmode = false;
 
 		// Check editing mode
-		if (JRequest::getVar('task') == 'edit' || JRequest::getVar('layout') == 'form' || JRequest::getVar('layout') == 'edit') {
+		if (JRequest::getVar('task') == 'edit'
+			|| JRequest::getVar('layout') == 'form'
+			|| JRequest::getVar('layout') == 'edit')
+		{
 			$editmode = true;
 		}
+		else
+		{
+		}
 
-		if (class_exists("WrightTemplate") && !$editmode) {
+		if (class_exists("WrightTemplate") && !$editmode)
+		{
 			$wrightTemplate = WrightTemplate::getInstance();
 
-			// checks if the template has full height sidebars for adding the tag for the columns (sidebars)
+			// Checks if the template has full height sidebars for adding the tag for the columns (sidebars)
 			if (property_exists("WrightTemplate", "fullHeightSidebars"))
-				if ($wrightTemplate->fullHeightSidebars) {
+			{
+				if ($wrightTemplate->fullHeightSidebars)
+				{
 					$this->tags['fullHeightColumns'] = '/(.*)<div class="container_12" id="columnscontainer">(.*)<\/div><div id="columnscontainer_close"><\/div>(.*)$/isU';
 				}
+			}
+		}
+		else
+		{
 		}
 
 		foreach (explode(';', $doc->document->params->get('columns', 'sidebar1:3;main:6;sidebar2:3')) as $item)
 		{
 			list ($col, $val) = explode(':', $item);
 
-			if ($col !== 'main' && $check == 0) $main++;
-			else $check = 1;
+			if ($col !== 'main' && $check == 0)
+			{
+				$main++;
+			}
+			else
+			{
+				$check = 1;
+			}
 
-					$this->columns[$col] = new JObject();
+			$this->columns[$col] = new JObject;
 
 			$this->columns[$col]->name = $col;
 			$this->columns[$col]->size = $val;
 			$this->columns[$col]->push = 0;
 			$this->columns[$col]->pull = 0;
 			$this->columns[$col]->check = $check;
-			$this->columns[$col]->exists = false;  // contains if column really exists into content or not
+
+			// Contains if column really exists into content or not
+			$this->columns[$col]->exists = false;
 
 			$number++;
-			if ($val > 0 && $doc->document->countModules($col) || $col == 'main') {
+
+			if ($val > 0 && $doc->document->countModules($col) || $col == 'main')
+			{
 					$layout[] = $col;
 			}
-			else {
-				// addition for forcing a sidebar (if it is a template which must have a sidebar for some of its positions)
+			else
+			{
+				// Addition for forcing a sidebar (if it is a template which must have a sidebar for some of its positions)
 				if ($wrightTemplate)
-					if (property_exists("WrightTemplate", "forcedSidebar")) {
+				{
+					if (property_exists("WrightTemplate", "forcedSidebar"))
+					{
 						$wrightTemplate = WrightTemplate::getInstance();
 						if ($col == $wrightTemplate->forcedSidebar)
 							$layout[] = $col;
 					}
+				}
 			}
 		}
 
 		// Auto set to full width if editing
-		if (JRequest::getVar('task') == 'edit' || JRequest::getVar('layout') == 'form') {
+		if (JRequest::getVar('task') == 'edit' || JRequest::getVar('layout') == 'form')
+		{
 			$layout = Array();
 			$layout[] = 'main';
 		}
 
-		switch(implode('-', $layout))
+		switch (implode('-', $layout))
 		{
 			case 'main':
-				$this->columns['main']->size = 12;
+				$this->columns['main']->size = $this->columnsNumber;
 				$this->cols = 'wide';
 				break;
 
 			case 'main-sidebar1':
-				$this->columns['main']->size = (12-$this->columns['sidebar1']->size);
-				$this->cols = 'm_'.$this->columns['main']->size.'_'.$this->columns['sidebar1']->size;
+				$this->columns['main']->size = ($this->columnsNumber - $this->columns['sidebar1']->size);
+				$this->cols = 'm_' . $this->columns['main']->size . '_' . $this->columns['sidebar1']->size;
 				break;
 
 			case 'sidebar1-main':
-				$this->columns['main']->size = (12-$this->columns['sidebar1']->size);
+				$this->columns['main']->size = ($this->columnsNumber - $this->columns['sidebar1']->size);
 				$this->columns['sidebar1']->pull = $this->columns['main']->size;
 				$this->columns['main']->push = $this->columns['sidebar1']->size;
-				$this->cols = 'l_'.$this->columns['main']->size;
+				$this->cols = 'l_' . $this->columns['main']->size;
 				break;
 
 			case 'main-sidebar2':
-				$this->columns['main']->size = (12-$this->columns['sidebar2']->size);
-				$this->cols = 'm_'.$this->columns['main']->size.'_r_'.$this->columns['sidebar2']->size;
+				$this->columns['main']->size = ($this->columnsNumber - $this->columns['sidebar2']->size);
+				$this->cols = 'm_' . $this->columns['main']->size . '_r_' . $this->columns['sidebar2']->size;
 				break;
 
 			case 'sidebar2-main':
-				$this->columns['main']->size = (12-$this->columns['sidebar2']->size);
+				$this->columns['main']->size = ($this->columnsNumber - $this->columns['sidebar2']->size);
 				$this->columns['sidebar2']->pull = $this->columns['main']->size;
 				$this->columns['main']->push = $this->columns['sidebar2']->size;
-				$this->cols = 'l_'.$this->columns['main']->size;
+				$this->cols = 'l_' . $this->columns['main']->size;
 				break;
 			case 'main-sidebar1-sidebar2':
-				$this->cols = 'm_'.$this->columns['sidebar1']->size.'_'.$this->columns['sidebar2']->size;
+				$this->cols = 'm_' . $this->columns['sidebar1']->size . '_' . $this->columns['sidebar2']->size;
 				break;
 
 			case 'main-sidebar2-sidebar1':
 				$this->columns['sidebar2']->pull = $this->columns['sidebar1']->size;
 				$this->columns['sidebar1']->push = $this->columns['sidebar2']->size;
-				$this->cols = 'm_'.$this->columns['sidebar2']->size.'_'.$this->columns['sidebar1']->size;
+				$this->cols = 'm_' . $this->columns['sidebar2']->size . '_' . $this->columns['sidebar1']->size;
 				break;
 
 			case 'sidebar2-main-sidebar1':
 				$this->columns['main']->push = $this->columns['sidebar2']->size;
 				$this->columns['sidebar2']->pull = $this->columns['main']->size + $this->columns['sidebar1']->size;
 				$this->columns['sidebar1']->push = $this->columns['sidebar2']->size;
-				$this->cols = $this->columns['sidebar2']->size.'_m_'.$this->columns['sidebar1']->size;
+				$this->cols = $this->columns['sidebar2']->size . '_m_' . $this->columns['sidebar1']->size;
 				break;
 
 			case 'sidebar1-main-sidebar2':
 				$this->columns['main']->push = $this->columns['sidebar1']->size;
 				$this->columns['sidebar1']->pull = $this->columns['main']->size;
-				$this->cols = $this->columns['sidebar1']->size.'_m_'.$this->columns['sidebar2']->size;
+				$this->cols = $this->columns['sidebar1']->size . '_m_' . $this->columns['sidebar2']->size;
 				break;
 
 			case 'sidebar1-sidebar2-main':
 				$this->columns['main']->push = $this->columns['sidebar1']->size + $this->columns['sidebar2']->size;
 				$this->columns['sidebar2']->pull = $this->columns['main']->size;
 				$this->columns['sidebar1']->pull = $this->columns['main']->size;
-				$this->cols = $this->columns['sidebar1']->size.'_'.$this->columns['sidebar2']->size.'_m';
+				$this->cols = $this->columns['sidebar1']->size . '_' . $this->columns['sidebar2']->size . '_m';
 				break;
 
 			case 'sidebar2-sidebar1-main':
 				$this->columns['main']->push = $this->columns['sidebar1']->size + $this->columns['sidebar2']->size;
-				$this->columns['sidebar2']->pull = $this->columns['main']->size +  $this->columns['sidebar1']->size;
+				$this->columns['sidebar2']->pull = $this->columns['main']->size + $this->columns['sidebar1']->size;
 				$this->columns['sidebar1']->pull = $this->columns['main']->size - $this->columns['sidebar2']->size;
-				$this->cols = 'l_'.$this->columns['sidebar2']->size.'_r_'.$this->columns['sidebar1']->size.'_m_'.$this->columns['main']->size;
+				$this->cols = 'l_' . $this->columns['sidebar2']->size . '_r_' . $this->columns['sidebar1']->size . '_m_' . $this->columns['main']->size;
 				break;
 		}
 	}
-
 }

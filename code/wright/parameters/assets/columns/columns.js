@@ -1,10 +1,14 @@
 window.addEvent('load', function() {
 	checkColumns();
 	$$('select.columns').addEvent('change', function() {
-		checkColumns();
-		setColumnParam();
+		changeColumns();
 	});
 });
+
+function changeColumns() {
+	checkColumns();
+	setColumnParam();
+}
 
 function setColumnParam() {
 	var widths = new Array();
@@ -21,7 +25,7 @@ function checkColumns() {
 		widths += parseInt(column.getProperty('value'));
 	});
 	$('columns_used').set('text', widths);
-	if (widths !== 12)
+	if (widths !== window.TPLNUMBER)
 	{
 		$('column_info').setStyle('color', 'red');
 		$('columns_warning').setStyle('display', 'inline');
@@ -32,19 +36,9 @@ function checkColumns() {
 		$('columns_warning').setStyle('display', 'none');
 	}
 	$$('div.col').each(function(column){
-		column.removeClass('span1');
-		column.removeClass('span2');
-		column.removeClass('span3');
-		column.removeClass('span4');
-		column.removeClass('span5');
-		column.removeClass('span6');
-		column.removeClass('span7');
-		column.removeClass('span8');
-		column.removeClass('span9');
-		column.removeClass('span10');
-		column.removeClass('span11');
-		column.removeClass('span12');
-		column.addClass('span' + column.getElement('select').getProperty('value'));
+		var col = column.getElement('select').getProperty('value');
+		var percent = col*100/window.TPLNUMBER;
+		column.setStyle('width', percent + "%");
 	});
 }
 
