@@ -1,5 +1,5 @@
 <?php
-// Wright v.3 Override: Joomla 3.2.1
+// Wright v.3 Override: Joomla 3.2.2
 /**
  * @package     Joomla.Site
  * @subpackage  mod_login
@@ -91,13 +91,13 @@ JHtml::_('bootstrap.tooltip');
 		<?php endif; ?>
 		<div id="form-login-submit" class="control-group">
 			<div class="controls">
-				<button type="submit" tabindex="0" name="Submit" class="btn"><?php echo JText::_('JLOGIN') ?></button><?php // Wright v.3: Removed btn-primary class ?>
+				<button type="submit" tabindex="0" name="Submit" class="btn btn-primary"><?php echo JText::_('JLOGIN') ?></button><?php // Wright v.3: Removed btn-primary class ?>
 			</div>
 		</div>
 		<?php
-			$usersConfig = JComponentHelper::getParams('com_users');
-			if ($usersConfig->get('allowUserRegistration')) : ?>
+			$usersConfig = JComponentHelper::getParams('com_users'); ?>
 			<ul class="nav nav-tabs nav-stacked"> <?php // Wright v.3: nav classes (removed unstyled) ?>
+			<?php if ($usersConfig->get('allowUserRegistration')) : ?>
 				<li>
 					<a href="<?php echo JRoute::_('index.php?option=com_users&view=registration&Itemid='.UsersHelperRoute::getRegistrationRoute()); ?>">
 					<?php echo JText::_('MOD_LOGIN_REGISTER'); ?> <span class="icon-arrow-right"></span></a>

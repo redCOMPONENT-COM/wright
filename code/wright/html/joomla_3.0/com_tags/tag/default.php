@@ -1,5 +1,5 @@
 <?php
-// Wright v.3 Override: Joomla 3.2.1
+// Wright v.3 Override: Joomla 3.2.2
 /**
  * @package     Joomla.Site
  * @subpackage  com_tags
@@ -66,7 +66,7 @@ if (!$this->params->get('show_page_heading')) : ?>
 
 <?php echo $this->loadTemplate('items'); ?>
 	<?php if (($this->params->def('show_pagination', 1) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->get('pages.total') > 1)) : ?>
-	<div class="divpagination">
+	<div class="pagination">
 		<?php  if ($this->params->def('show_pagination_results', 1)) : ?>
 		<p class="counter pull-right"> <?php echo $this->pagination->getPagesCounter(); ?> </p>
 		<?php endif; ?>

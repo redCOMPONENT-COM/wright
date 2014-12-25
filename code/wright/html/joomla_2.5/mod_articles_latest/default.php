@@ -1,5 +1,5 @@
 <?php
-// Wright v.3 Override: Joomla 2.5.17
+// Wright v.3 Override: Joomla 2.5.18
 /**
  * @package		Joomla.Site
  * @subpackage	mod_articles_latest
@@ -9,12 +9,25 @@
 
 // no direct access
 defined('_JEXEC') or die;
+
+$wrightAddNavs = (isset($wrightAddNavs) ? $wrightAddNavs : true);
+$wrightAddIcon = (isset($wrightAddIcon) ? $wrightAddIcon : true);
+
 ?>
-<ul class="latestnews<?php echo $moduleclass_sfx; ?> nav nav-list">  <?php // Wright v.3: Added nav nav-list classes ?>
+<ul class="latestnews<?php echo $moduleclass_sfx; ?><?php if ($wrightAddNavs) : ?> nav nav-list<?php endif; ?>">  <?php // Wright v.3: Added optional nav nav-list classes ?>
 <?php foreach ($list as $item) :  ?>
 	<li>
 		<a href="<?php echo $item->link; ?>">
-			<i class="icon-file"></i>  <?php // Wright v.3: Added icon ?>
+			<?php
+				/* Wright v.3: Add icon (optional) */
+				if ($wrightAddIcon)
+					:
+			?>
+				<i class="icon-file"></i>
+			<?php
+				endif;
+				/* End Wright v.3: Add icon (optional) */
+			?>
 			<?php echo $item->title; ?></a>
 	</li>
 <?php endforeach; ?>

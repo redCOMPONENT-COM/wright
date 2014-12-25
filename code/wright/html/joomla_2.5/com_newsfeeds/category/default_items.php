@@ -1,5 +1,5 @@
 <?php
-// Wright v.3 Override: Joomla 2.5.17
+// Wright v.3 Override: Joomla 2.5.18
 /**
  * @package		Joomla.Site
  * @subpackage	com_newsfeeds
@@ -91,7 +91,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	</table>
 
 	<?php if ($this->params->get('show_pagination')) : ?>
-	<div class="divpagination">
+	<div class="pagination">
 	<?php if ($this->params->def('show_pagination_results', 1)) : ?>
 		<p class="counter">
 			<?php echo $this->pagination->getPagesCounter(); ?>

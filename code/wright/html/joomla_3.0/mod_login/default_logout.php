@@ -1,5 +1,5 @@
 <?php
-// Wright v.3 Override: Joomla 3.1.5
+// Wright v.3 Override: Joomla 3.2.2
 /**
  * @package     Joomla.Site
  * @subpackage  mod_login
@@ -23,7 +23,7 @@ JHtml::_('behavior.keepalive');
 	</div>
 <?php endif; ?>
 	<div class="logout-button">
-		<input type="submit" name="Submit" class="btn" value="<?php echo JText::_('JLOGOUT'); ?>" /><?php // Wright v.3: Removed btn-primary class ?>
+		<input type="submit" name="Submit" class="btn btn-primary" value="<?php echo JText::_('JLOGOUT'); ?>" /><?php // Wright v.3: Removed btn-primary class ?>
 		<input type="hidden" name="option" value="com_users" />
 		<input type="hidden" name="task" value="user.logout" />
 		<input type="hidden" name="return" value="<?php echo $return; ?>" />

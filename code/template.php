@@ -37,7 +37,7 @@ defined('_JEXEC') or die('Restricted access');
 		<!-- header -->
 		<header id="header">
 			<div class="row clearfix">
-                <w:logo name="top"   />
+                <w:logo name="top" />
 				<div class="clear"></div>
 			</div>
 		</header>
