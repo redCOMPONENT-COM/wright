@@ -35,6 +35,10 @@ function checkColumns() {
 		$('column_info').setStyle('color', 'inherit');
 		$('columns_warning').setStyle('display', 'none');
 	}
+
+	$('columnsNumber').set('text', window.TPLNUMBER);
+	$('columnsNumber2').set('text', window.TPLNUMBER);
+
 	$$('div.col').each(function(column){
 		var col = column.getElement('select').getProperty('value');
 		var percent = col*100/window.TPLNUMBER;
@@ -68,6 +72,12 @@ function swapColumns(col, dir) {
 		});
 		$(selected).inject(cols[swapindex],'before');
 	}
+	checkColumns();
+	setColumnParam();
+}
+
+function changeColumnsNumber(columnsNumber) {
+	window.TPLNUMBER = columnsNumber;
 	checkColumns();
 	setColumnParam();
 }
