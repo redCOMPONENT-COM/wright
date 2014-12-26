@@ -163,8 +163,60 @@
       width: 100%;
       background-color: rgba(0, 0, 0, 0.1);
     }
+  }
 
+  .nav,
+  .navbar-inner,
+  .nav .navbar-inner,
+  .navbar .nav,
+  .navbar .nav .navbar-inner {
+    li {
+      margin-bottom: 0;
+      line-height: inherit;
+      > a {
+        .caret {
+          position: absolute;
+          right: 10px;
+          top: 15px;
+          border-left: 9px solid transparent;
+          border-right: 9px solid transparent;
+          border-top: 10px solid @dropdown-link-color;
+        }
+      }
+      &.active {
+        > a {
+          .caret {
 
+          }
+        }
+      }
+      &:hover,
+      &:focus {
+        > .dropdown-menu {
+          display: none !important;
+        }
+      }
+
+      &.open
+      {
+        &:hover,
+        &:focus {
+          > .dropdown-menu {
+            display: block !important;
+          }
+        }
+      }
+    }
+  }
+
+  .navbar-nav .open .dropdown-menu > li > a
+  {
+    padding: 10px 25px;
+  }
+
+  .navbar-nav > li > a
+  {
+    padding-right: 30px;
   }
 
     .gridRedWeb .grid('767');

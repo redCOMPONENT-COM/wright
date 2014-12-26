@@ -236,6 +236,7 @@ class Wright
 		}
 
 		// Load bootstrap JS
+		unset($this->document->_script['/media/jui/js/bootstrap.min.js']);
 		$this->addJSScript($this->_urlJS . '/bootstrap.min.js');
 
 		$this->addJSScript($this->_urlJS . '/utils.js');

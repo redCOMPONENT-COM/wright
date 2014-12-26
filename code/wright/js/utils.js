@@ -17,6 +17,31 @@ if (typeof jQuery != 'undefined' && typeof MooTools != 'undefined' ) {
 			$(this).css('min-height',$(this).find('.navbar:first').height() + 'px');
 		});
 
+		if ($(document).width() <= 767)
+		{
+			$('li.dropdown').each(function() {
+				var a =  $(this).find('a').eq(0);
+				$(a.find('.caret')).click(function(event){
+					event.preventDefault();
+					var lipa = $(this).parent().parent();
+
+					if (lipa.hasClass('open'))
+					{
+						lipa.removeClass('open');
+					}
+					else
+					{
+						lipa.addClass('open');
+					}
+				});
+			});
+		}
+		else
+		{
+			$('li.dropdown').removeClass('open');
+			$('.navbar-collapse').removeClass('in');
+			$('.navbar-collapse').addClass('collapse');
+		}
 	}
 
 	function fixImagesIE() {

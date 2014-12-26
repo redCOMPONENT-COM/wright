@@ -100,8 +100,7 @@ foreach ($list as $i => &$item) :
 
 	// The next item is deeper.
 	if ($item->deeper) {
-		$submenu = $item->level > 1 ? ' sub-menu' : '';  // Wright v.3 adds sub-menu for level 2 and beyond
-		echo '<ul' . $idul . ' class="dropdown-menu' . $uladd . $submenu . '">';  // Wright v.3: Added dropdown-menu class for submenus and collapsible menus options (including collapsed)
+		echo '<ul' . $idul . ' class="dropdown-menu' . $uladd . '">';  // Wright v.3: Added dropdown-menu class for submenus and collapsible menus options (including collapsed)
 	}
 	// The next item is shallower.
 	elseif ($item->shallower) {
