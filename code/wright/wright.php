@@ -66,8 +66,6 @@ class Wright
 
 	public $language;
 
-	private $loadBootstrap = false;
-
 	public $_jsScripts = Array();
 
 	public $_jsDeclarations = Array();
@@ -114,17 +112,6 @@ class Wright
 		$this->_urlWright = $this->_urlTemplate . '/wright';
 		$this->_urlJS = $this->_urlWright . '/js';
 
-		// Joomla versions under 3.0 must load bootstrap
-		if (version_compare(JVERSION, '3.0', 'lt'))
-		{
-			$this->loadBootstrap = true;
-		}
-		else
-		{
-			// Add JavaScript CSS and Framework
-			JHtml::_('bootstrap.framework');
-			//JHtml::_('bootstrap.loadCss', true, $this->document->direction);
-		}
 
 		// Browser library
 		include_once JPATH_SITE . '/templates/' . $this->document->template . '/wright/includes/browser.php';
@@ -226,7 +213,7 @@ class Wright
 		}
 
 		// Load jQuery
-		if ($this->loadBootstrap && $loadJquery = $this->document->params->get('jquery', 0))
+		if ($loadJquery = $this->document->params->get('jquery', 0))
 		{
 			switch ($loadJquery)
 			{
@@ -248,11 +235,8 @@ class Wright
 			$this->document->addScriptDeclaration('jQuery.noConflict();');
 		}
 
-		if ($this->loadBootstrap)
-		{
-			// Load bootstrap JS
-			$this->addJSScript($this->_urlJS . '/bootstrap.min.js');
-		}
+		// Load bootstrap JS
+		$this->addJSScript($this->_urlJS . '/bootstrap.min.js');
 
 		$this->addJSScript($this->_urlJS . '/utils.js');
 
