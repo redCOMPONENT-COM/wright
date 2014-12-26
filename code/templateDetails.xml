@@ -77,12 +77,7 @@
 				<field name="body_font" type="typography" default="default" label="TPL_%%UPNAME%%_FIELD_BODY_FONT_LABEL" description="TPL_%%UPNAME%%_FIELD_BODY_FONT_DESC" />
 				<field name="header_font" type="typography" default="default" label="TPL_%%UPNAME%%_FIELD_HEADING_FONT_LABEL" description="TPL_%%UPNAME%%_FIELD_HEADING_FONT_DESC" />
 
-				<field name="columnsNumber" type="list" default="12" label="TPL_%%UPNAME%%_COLUMNSNUMBER_LABEL" description="TPL_%%UPNAME%%_COLUMNSNUMBER_DESC" onchange="onclick=Joomla.submitbutton('style.apply')" >
-					<option value="12">12</option>
-					<option value="24">24</option>
-					<option value="36">36</option>
-					<option value="48">48</option>
-				</field>
+				<field name="columnsNumber" type="text" default="12" label="TPL_%%UPNAME%%_COLUMNSNUMBER_LABEL" description="TPL_%%UPNAME%%_COLUMNSNUMBER_DESC" onchange="changeColumnsNumber(this.value)" filter="integer" />
 
 				<field name="columns" type="columns" default="sidebar1:3;main:6;sidebar2:3" sidebars="2" label="TPL_%%UPNAME%%_FIELD_COLUMNS_LABEL" description="TPL_%%UPNAME%%_FIELD_COLUMNS_DESC" />
 
