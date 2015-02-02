@@ -32,7 +32,7 @@ $params  = $displayData->params;
 		echo 'class="' . $displayData->wrightBootstrapImages . '"';
 	/* End Wright v.3: Image class when no caption present */
 	endif; ?>
-	src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>"/>
+	src="<?php echo JURI::base() . htmlspecialchars($images->image_intro); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>"/>
 	<?php
 	/* Wright v.3: Added link to the image from the article */
 		if ($params->get('access-view')) :
