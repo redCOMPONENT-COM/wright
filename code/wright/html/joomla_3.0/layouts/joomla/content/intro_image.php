@@ -10,6 +10,9 @@
 
 defined('_JEXEC') or die;
 $params  = $displayData->params;
+$app = JFactory::getApplication();
+$template = $app->getTemplate(true);
+$this->wrightBootstrapImages = $template->params->get('wright_bootstrap_images','');
 ?>
 <?php $images = json_decode($displayData->images); ?>
 <?php if (isset($images->image_intro) && !empty($images->image_intro)) : ?>
@@ -26,10 +29,10 @@ $params  = $displayData->params;
 	?>
 	<img
 	<?php if ($images->image_intro_caption):
-		echo 'class="caption ' . $displayData->wrightBootstrapImages . '"'.' title="' .htmlspecialchars($images->image_intro_caption) .'"';  // Wright .v.3: Added image class
+		echo 'class="caption ' . $this->wrightBootstrapImages . '"'.' title="' .htmlspecialchars($images->image_intro_caption) .'"';  // Wright .v.3: Added image class
 	/* Wright v.3: Image class when no caption present */
 	else:
-		echo 'class="' . $displayData->wrightBootstrapImages . '"';
+		echo 'class="' . $this->wrightBootstrapImages . '"';
 	/* End Wright v.3: Image class when no caption present */
 	endif; ?>
 	src="<?php echo JURI::base() . htmlspecialchars($images->image_intro); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>"/>
