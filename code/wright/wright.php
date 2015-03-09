@@ -213,7 +213,7 @@ class Wright
 		}
 
 		// Load jQuery
-		if ($loadJquery = $this->document->params->get('jquery', 0))
+		if ($loadJquery = $this->document->params->get('jquery', 0) && (version_compare(JVERSION, '3.0', 'lt')))
 		{
 			switch ($loadJquery)
 			{
@@ -235,15 +235,20 @@ class Wright
 			$this->document->addScriptDeclaration('jQuery.noConflict();');
 		}
 
-		// Load bootstrap JS
-		unset($this->document->_script['/media/jui/js/bootstrap.min.js']);
-		$this->addJSScript($this->_urlJS . '/bootstrap.min.js');
-
-		$this->addJSScript($this->_urlJS . '/utils.js');
-
-		if ($this->document->params->get('stickyFooter', 1))
+		// Load bootstrap JS - Not load on edit module
+		if ($input->getString('option', '') != 'com_config')
 		{
-			$this->addJSScript($this->_urlJS . '/stickyfooter.js');
+			$this->addJSScript($this->_urlJS . '/bootstrap.min.js');
+			$this->addJSScript($this->_urlJS . '/utils.js');
+
+			if ($this->document->params->get('stickyFooter', 1))
+			{
+				$this->addJSScript($this->_urlJS . '/stickyfooter.js');
+			}
+		}
+		else
+		{
+			$this->addJSScript($this->_urlJS . '/edit.js');
 		}
 
 		// Add header script if set
@@ -442,6 +447,7 @@ class Wright
 
 		$browser = JBrowser::getInstance();
 		$doc = JFactory::getDocument();
+		$input = JFactory::getApplication()->input;
 
 		$styles = Array();
 
@@ -492,6 +498,11 @@ class Wright
 		if (is_file(JPATH_THEMES . '/' . $this->document->template . '/css/editor.css'))
 		{
 			$styles['template'][] = 'editor.css';
+		}
+
+		if ($input->getString('option', '') == 'com_config')
+		{
+			$styles['wrighttemplatecss'][] = 'edit.css';
 		}
 
 		return $styles;

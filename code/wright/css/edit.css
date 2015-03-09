@@ -1,0 +1,31 @@
+
+.radio.btn-group
+{
+	padding-left: 0px;
+}
+
+.radio.btn-group input[type="radio"] {
+    display: none;
+}
+
+
+.radio.btn-group > label:first-of-type {
+    border-bottom-left-radius: 4px !important;
+    border-top-left-radius: 4px !important;
+    margin-left: 0;
+}
+
+.chzn-container-single .chzn-single
+{
+	min-width: 100px;
+}
+
+.collapse.in {
+    height: auto;
+}
+.collapse {
+    height: 0;
+    overflow: hidden;
+    position: relative;
+    transition: height 0.35s ease 0s;
+}
