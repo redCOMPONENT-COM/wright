@@ -30,6 +30,8 @@ class JFormFieldColumns extends JFormField
 	 */
 	function getInput()
 	{
+		JHtml::_('behavior.framework', true);
+
 		$doc = JFactory::getDocument();
 		$doc->addScript(str_replace('/administrator/', '/', JURI::base()) . 'templates/' . $this->form->getValue('template') . '/wright/parameters/assets/columns/columns.js');
 		$doc->addStylesheet(str_replace('/administrator/', '/', JURI::base()) . 'templates/' . $this->form->getValue('template') . '/wright/parameters/assets/columns/columns.css');
