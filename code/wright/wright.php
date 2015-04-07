@@ -207,6 +207,11 @@ class Wright
 
 		JHtml::_('behavior.framework', true);
 
+		if (version_compare(JVERSION, '3.0', 'gt'))
+		{
+			JHtml::_('bootstrap.framework', true);
+		}
+
 		if ($this->document->params->get('modal', '1') == '1')
 		{
 			JHtml::_('behavior.modal');
@@ -238,7 +243,7 @@ class Wright
 		// Load bootstrap JS - Not load on edit module
 		if ($input->getString('option', '') != 'com_config')
 		{
-			$this->addJSScript($this->_urlJS . '/bootstrap.min.js');
+			$this->addJSScript($this->_urlJS . '/bootstrap.js');
 			$this->addJSScript($this->_urlJS . '/utils.js');
 
 			if ($this->document->params->get('stickyFooter', 1))
