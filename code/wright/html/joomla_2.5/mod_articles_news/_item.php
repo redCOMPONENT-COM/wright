@@ -3,7 +3,7 @@
 /**
  * @package		Joomla.Site
  * @subpackage	mod_articles_news
- * @copyright	Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -135,7 +135,7 @@ endif; ?>
 		jQuery("#'.$item->id.'").after(\'<img src="\'+srcHover+\'" id="hover-'.$item->id.'" style="display:none">\');
 
 	    jQuery("#'.$item->id.'").parent().parent().parent()
-	        .hover(function() {	            
+	        .hover(function() {
 	            jQuery("#'.$item->id.'").hide();
 	            jQuery("#hover-'.$item->id.'").show();
 	        },
@@ -144,7 +144,7 @@ endif; ?>
 	            jQuery("#hover-'.$item->id.'").hide();
 	        }).on("click touchend", function() {
 		        location.href="'.$item->link .'";
-		    });  
+		    });
 	});
 	</script>';
 	}

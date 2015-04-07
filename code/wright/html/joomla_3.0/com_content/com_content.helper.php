@@ -3,14 +3,14 @@
  * @version
  * @package		Wright
  * @subpackage	Overrides
- * @copyright	Copyright (C) 2005 - 2014 Joomlashack / Meritage Assets. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2015 Joomlashack / Meritage Assets. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
- 
- 
+
+
  // no direct access
  defined('_JEXEC') or die;
- 
+
 function wrightTransformArticleContent($content) {
 	// Page Break Plugin
 	$content = preg_replace("/dl([^>]*)class=\"tabs\"/Uis", 'dl$1class="tabs nav nav-tabs"', $content);  // Add tabs

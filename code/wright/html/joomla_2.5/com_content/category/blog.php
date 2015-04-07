@@ -3,7 +3,7 @@
 /**
  * @package		Joomla.Site
  * @subpackage	com_content
- * @copyright	Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -325,13 +325,13 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 
 <?php if ($this->wrightComplementOuterClass != "") echo '<div class="' . $this->wrightComplementOuterClass . '">' // Wright v.3: Outer complements class  ?>
 
-<?php if ($this->MoreItemsGridOrientation['activeLayout'] != '') { // Wright v.3: Bootstrap grid layout 
-		
+<?php if ($this->MoreItemsGridOrientation['activeLayout'] != '') { // Wright v.3: Bootstrap grid layout
+
 			if ( (empty($this->children[$this->category->id]) && $this->maxLevel == 0) || empty($this->link_items)) {
-				
+
 				$this->MoreItemsGridOrientation['moreitemsLayout'] = 12;
 				$this->MoreItemsGridOrientation['subcategoriesLayout'] = 12;
-			}		
+			}
 		}
 ?>
 
@@ -348,7 +348,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 	<?php if ($this->MoreItemsGridOrientation['activeLayout']) : // Wright v.3: Bootstrap grid layout ?>
 	<?php echo '<div class="span' . $this->MoreItemsGridOrientation['moreitemsLayout'] . '">' ?>
 	<?php endif; ?>
-	
+
 	<?php if ($this->wrightComplementExtraClass != "") echo '<div class="' . $this->wrightComplementExtraClass . '">' // Wright v.3: Extra complements class  ?>
 	<?php if ($this->wrightComplementInnerClass != "") echo '<div class="' . $this->wrightComplementInnerClass . '">' // Wright v.3: Inner complements class  ?>
 		<?php echo $this->loadTemplate('links'); ?>
@@ -377,7 +377,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 
 		<?php if ($this->MoreItemsGridOrientation['activeLayout']) : ?>
 		<?php echo '<div class="span' . $this->MoreItemsGridOrientation['subcategoriesLayout'] . '">' ?>
-		<?php endif; ?>	
+		<?php endif; ?>
 
 		<?php if ($this->wrightComplementExtraClass != "") echo '<div class="' . $this->wrightComplementExtraClass . '">' // Wright v.3: Extra complements class  ?>
 		<div class="cat-children<?php if ($this->wrightComplementInnerClass != "") echo ' ' . $this->wrightComplementInnerClass // Wright v.3: Inner complements class  ?>">
@@ -400,7 +400,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 
 	<?php endif; ?>
 
-<?php if ($this->MoreItemsGridOrientation['activeLayout']) : // Wright v.3: Bootstrap grid layout ?> 
+<?php if ($this->MoreItemsGridOrientation['activeLayout']) : // Wright v.3: Bootstrap grid layout ?>
 
 	<?php echo '</div>' ?>
 <?php endif; // Wright v.3: Bootstrap grid layout ?>
