@@ -3,7 +3,7 @@
 /**
  * @package		Joomla.Site
  * @subpackage	com_content
- * @copyright	Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -21,7 +21,7 @@ defined('_JEXEC') or die;
 	if (!isset($this->wrightLegendBottom)) $this->wrightLegendBottom= "";
 
 	if (empty($this->wrightElementsStructure)) $this->wrightElementsStructure = Array("title","icons","article-info","image","legendtop","content","legendbottom");
-	
+
 /* End Wright v.3: Item elements structure and extra elements */
 
 /* Wright v.3: Bootstrapped images */
@@ -56,7 +56,7 @@ if (!empty($this->item->pagination) AND $this->item->pagination && !$this->item-
 }
  ?>
 
-<?php 
+<?php
 /* Wright v.3: Item elements structure */
 	foreach ($this->wrightElementsStructure as $wrightElement) :
 		switch ($wrightElement) :
@@ -351,11 +351,11 @@ if (!empty($this->item->pagination) AND $this->item->pagination AND $this->item-
 	 echo wrightTransformArticlePager($this->item->pagination);  // Wright v.3: Pager styles (using helper) ?>
 <?php endif; ?>
 
-<?php 
+<?php
 /* Wright v.3: Item elements structure */
 				break;
 			default:
-				
+
 				if (preg_match("/^([\/]?)([a-z0-9-_]+?)([\#]?)([a-z0-9-_]*?)([\.]?)([a-z0-9-]*)$/iU", $wrightElement, $wrightDiv)) {
 					echo '<' . $wrightDiv[1] . $wrightDiv[2] .
 						($wrightDiv[1] != '' ? '' :
@@ -364,7 +364,7 @@ if (!empty($this->item->pagination) AND $this->item->pagination AND $this->item-
 						)
 						. '>';
 				}
-				
+
 		endswitch;
 	endforeach;
 /* End Wright v.3: Item elements structure */
