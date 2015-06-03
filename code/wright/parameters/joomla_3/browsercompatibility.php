@@ -88,16 +88,16 @@ class JFormFieldBrowserCompatibility extends JFormField
 
 		$browserCompatibility = json_decode($this->value);
 
-		$html .= '<table class="wright-browser-table"><tr><th>' . JText::_('TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_BROWSER') . '</th><th>' . JText::_('TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_MINIMUM_VERSION') . '</th><th>' . JText::_('TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_DESKTOP') . '</th><th>' . JText::_('TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_RECOMMENDED') . '</th><th>' . JText::_('TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_MOBILE') . '</th></tr>';
+		$html .= '<table class="table table-striped"><tr><th>' . JText::_('TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_BROWSER') . '</th><th>' . JText::_('TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_MINIMUM_VERSION') . '</th><th style="text-align:center;">' . JText::_('TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_DESKTOP') . '</th><th style="text-align:center;">' . JText::_('TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_RECOMMENDED') . '</th><th style="text-align:center;">' . JText::_('TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_MOBILE') . '</th></tr>';
 
 		foreach ($this->_browserCollection as $browserId => $browserName)
 		{
 			$html .= '<tr>'
 				. '<td class="text-left">' . $browserName . '</td>'
-				. '<td><input type="text" class="wbminv" name="wbminv_' . $browserId . '" id="wbminv_' . $browserId . '" value="' . (isset($browserCompatibility->$browserName) ? $browserCompatibility->$browserName->minimumVersion : '') . '" data-browser="' . $browserName . '" data-browserid="' . $browserId . '" /></td>'
-				. '<td><input type="checkbox" class="wbdesktop" name="wbdesktop_' . $browserId . '" id="wbdesktop_' . $browserId . '"' . (isset($browserCompatibility->$browserName) ? ($browserCompatibility->$browserName->desktop ? 'checked="checked"' : '') : '') . ' data-browser="' . $browserName . '" data-browserid="' . $browserId . '" /></td>'
-				. '<td><input type="checkbox" class="wbrecommended" name="wbrecommended_' . $browserId . '" id="wbrecommended_' . $browserId . '"' . (isset($browserCompatibility->$browserName) ? ($browserCompatibility->$browserName->recommended ? 'checked="checked"' : '') : '') . ' data-browser="' . $browserName . '" data-browserid="' . $browserId . '" /></td>'
-				. '<td><input type="checkbox" class="wbmobile" name="wbmobile_' . $browserId . '" id="wbmobile_' . $browserId . '"' . (isset($browserCompatibility->$browserName) ? ($browserCompatibility->$browserName->mobile ? 'checked="checked"' : '') : '') . ' data-browser="' . $browserName . '" data-browserid="' . $browserId . '" /></td>'
+				. '<td><input type="text" class="input-mini" name="wbminv_' . $browserId . '" id="wbminv_' . $browserId . '" value="' . (isset($browserCompatibility->$browserName) ? $browserCompatibility->$browserName->minimumVersion : '') . '" data-browser="' . $browserName . '" data-browserid="' . $browserId . '" /></td>'
+				. '<td style="text-align:center;"><input type="checkbox" class="wbdesktop" name="wbdesktop_' . $browserId . '" id="wbdesktop_' . $browserId . '"' . (isset($browserCompatibility->$browserName) ? ($browserCompatibility->$browserName->desktop ? 'checked="checked"' : '') : '') . ' data-browser="' . $browserName . '" data-browserid="' . $browserId . '" /></td>'
+				. '<td style="text-align:center;"><input type="checkbox" class="wbrecommended" name="wbrecommended_' . $browserId . '" id="wbrecommended_' . $browserId . '"' . (isset($browserCompatibility->$browserName) ? ($browserCompatibility->$browserName->recommended ? 'checked="checked"' : '') : '') . ' data-browser="' . $browserName . '" data-browserid="' . $browserId . '" /></td>'
+				. '<td style="text-align:center;"><input type="checkbox" class="wbmobile" name="wbmobile_' . $browserId . '" id="wbmobile_' . $browserId . '"' . (isset($browserCompatibility->$browserName) ? ($browserCompatibility->$browserName->mobile ? 'checked="checked"' : '') : '') . ' data-browser="' . $browserName . '" data-browserid="' . $browserId . '" /></td>'
 				. '</tr>';
 		}
 
