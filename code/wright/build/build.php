@@ -84,6 +84,16 @@ class BuildBootstrap extends lessc
 			$ds .= '@import "../less/typography.less"; ';
 			$ds .= '@import "../../../less/template.less"; ';
 
+			if ($document->params->get('responsive', 1))
+			{
+				$ds .= '@import "../../../less/template-responsive.less"; ';
+				$ds .= '@import "../libraries/redcomponent/redcomponent-responsive.less"; ';
+			}
+			else
+			{
+				$ds .= '.container{width:@container-desktop !important} .navbar-nav > li {float: left;} ';
+			}
+
 			file_put_contents($df, $ds);
 
 			$this->compileFile($df, JPATH_THEMES . '/' . $document->template . '/css/style.css');

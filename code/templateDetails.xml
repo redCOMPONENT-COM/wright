@@ -7,7 +7,7 @@
 	<authorUrl>http://www.redcomponent.com</authorUrl>
 	<copyright>Copyright redComponent 2013. All rights reserved</copyright>
 	<license>GNU/GPL v.3 or later.</license>
-	<version>1.3.3.2</version>
+	<version>1.4.1</version>
     <description>TPL_%%UPNAME%%_XML_DESCRIPTION</description>
 
 	<files>
@@ -80,7 +80,10 @@
 				<field name="columnsNumber" type="text" default="12" label="TPL_%%UPNAME%%_COLUMNSNUMBER_LABEL" description="TPL_%%UPNAME%%_COLUMNSNUMBER_DESC" onchange="changeColumnsNumber(this.value)" filter="integer" />
 
 				<field name="columns" type="columns" default="sidebar1:3;main:6;sidebar2:3" sidebars="2" label="TPL_%%UPNAME%%_FIELD_COLUMNS_LABEL" description="TPL_%%UPNAME%%_FIELD_COLUMNS_DESC" />
-
+				<field name="responsive" type="list" default="1" label="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE" description="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
 				<field name="stickyFooter" type="list" default="1" label="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER" description="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER_DESC">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>

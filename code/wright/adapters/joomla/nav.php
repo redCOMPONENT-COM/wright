@@ -4,6 +4,9 @@ class WrightAdapterJoomlaNav
 {
 	public function render($args)
 	{
+		$doc = JFactory::getDocument();
+		$responsive = $doc->params->get('responsive', 1);
+
 		// Set module name
 		if (!isset($args['name']))
 			$args['name'] = 'menu';
@@ -25,24 +28,29 @@ class WrightAdapterJoomlaNav
 		if (!isset($args['containerClass']))
 			$args['containerClass'] = '';
 
+		$collapse = "";
+
 		$nav = '<div class="' . $args['wrapper'] . '">
 					<nav id="' . $args['name'] . '" class="navbar ' . $args['wrapClass'] . '"  role="navigation">
-						<div class="' . $args['containerClass'] . '">
-							<div class="navbar-header">
-							    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-' . $args['name'] . '">
-							      <span class="sr-only">Toggle navigation</span>
-							      <span class="icon-bar"></span>
-							      <span class="icon-bar"></span>
-							      <span class="icon-bar"></span>
-							    </button>
-						  	</div>
+						<div class="' . $args['containerClass'] . '">';
 
-		  					<div class="collapse navbar-collapse" id="nav-' . $args['name'] . '" >
-		  						<jdoc:include type="modules" name="' . $args['name'] . '" style="' . $args['style'] . '" />
-		  					</div>
-	  					</div>
-					</nav>
-				</div>';
+		if ($responsive)
+		{
+			$nav .= '<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-' . $args['name'] . '">
+						  <span class="sr-only">Toggle navigation</span>
+						  <span class="icon-bar"></span>
+						  <span class="icon-bar"></span>
+						  <span class="icon-bar"></span>
+						</button>
+					</div>';
+
+			$collapse = 'class="collapse navbar-collapse"';
+		}
+
+		$nav .= '<div ' . $collapse . ' id="nav-' . $args['name'] . '" >
+					<jdoc:include type="modules" name="' . $args['name'] . '" style="' . $args['style'] . '" />
+				</div></div></nav></div>';
 
 		return $nav;
 	}
