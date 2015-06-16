@@ -87,7 +87,7 @@ class BuildBootstrap extends lessc
 			if ($document->params->get('responsive', 1))
 			{
 				$ds .= '@import "../../../less/template-responsive.less"; ';
-				$ds .= '@import "redcomponent/redcomponent-responsive.less"; ';
+				$ds .= '@import "../libraries/redcomponent/redcomponent-responsive.less"; ';
 			}
 			else
 			{
