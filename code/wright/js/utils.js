@@ -54,9 +54,6 @@ if (typeof jQuery != 'undefined' && typeof MooTools != 'undefined' ) {
 	wToolbar();
 	fixImagesIE();
 
-	$(window).load(function () {
-		wToolbar();
-	});
 	$(window).resize(function() {
 		wToolbar();
 	});
