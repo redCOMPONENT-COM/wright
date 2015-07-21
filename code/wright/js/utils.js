@@ -34,6 +34,11 @@ if (typeof jQuery != 'undefined' && typeof MooTools != 'undefined' ) {
 						lipa.addClass('open');
 					}
 				});
+
+				if ($(this).hasClass('active'))
+				{
+					$(this).addClass('open');
+				}
 			});
 		}
 		else
