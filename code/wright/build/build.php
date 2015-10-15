@@ -2,9 +2,9 @@
 
 defined('_JEXEC') or die('You are not allowed to directly access this file');
 
-require_once dirname(__FILE__) . '/lessc.inc.php';
+require_once dirname(__FILE__) . '/scss.inc.php';
 
-class BuildBootstrap extends lessc
+class BuildBootstrap extends scssc
 {
 	static function getInstance()
 	{
@@ -18,14 +18,14 @@ class BuildBootstrap extends lessc
 		return $instance;
 	}
 
-	function start()
+	public function start()
 	{
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
 
 		$document = JFactory::getDocument();
 
-		$less_path = JPATH_THEMES . '/' . $document->template . '/less';
+		$less_path = JPATH_THEMES . '/' . $document->template . '/scss';
 
 		// Check rebuild less
 		$rebuild = $document->params->get('build', false);
@@ -34,7 +34,7 @@ class BuildBootstrap extends lessc
 		{
 			$cachetime = filemtime(JPATH_THEMES . '/' . $document->template . '/css/style.css');
 
-			$files = JFolder::files($less_path, '.less', true, true);
+			$files = JFolder::files($less_path, '.scss', true, true);
 
 			if (count($files) > 0)
 			{
@@ -56,49 +56,46 @@ class BuildBootstrap extends lessc
 		// Build LESS
 		if ($rebuild)
 		{
-			$this->setFormatter("compressed");
+			$this->setFormatter("scss_formatter_compressed");
+
+			$this->setImportPaths(
+				array(
+					JPATH_THEMES . '/' . $document->template . '/scss/',
+					JPATH_THEMES . '/' . $document->template . '/wright/build/',
+					JPATH_THEMES . '/' . $document->template . '/wright/build/libraries/bootstrap/stylesheets/',
+					JPATH_THEMES . '/' . $document->template . '/wright/build/libraries/redcomponent/'
+				)
+			);
+
 
 			$columnsNumber = $document->params->get('columnsNumber', 12);
-			$this->setVariables(array('grid-columns' => $columnsNumber));
 
 			if (is_file(JPATH_THEMES . '/' . $document->template . '/css/style.css'))
 			{
 				unlink(JPATH_THEMES . '/' . $document->template . '/css/style.css');
 			}
 
-			$df = dirname(__FILE__) . '/less/build.less';
+			$ds = '@import "variables";';
+			$ds .= '$grid-columns: ' . $columnsNumber . ';';
+			$ds .= '@import "scss/bootstrap";';
+			$ds .= '@import "template-responsive"; ';
 
-			$ds = '@import "../../../less/variables.less"; ';
-			$ds .= '@import "../less/bootstrap.less"; ';
-			$ds .= '@import "../less/joomla.less"; ';
+			$ds .= '@import "scss/joomla";';
 
-			if (version_compare(JVERSION, '3.0', 'lt'))
-			{
-				$ds .= '@import "../less/joomla25.less"; ';
-			}
-			else
-			{
-				$ds .= '@import "../less/joomla30.less"; ';
-			}
-
-			$ds .= '@import "../less/typography.less"; ';
-			$ds .= '@import "../../../less/template.less"; ';
+			$ds .= '@import "scss/typography";';
+			$ds .= '@import "redcomponent"; ';
 
 			if ($document->params->get('responsive', 1))
 			{
-				$ds .= '@import "../../../less/template-responsive.less"; ';
-				$ds .= '@import "../libraries/redcomponent/redcomponent-responsive.less"; ';
+				$ds .= '@import "template-responsive"; ';
+				$ds .= '@import "redcomponent-responsive"; ';
 			}
 			else
 			{
-				$ds .= '.container{width:@container-desktop !important} .navbar-nav > li {float: left;} ';
+				$ds .= '.container{width:$container-desktop !important} .navbar-nav > li {float: left;} ';
 			}
 
-			file_put_contents($df, $ds);
-
-			$this->compileFile($df, JPATH_THEMES . '/' . $document->template . '/css/style.css');
-
-			unlink($df);
+			file_put_contents(JPATH_THEMES . '/' . $document->template . '/css/style.css', $this->compile($ds));
 
 			$document->params->set('build', false);
 

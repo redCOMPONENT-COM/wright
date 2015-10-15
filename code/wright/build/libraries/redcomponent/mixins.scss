@@ -1,0 +1,76 @@
+/* author 		redWeb ApS
+ * copyright 	Copyright © 2013 redweb.dk All rights reserved.
+ * license  	http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * website   	http://www.redweb.dk
+ */
+
+@mixin gridRedWeb-wrapper($gridMarginLeft)
+{
+   width: auto !important;
+    @include clearfix();
+    margin-left: -($gridMarginLeft / 2);
+    margin-right: -($gridMarginLeft / 2);
+
+}
+
+@mixin gridRedWeb-row($gridColumns, $gridMarginLeft, $girdColumnHeight)
+{
+    width: percentage(1/$gridColumns) !important;
+    padding-left: ($gridMarginLeft / 2);
+    padding-right: ($gridMarginLeft / 2);
+    float: left;
+    margin: 0px;
+    border: 0px;
+    min-height: $girdColumnHeight;
+}
+
+@mixin gridRedWeb-grid($layout: "")
+{
+
+   /* .category_box_wrapper
+    {
+        $var : "gridProductGutterWidth${layout}";
+        @include gridRedWeb-wrapper($$var);
+    }
+
+    .category_box_wrapper .category_box_outside
+    {
+        $var1 : "gridProductColumns${layout}";
+        $var2 : "gridProductGutterWidth${layout}";
+        $var3 : "gridProductColumnHeight${layout}";
+
+        @include gridRedWeb-row("gridProductColumns$layout", $$var2, $$var3);
+    }
+
+    .category_box_wrapper .category_box_outside_row
+    {
+       $var : "gridProductGutterWidth$layout";
+        margin-left: $"$var";
+    }*/
+
+    /*.category_front_wrapper
+    {
+        $var : "gridCategoryGutterWidth${layout}";
+        @include gridRedWeb-wrapper($$var);
+    }
+
+    .category_front_wrapper .category_front
+    {
+        $var1 : "gridCategoryColumns${layout}";
+        $var2 : "gridCategoryGutterWidth${layout}";
+        $var3 : "gridCategoryColumnHeight${layout}";
+
+        @include gridRedWeb-row($$var1, $$var2, $$var3);
+    }
+
+    .related_product_wrapper
+    {
+        $var : "gridRelatedProductGutterWidth${layout}";
+        @include gridRedWeb-wrapper($$var);
+    }
+
+    .related_product_wrapper .related_product_inside
+    {
+        //@include gridRedWeb-row($gridRelatedProductColumns{$layout}, $gridRelatedProductGutterWidth{$layout}, $gridRelatedProductColumnHeight{$layout});
+    }*/
+}
