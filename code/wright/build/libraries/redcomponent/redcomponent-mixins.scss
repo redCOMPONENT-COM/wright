@@ -1,0 +1,157 @@
+/* author 		redWeb ApS
+ * copyright 	Copyright © 2013 redweb.dk All rights reserved.
+ * license  	http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * website   	http://www.redweb.dk
+ */
+
+@mixin gridRedWeb-wrapper($gridMarginLeft)
+{
+    width: auto !important;
+    margin-left: -$gridMarginLeft/2;
+    margin-right: -$gridMarginLeft/2;
+    @include clearfix();
+
+}
+
+@mixin gridRedWeb-row($gridColumns, $gridMarginLeft, $girdColumnHeight)
+{
+    width: percentage(1/$gridColumns) !important;
+    padding-left: ($gridMarginLeft/2);
+    padding-right: ($gridMarginLeft/2);
+    float: left;
+    margin: 0px;
+    border: 0px;
+    min-height: $girdColumnHeight;
+}
+
+@mixin gridRedWeb-grid($layout: "")
+{
+    $currentGridProductColumns     : $gridProductColumns;
+    $currentGridProductGutterWidth : $gridProductGutterWidth;
+    $currentGridProductHeight      : $gridProductColumnHeight;
+
+    $currentGridCategoryColumns    : $gridCategoryColumns;
+    $currentGridCategoryGutterWidth: $gridCategoryGutterWidth;
+    $currentGridCategoryHeight     : $gridCategoryColumnHeight;
+
+    $currentGridRelatedColumns     : $gridRelatedProductColumns;
+    $currentGridRelatedGutterWidth : $gridRelatedProductGutterWidth;
+    $currentGridRelatedHeight      : $gridRelatedProductColumnHeight;
+
+    @if ($layout == "1200")
+    {
+        $currentGridProductColumns     : $gridProductColumns1200;
+        $currentGridProductGutterWidth : $gridProductGutterWidth1200;
+        $currentGridProductHeight      : $gridProductColumnHeight1200;
+
+        $currentGridCategoryColumns    : $gridCategoryColumns1200;
+        $currentGridCategoryGutterWidth: $gridCategoryGutterWidth1200;
+        $currentGridCategoryHeight     : $gridCategoryColumnHeight1200;
+
+        $currentGridRelatedColumns     : $gridRelatedProductColumns1200;
+        $currentGridRelatedGutterWidth : $gridRelatedProductGutterWidth1200;
+        $currentGridRelatedHeight      : $gridRelatedProductColumnHeight1200;
+    }
+
+    @if ($layout == "768")
+    {
+        $currentGridProductColumns     : $gridProductColumns768;
+        $currentGridProductGutterWidth : $gridProductGutterWidth768;
+        $currentGridProductHeight      : $gridProductColumnHeight768;
+
+        $currentGridCategoryColumns    : $gridCategoryColumns768;
+        $currentGridCategoryGutterWidth: $gridCategoryGutterWidth768;
+        $currentGridCategoryHeight     : $gridCategoryColumnHeight768;
+
+        $currentGridRelatedColumns     : $gridRelatedProductColumns768;
+        $currentGridRelatedGutterWidth : $gridRelatedProductGutterWidth768;
+        $currentGridRelatedHeight      : $gridRelatedProductColumnHeight768;
+    }
+
+    @if ($layout == "767")
+    {
+        $currentGridProductColumns     : $gridProductColumns767;
+        $currentGridProductGutterWidth : $gridProductGutterWidth767;
+        $currentGridProductHeight      : $gridProductColumnHeight767;
+
+        $currentGridCategoryColumns    : $gridCategoryColumns767;
+        $currentGridCategoryGutterWidth: $gridCategoryGutterWidth767;
+        $currentGridCategoryHeight     : $gridCategoryColumnHeight767;
+
+        $currentGridRelatedColumns     : $gridRelatedProductColumns767;
+        $currentGridRelatedGutterWidth : $gridRelatedProductGutterWidth767;
+        $currentGridRelatedHeight      : $gridRelatedProductColumnHeight767;
+    }
+
+    @if ($layout == "480")
+    {
+        $currentGridProductColumns     : $gridProductColumns480;
+        $currentGridProductHeight      : $gridProductColumnHeight480;
+
+        $currentGridCategoryColumns    : $gridCategoryColumns480;
+        $currentGridCategoryHeight     : $gridCategoryColumnHeight480;
+
+        $currentGridRelatedColumns     : $gridRelatedProductColumns480;
+        $currentGridRelatedHeight      : $gridRelatedProductColumnHeight480;
+    }
+
+    @if ($layout == "360")
+    {
+        $currentGridProductColumns     : $gridProductColumns360;
+        $currentGridProductHeight      : $gridProductColumnHeight360;
+
+        $currentGridCategoryColumns    : $gridCategoryColumns360;
+        $currentGridCategoryHeight     : $gridCategoryColumnHeight360;
+
+        $currentGridRelatedColumns     : $gridRelatedProductColumns360;
+        $currentGridRelatedHeight      : $gridRelatedProductColumnHeight360;
+    }
+
+    @if ($layout == "320")
+    {
+        $currentGridProductColumns     : $gridProductColumns320;
+        $currentGridProductHeight      : $gridProductColumnHeight320;
+
+        $currentGridCategoryColumns    : $gridCategoryColumns320;
+        $currentGridCategoryHeight     : $gridCategoryColumnHeight320;
+
+        $currentGridRelatedColumns     : $gridRelatedProductColumns320;
+        $currentGridRelatedHeight      : $gridRelatedProductColumnHeight320;
+    }
+
+
+    .category_box_wrapper
+    {
+        @include gridRedWeb-wrapper($currentGridProductGutterWidth);
+    }
+
+    .category_box_wrapper .category_box_outside
+    {
+        @include gridRedWeb-row($currentGridProductColumns, $currentGridProductGutterWidth, $currentGridProductHeight);
+    }
+
+    .category_box_wrapper .category_box_outside_row
+    {
+       margin-left: $currentGridProductGutterWidth;
+    }
+
+    .category_front_wrapper
+    {
+        @include gridRedWeb-wrapper($currentGridCategoryGutterWidth);
+    }
+
+    .category_front_wrapper .category_front
+    {
+        @include gridRedWeb-row($currentGridCategoryColumns, $currentGridCategoryGutterWidth, $currentGridCategoryHeight);
+    }
+
+    .related_product_wrapper
+    {
+        @include gridRedWeb-wrapper($currentGridRelatedGutterWidth);
+    }
+
+    .related_product_wrapper .related_product_inside
+    {
+        @include gridRedWeb-row($currentGridRelatedColumns, $currentGridRelatedGutterWidth, $currentGridRelatedHeight);
+    }
+}

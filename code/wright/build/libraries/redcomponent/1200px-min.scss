@@ -4,5 +4,5 @@
 
 
 @media (min-width: 1200px) {
-  .gridRedWeb .grid('1200');
+	@include gridRedWeb-grid("1200");
 }

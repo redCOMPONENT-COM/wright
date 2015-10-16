@@ -3,7 +3,7 @@
 
 
 @media (max-width: 360px) {
-	.gridRedWeb .grid('360');
+	@include gridRedWeb-grid("360");
 
   .adminform
   {

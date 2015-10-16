@@ -3,12 +3,12 @@
 // --------------------------------------------------
 
 @media (min-width: 768px) and (max-width: 979px) {
-	
+
 	.pagination .pager
 	{
 		display: inline;
 	}
-	
+
 	.pagination .pagerdt, .pagination .counter
 	{
 		display: none;
@@ -21,7 +21,7 @@
      		width: 150px;
   		}
  	}
-	
-	.gridRedWeb .grid('768');
-	
+
+	@include gridRedWeb-grid("768");
+
 }

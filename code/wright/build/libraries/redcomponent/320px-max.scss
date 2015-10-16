@@ -3,7 +3,5 @@
 
 
 @media (max-width: 320px) {
-
-	.gridRedWeb .grid('320');
-
+	@include gridRedWeb-grid("320");
 }

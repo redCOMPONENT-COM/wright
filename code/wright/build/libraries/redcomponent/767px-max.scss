@@ -156,7 +156,7 @@
     }
     label
     {
-      .border-radius(5px);
+      border-radius: 5px;
       border: 1px solid #000000;
       margin-top: -22px !important;
       padding-left: 25px;
@@ -180,7 +180,7 @@
           top: 15px;
           border-left: 9px solid transparent;
           border-right: 9px solid transparent;
-          border-top: 10px solid @dropdown-link-color;
+          border-top: 10px solid $dropdown-link-color;
         }
       }
       &.active {
@@ -219,7 +219,7 @@
     padding-right: 30px;
   }
 
-    .gridRedWeb .grid('767');
+  @include gridRedWeb-grid("767");
 }
 
 

@@ -23,12 +23,12 @@ body {
     visibility: hidden;
   }
 }
-@import "mixins";
+@import "redcomponent-mixins";
 @include gridRedWeb-grid();
 
 
-/*.category_pagination {
-  margin: $baseLineHeight 0;
+.category_pagination {
+  margin: $line-height-base 0;
   clear: both;
 }
 
@@ -40,12 +40,11 @@ body {
 .category_pagination ul, .pagination-links {
 // Allow for text-based alignment
   display: inline-block;
-  @include ie7-inline-block();
 // Reset default ul styles
   margin-left: 0;
   margin-bottom: 0;
 // Visuals
-  @include border-radius($baseBorderRadius);
+  border-radius: $border-radius-base;
   @include box-shadow(0 1px 2px rgba(0,0,0,.05));
 }
 .category_pagination ul > li {
@@ -61,10 +60,10 @@ body {
 .category_pagination .redpre > span{
   float: left; // Collapse white-space
   padding: 4px 12px;
-  line-height: $baseLineHeight;
+  line-height: $line-height-base;
   text-decoration: none;
-  background-color: $paginationBackground;
-  border: 1px solid $paginationBorder;
+  background-color: $pagination-bg;
+  border: 1px solid $pagination-border;
   border-left-width: 0;
 }
 .category_pagination ul > li > a:hover,
@@ -74,12 +73,12 @@ body {
 .category_pagination .redpagination-enable-style,
 .category_pagination .redpre > a:hover,
 .category_pagination .rednext > a:hover {
-  background-color: $paginationActiveBackground;
+  background-color: $pagination-active-bg;
 }
 .category_pagination ul > .active > a,
 .category_pagination ul > .active > span,
 .category_pagination .redpagination-enable-style {
-  color: $grayLight;
+  color: $gray-light;
   cursor: default;
 }
 .category_pagination ul > .disabled > span,
@@ -87,7 +86,7 @@ body {
 .category_pagination ul > .disabled > a:hover,
 .category_pagination .rednext > span,
 .category_pagination .redpre > span{
-  color: $grayLight;
+  color: $gray-light;
   background-color: transparent;
   cursor: default;
 }
@@ -97,13 +96,13 @@ body {
 .category_pagination span.redpagination-enable-style:first-child
 {
   border-left-width: 1px;
-  @include border-left-radius($baseBorderRadius);
+  @include border-left-radius($border-radius-base);
 }
 .category_pagination ul > li:last-child > a,
 .category_pagination ul > li:last-child > span,
 .category_pagination .rednext > a,
 .category_pagination .rednext > span {
-  @include border-right-radius($baseBorderRadius);
+  @include border-right-radius($border-radius-base);
 }
 
 #system-message {
@@ -112,14 +111,14 @@ body {
   }
   dd {
     margin-left: 0px;
-    @include alert;
+    @extend .alert;
 
     &.message {
-      @include alert-info;
+      @extend .alert-info;
     }
 
     &.error {
-      @include alert-error;
+      @extend .alert-error;
     }
 
     ul {
@@ -128,7 +127,7 @@ body {
       list-style: none;
 
       li {
-        font-size: $fontSizeLarge;
+        font-size: $font-size-large;
         text-shadow: none;
       }
     }
@@ -136,7 +135,7 @@ body {
   }
 }
 
-.redSHOP_product_box {
+/*.redSHOP_product_box {
   .redSHOP_product_box_left {
     @include row > .span6;
   }
