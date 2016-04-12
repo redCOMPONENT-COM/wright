@@ -4,7 +4,9 @@ defined('_JEXEC') or die('You are not allowed to directly access this file');
 
 require_once dirname(__FILE__) . '/scss.inc.php';
 
-class BuildBootstrap extends scssc
+use Leafo\ScssPhp\Compiler;
+
+class BuildBootstrap
 {
 	static function getInstance()
 	{
@@ -56,9 +58,11 @@ class BuildBootstrap extends scssc
 		// Build LESS
 		if ($rebuild)
 		{
-			$this->setFormatter("scss_formatter_compressed");
+			$scss = new Compiler();
 
-			$this->setImportPaths(
+			$scss->setFormatter("Leafo\ScssPhp\Formatter\Crunched");
+
+			$scss->setImportPaths(
 				array(
 					JPATH_THEMES . '/' . $document->template . '/scss/',
 					JPATH_THEMES . '/' . $document->template . '/wright/build/',
@@ -95,7 +99,7 @@ class BuildBootstrap extends scssc
 				$ds .= '.container{width:$container-desktop !important} .navbar-nav > li {float: left;} ';
 			}
 
-			file_put_contents(JPATH_THEMES . '/' . $document->template . '/css/style.css', $this->compile($ds));
+			file_put_contents(JPATH_THEMES . '/' . $document->template . '/css/style.css', $scss->compile($ds));
 
 			$document->params->set('build', false);
 
