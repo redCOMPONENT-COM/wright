@@ -75,6 +75,7 @@
 		<!-- Plugin -->
 		<echo message="Copying Plugin..." />
 		<copy todir="${www.dir}/plugins" overwrite="true">
+			<filterchain refid="file" />
 			<fileset dir="${plugin}" >
 				<include name="**" />
 			</fileset>

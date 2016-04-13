@@ -90,6 +90,7 @@
         <!-- Plugin -->
         <echo message="Copying Plugin..." />
         <copy todir="${targetdir}/plugin" overwrite="true">
+            <filterchain refid="file" />
             <fileset dir="${extpath}/../plugin/extension/redcomponent" >
                 <include name="**" />
             </fileset>
@@ -122,9 +123,7 @@
         </zip>
 
         <zip destfile="${targetdir}/${extension}-v${version}.zip">
-            <fileset dir="${targetdir}/packages">
-
-            </fileset>
+            <fileset dir="${targetdir}/packages" />
         </zip>
 
         <echo msg="Files copied and compressed in build directory OK!" />

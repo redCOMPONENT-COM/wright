@@ -4,7 +4,7 @@
 	<author>redCOMPONENT</author>
 	<creationDate>April 2016</creationDate>
 	<packagename>redcomponent</packagename>
-	<version>1.0.0</version>
+	<version>%%version%%</version>
 	<packager>redCOMPONENT</packager>
 	<files>
 		<file type="plugin" id="redcomponent" group="extension">plg_extension_redcomponent.zip</file>
