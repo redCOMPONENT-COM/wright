@@ -11,10 +11,9 @@
             value="${tpl.name}"
             override="true" />
 
-    <!-- Folder where the redSHOP repository is located  -->
     <property
             name="extpath"
-            value="${repo.dir}/code"
+            value="${repo.dir}/template"
             override="true" />
 
     <!-- Load extension property in XML file -->
@@ -70,8 +69,8 @@
             </replaceregexp>
         </filterchain>
 
-        <echo msg="Copying CODE folder to build directory..." />
-        <copy todir="${targetdir}">
+        <echo msg="Copying TEMPLATE folder to build directory..." />
+        <copy todir="${targetdir}/template">
             <filterchain refid="file" />
             <fileset dir="${extpath}">
                 <include name="**" />
@@ -81,10 +80,22 @@
         </copy>
 
         <!-- Languages -->
-        <copy file="${extpath}/language/en-GB/en-GB.tpl_redcomponent.ini" tofile="${targetdir}/language/en-GB/en-GB.tpl_${nameLcwords}.ini" overwrite="true">
+        <copy file="${extpath}/language/en-GB/en-GB.tpl_redcomponent.ini" tofile="${targetdir}/template/language/en-GB/en-GB.tpl_${nameLcwords}.ini" overwrite="true">
             <filterchain refid="file" />
         </copy>
-        <copy file="${extpath}/language/en-GB/en-GB.tpl_redcomponent.sys.ini" tofile="${targetdir}/language/en-GB/en-GB.tpl_${nameLcwords}.sys.ini" overwrite="true">
+        <copy file="${extpath}/language/en-GB/en-GB.tpl_redcomponent.sys.ini" tofile="${targetdir}/template/language/en-GB/en-GB.tpl_${nameLcwords}.sys.ini" overwrite="true">
+            <filterchain refid="file" />
+        </copy>
+
+        <!-- Plugin -->
+        <echo message="Copying Plugin..." />
+        <copy todir="${targetdir}/plugin" overwrite="true">
+            <fileset dir="${extpath}/../plugin/extension/redcomponent" >
+                <include name="**" />
+            </fileset>
+        </copy>
+
+        <copy file="${extpath}/../pkg_wright.xml" tofile="${targetdir}/packages/pkg_${extension}.xml" overwrite="true">
             <filterchain refid="file" />
         </copy>
 
@@ -96,10 +107,23 @@
     <target name="dist" depends="build">
         <echo msg="Creating ZIP archive..." />
 
-        <zip destfile="${targetdir}/../tpl_${extension}-v${version}.zip">
-            <fileset dir="${targetdir}">
+        <zip destfile="${targetdir}/packages/tpl_${extension}.zip">
+            <fileset dir="${targetdir}/template">
                 <include name="**" />
                 <exclude name=".*" />
+            </fileset>
+        </zip>
+
+        <zip destfile="${targetdir}/packages/plg_extension_redcomponent.zip">
+            <fileset dir="${targetdir}/plugin">
+                <include name="**" />
+                <exclude name=".*" />
+            </fileset>
+        </zip>
+
+        <zip destfile="${targetdir}/${extension}-v${version}.zip">
+            <fileset dir="${targetdir}/packages">
+
             </fileset>
         </zip>
 

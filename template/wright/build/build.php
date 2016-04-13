@@ -6,6 +6,9 @@ require_once dirname(__FILE__) . '/scss.inc.php';
 
 use Leafo\ScssPhp\Compiler;
 
+jimport('joomla.filesystem.file');
+jimport('joomla.filesystem.folder');
+
 class BuildBootstrap
 {
 	static function getInstance()
@@ -22,9 +25,6 @@ class BuildBootstrap
 
 	public function start()
 	{
-		jimport('joomla.filesystem.file');
-		jimport('joomla.filesystem.folder');
-
 		$document = JFactory::getDocument();
 
 		$less_path = JPATH_THEMES . '/' . $document->template . '/scss';
@@ -58,7 +58,7 @@ class BuildBootstrap
 		// Build LESS
 		if ($rebuild)
 		{
-			$scss = new Compiler();
+			$scss = new Compiler;
 
 			$scss->setFormatter("Leafo\ScssPhp\Formatter\Crunched");
 

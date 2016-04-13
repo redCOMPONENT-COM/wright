@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="extension" method="upgrade">
+    <name>PLG_EXTENSION_REDCOMPONENT</name>
+    <author>redCOMPONENT</author>
+    <creationDate>April 2016</creationDate>
+    <copyright>Copyright (C) 2008 - 2016 redCOMPONENT.com. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>email@redcomponent.com</authorEmail>
+    <authorUrl>www.redcomponent.com</authorUrl>
+    <version>1.0</version>
+    <description>PLG_EXTENSION_REDCOMPONENT_XML_DESCRIPTION</description>
+
+    <files>
+    	<folder>language</folder>
+        <filename plugin="redcomponent">redcomponent.php</filename>
+    </files>
+
+    <scriptfile>install.php</scriptfile>
+
+</extension>
