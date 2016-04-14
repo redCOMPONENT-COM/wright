@@ -120,7 +120,7 @@
             </fileset>
         </zip>
 
-        <zip destfile="${targetdir}/${extension}-v${version}.zip">
+        <zip destfile="${package.dir}/${extension}-v${version}.zip">
             <fileset dir="${targetdir}/packages" />
         </zip>
 
