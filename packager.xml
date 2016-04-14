@@ -2,39 +2,37 @@
 <!-- ==================================================================  -->
 <!-- redCOMPONENT Template Framework packager                            -->
 <!-- ==================================================================  -->
-<project name="com_redshop" default="dist">
-    <!-- Do initialization stuff -->
-    <property file="build.properties" override="true" />
-
-    <property
-            name="extension"
-            value="${tpl.name}"
-            override="true" />
-
-    <property
-            name="extpath"
-            value="${repo.dir}/template"
-            override="true" />
-
-    <!-- Load extension property in XML file -->
-    <xmlproperty file="${extpath}/templateDetails.xml" prefix="extensionDetails" keepRoot="false" />
-
-    <!-- Get extension version from XML -->
-    <property
-            name="version"
-            value="${extensionDetails.version}"
-            override="true"/>
-
-     <!-- Target dir where packages will be created  -->
-    <property
-            name="targetdir"
-            value="${package.dir}/package-${extension}-v${version}"
-            override="true" />
+<project name="com_redshop" default="pack">
 
     <!-- ============================================  -->
     <!-- Create packages folder                        -->
     <!-- ============================================  -->
     <target name="prepare">
+
+        <property
+                name="extension"
+                value="${tpl.name}"
+                override="true" />
+
+        <property
+                name="extpath"
+                value="${repo.dir}/template"
+                override="true" />
+
+        <!-- Load extension property in XML file -->
+        <xmlproperty file="${extpath}/templateDetails.xml" prefix="extensionDetails" keepRoot="false" />
+
+        <!-- Get extension version from XML -->
+        <property
+                name="version"
+                value="${extensionDetails.version}"
+                override="true"/>
+
+        <!-- Target dir where packages will be created  -->
+        <property
+                name="targetdir"
+                value="${package.dir}/package-${extension}-v${version}"
+                override="true" />
         <!-- Check if the target folder exists. If not, create it -->
         <if>
             <available file="${targetdir}" type="dir" />
@@ -122,10 +120,66 @@
             </fileset>
         </zip>
 
-        <zip destfile="${targetdir}/${extension}-v${version}.zip">
+        <zip destfile="${package.dir}/${extension}-v${version}.zip">
             <fileset dir="${targetdir}/packages" />
         </zip>
 
         <echo msg="Files copied and compressed in build directory OK!" />
+    </target>
+
+
+    <target name="pack">
+        <!-- Do initialization stuff -->
+        <if>
+            <not>
+                <available file="build.properties" type="file" />
+            </not>
+            <then>
+                <fail msg="File not found: build.properties" />
+            </then>
+        </if>
+
+        <property file="build.properties" override="true"/>
+
+        <property
+                name="extension"
+                value="${comp.name}"
+                override="true"/>
+
+        <phingcall target="dist" />
+    </target>
+
+    <target name="autopack">
+        <property
+                name="package.dir"
+                value=".dist"
+                override="true"/>
+
+        <property
+                name="tpl.name"
+                value="redcomponent"
+                override="true"/>
+
+        <property
+                name="package.delete"
+                value="true"
+                override="false"/>
+
+        <property
+                name="repo.dir"
+                value="./"
+                override="false"/>
+        <if>
+            <and>
+                <available file="${package.dir}" type="dir"/>
+                <equals arg1="${package.delete}" arg2="1" />
+            </and>
+            <then>
+                <echo msg="Removing old autopack folder"/>
+                <delete dir="${package.dir}"/>
+            </then>
+        </if>
+
+        <phingcall target="dist" />
     </target>
 </project>
