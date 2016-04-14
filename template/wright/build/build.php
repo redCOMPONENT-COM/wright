@@ -17,7 +17,7 @@ class BuildBootstrap
 
 		if ($instance === null)
 		{
-			$instance = new Wright;
+			$instance = new BuildBootstrap;
 		}
 
 		return $instance;
@@ -27,16 +27,16 @@ class BuildBootstrap
 	{
 		$document = JFactory::getDocument();
 
-		$less_path = JPATH_THEMES . '/' . $document->template . '/scss';
-
-		// Check rebuild less
-		$rebuild = $document->params->get('build', false);
+		// Check rebuild SCSS
+		$buildScss = $document->params->get('build', false);
 
 		if (is_file(JPATH_THEMES . '/' . $document->template . '/css/style.css'))
 		{
+			$scss_path = JPATH_THEMES . '/' . $document->template . '/scss';
+
 			$cachetime = filemtime(JPATH_THEMES . '/' . $document->template . '/css/style.css');
 
-			$files = JFolder::files($less_path, '.scss', true, true);
+			$files = JFolder::files($scss_path, '.scss', true, true);
 
 			if (count($files) > 0)
 			{
@@ -44,7 +44,7 @@ class BuildBootstrap
 				{
 					if (filemtime($file) > $cachetime)
 					{
-						$rebuild = true;
+						$buildScss = true;
 						break;
 					}
 				}
@@ -52,11 +52,11 @@ class BuildBootstrap
 		}
 		else
 		{
-			$rebuild = true;
+			$buildScss = true;
 		}
 
-		// Build LESS
-		if ($rebuild)
+		// Build SCSS
+		if ($buildScss)
 		{
 			$scss = new Compiler;
 
@@ -115,5 +115,97 @@ class BuildBootstrap
 			$db->setQuery($query);
 			$db->execute();
 		}
+
+		// Check rebuild JS
+		$buildJs = false;
+
+		$js_path = JPATH_THEMES . '/' . $document->template . '/js';
+
+		$jsFiles = JFolder::files($js_path, '.js', true, true, array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'template.js'));
+
+		if (is_file(JPATH_THEMES . '/' . $document->template . '/js/template.js'))
+		{
+			$cachetime = filemtime(JPATH_THEMES . '/' . $document->template . '/js/template.js');
+
+			if (count($jsFiles) > 0)
+			{
+				foreach ($jsFiles as $file)
+				{
+					if (filemtime($file) > $cachetime)
+					{
+						$buildJs = true;
+						break;
+					}
+				}
+			}
+		}
+		else
+		{
+			$buildJs = true;
+		}
+
+		if ($buildJs)
+		{
+			$wr = Wright::getInstance();
+			$jsFiles = $wr->_jsScripts;
+
+			if (count($jsFiles) > 0)
+			{
+				$buffer = "";
+
+				foreach ($jsFiles as $file)
+				{
+					$buffer .= $this->getJsContent($file);
+				}
+
+				file_put_contents($js_path . '/template.js', $this->compress($buffer));
+			}
+		}
+	}
+
+	private function compress($string)
+	{
+		$string = str_replace('/// ', '///', $string);
+		$string = str_replace(',//', ', //', $string);
+		$string = str_replace('{//', '{ //', $string);
+		$string = str_replace('}//', '} //', $string);
+		$string = str_replace('/**/', '/*  */', $string);
+		$string = preg_replace("/\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n/", "", $string);
+		$string = preg_replace("/\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n/", "", $string);
+		$string = preg_replace("/\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n/", "", $string);
+		$string = preg_replace("/\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n/", "", $string);
+		$string = preg_replace("/\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n/", "", $string);
+		$string = preg_replace("/\/\/.*\n\/\/.*\n\/\/.*\n/", "", $string);
+		$string = preg_replace('/\/\/.*\/\/\n/', '', $string);
+		$string = preg_replace("/\s\/\/\".*/", "", $string);
+		$string = preg_replace("/\/\/\n/", "\n", $string);
+		$string = preg_replace("/\/\/\s.*.\n/", "\n  \n", $string);
+		$string = preg_replace('/\/\/w[^w].*/', '', $string);
+		$string = preg_replace('/\/\/s[^s].*/', '', $string);
+		$string = preg_replace('/\/\/\*\*\*.*/', '', $string);
+		$string = preg_replace('/\/\/\*\s\*\s\*.*/', '', $string);
+		$string = preg_replace('!/\*[^\'."].*?\*/!s', '', $string);
+		$string = preg_replace('/\n\s*\n/', "\n", $string);
+		$string = preg_replace("/<!--.*-->/Us", "", $string);
+
+		return $string;
+	}
+
+	private function getJsContent($file)
+	{
+		// Initialize the buffer
+		$buffer = file_get_contents($file);
+
+		// Make sure the JS-content ends with ;
+		$buffer = trim($buffer);
+
+		if (preg_match('/;$/', $buffer) == false)
+		{
+			$buffer .= ';' . "\n";
+		}
+
+		$buffer .= "\n";
+
+		return $buffer;
 	}
 }

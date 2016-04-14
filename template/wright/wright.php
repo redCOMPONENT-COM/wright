@@ -108,7 +108,7 @@ class Wright
 		}
 
 		// Urls
-		$this->_urlTemplate = JURI::root(true) . '/templates/' . $this->document->template;
+		$this->_urlTemplate = JURI::root() . '/templates/' . $this->document->template;
 		$this->_urlWright = $this->_urlTemplate . '/wright';
 		$this->_urlJS = $this->_urlWright . '/js';
 
@@ -136,9 +136,6 @@ class Wright
 			$path = JPATH_SITE . '/templates/' . $document->template . '/home.php';
 		elseif (is_file(JPATH_SITE . '/templates/' . $document->template . '/custom.php'))
 			$path = JPATH_SITE . '/templates/' . $document->template . '/custom.php';
-
-		$build = new BuildBootstrap;
-		$build->start();
 
 		// Include our file and capture buffer
 		ob_start();
@@ -190,6 +187,9 @@ class Wright
 		// Parse by doctype
 		$this->doctype();
 
+		$build = new BuildBootstrap;
+		$build->start();
+
 		print trim($this->template);
 
 		return true;
@@ -220,7 +220,7 @@ class Wright
 		// Load bootstrap JS - Not load on edit module
 		if ($input->getString('option', '') != 'com_config')
 		{
-			$this->addJSScript($this->_urlJS . '/bootstrap.js');
+			$this->addJSScript($this->_urlJS . '/bootstrap-uncompressed.js');
 			$this->addJSScript($this->_urlJS . '/utils.js');
 
 			if ($this->document->params->get('stickyFooter', 1))
@@ -700,17 +700,7 @@ class Wright
 	 */
 	public function addJSScript($url)
 	{
-		$javascriptBottom = ($this->document->params->get('javascriptBottom', 1) == 1 ? true : false);
-
-		if ($javascriptBottom)
-		{
-			$this->_jsScripts[] = $url;
-		}
-		else
-		{
-			$document = JFactory::getDocument();
-			$document->addScript($url);
-		}
+		$this->_jsScripts[] = $url;
 	}
 
 	/**
@@ -722,17 +712,7 @@ class Wright
 	 */
 	private function addJSScriptDeclaration($script)
 	{
-		$javascriptBottom = ($this->document->params->get('javascriptBottom', 1) == 1 ? true : false);
-
-		if ($javascriptBottom)
-		{
-			$this->_jsDeclarations[] = $script;
-		}
-		else
-		{
-			$document = JFactory::getDocument();
-			$document->addScriptDeclaration('jQuery( document ).ready(function( $ ) {' . $script . '});');
-		}
+		$this->_jsDeclarations[] = $script;
 	}
 
 	/**
@@ -744,17 +724,11 @@ class Wright
 	{
 		$javascriptBottom = ($this->document->params->get('javascriptBottom', 1) == 1 ? true : false);
 
+		$templateJsUrl = JURI::root() . 'templates/' . $this->document->template . '/js/template.js';
+
 		if ($javascriptBottom)
 		{
-			$script = "\n";
-
-			if ($this->_jsScripts)
-			{
-				foreach ($this->_jsScripts as $js)
-				{
-					$script .= "<script src='$js' type='text/javascript'></script>\n";
-				}
-			}
+			$script = "<script src='" . $templateJsUrl . "' type='text/javascript'></script>\n";
 
 			if ($this->_jsDeclarations)
 			{
@@ -769,6 +743,19 @@ class Wright
 			}
 
 			return $script;
+		}
+		else
+		{
+			$document = JFactory::getDocument();
+			$document->addScript($templateJsUrl);
+
+			if ($this->_jsDeclarations)
+			{
+				foreach ($this->_jsDeclarations as $script)
+				{
+					$document->addScriptDeclaration('jQuery( document ).ready(function( $ ) {' . $script . '});');
+				}
+			}
 		}
 
 		return "";
