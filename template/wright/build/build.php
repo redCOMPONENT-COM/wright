@@ -82,7 +82,7 @@ class BuildBootstrap
 			$ds = '@import "variables";';
 			$ds .= '$grid-columns: ' . $columnsNumber . ';';
 			$ds .= '@import "scss/bootstrap";';
-			$ds .= '@import "template-responsive"; ';
+			$ds .= '@import "template"; ';
 
 			$ds .= '@import "scss/joomla";';
 
