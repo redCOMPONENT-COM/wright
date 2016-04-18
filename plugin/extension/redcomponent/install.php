@@ -33,6 +33,7 @@ class PlgExtensionRedcomponentInstallerScript
 		$query->set($db->quoteName('enabled') . ' = 1');
 		$query->where($db->quoteName('element') . ' = ' . $db->quote('redcomponent'));
 		$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
+		$query->where($db->quoteName('client_id') . ' = ' . $db->quote('extension'));
 		$db->setQuery($query);
 		$db->execute();
 	}

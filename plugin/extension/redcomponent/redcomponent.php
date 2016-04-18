@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Joomla.Plugin
- * @subpackage  System.Redcore
+ * @subpackage  Extension.Redcomponent
  *
  * @copyright   Copyright (C) 2008 - 2016 redCOMPONENT.com. All rights reserved.
  * @license     GNU General Public License version 2 or later, see LICENSE.
@@ -10,10 +10,10 @@
 defined('JPATH_BASE') or die;
 
 /**
- * System plugin for redCORE
+ * Extension plugin for redCOMPONENT template
  *
  * @package     Joomla.Plugin
- * @subpackage  System
+ * @subpackage  Extension
  * @since       1.0
  */
 class PlgExtensionRedcomponent extends JPlugin

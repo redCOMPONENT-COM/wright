@@ -14,11 +14,6 @@ class JFormFieldBootstrapVariables extends JFormFieldList
 
 	private $variables = array();
 
-	function __construct()
-	{
-
-	}
-
 	/**
 	 * Creates color picker
 	 *

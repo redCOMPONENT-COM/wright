@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5" type="template" method="upgrade" client="site">
+<extension version="2.5" type="template" method="install" client="site">
 	<name>%%extention%%</name>
 	<creationDate>Dec 2013</creationDate>
 	<author>redCOMPONENT</author>
