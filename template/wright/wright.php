@@ -88,9 +88,8 @@ class Wright
 	/**
 	 * Main Wright function called to create the index.php file read by Joomla
 	 *
-	 * @return  void
 	 */
-	function Wright()
+	function __construct()
 	{
 		// Initialize properties
 		$document = JFactory::getDocument();
