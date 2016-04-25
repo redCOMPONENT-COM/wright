@@ -105,20 +105,18 @@ body {
   @include border-right-radius($border-radius-base);
 }
 
-/*#system-message {
-  dt {
-    display: none;
-  }
-  dd {
+#system-message {
+
+  > div {
     margin-left: 0px;
     @extend .alert;
 
-    &.message {
+    &.alert-message {
       @extend .alert-info;
     }
 
-    &.error {
-      @extend .alert-error;
+    &.alert-error {
+      @extend .alert-danger;
     }
 
     ul {
@@ -133,7 +131,7 @@ body {
     }
 
   }
-}*/
+}
 
 /*.redSHOP_product_box {
   .redSHOP_product_box_left {
