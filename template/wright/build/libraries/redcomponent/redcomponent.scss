@@ -27,82 +27,85 @@ body {
 @include gridRedWeb-grid();
 
 
-.category_pagination {
-  margin: $line-height-base 0;
-  clear: both;
-}
-
-.pagination .pager
+.pagination
 {
-  display: none;
-}
+  width: 100%;
+  text-align: center;
 
-.category_pagination ul, .pagination-links {
-// Allow for text-based alignment
-  display: inline-block;
-// Reset default ul styles
-  margin-left: 0;
-  margin-bottom: 0;
-// Visuals
-  border-radius: $border-radius-base;
-  @include box-shadow(0 1px 2px rgba(0,0,0,.05));
-}
-.category_pagination ul > li {
-  display: inline; // Remove list-style and block-level defaults
-}
-.category_pagination ul > li > a,
-.category_pagination ul > li > span,
-.category_pagination a.redpagination-style,
-.category_pagination .redpagination-enable-style,
-.category_pagination .redpre > a,
-.category_pagination .rednext > a,
-.category_pagination .rednext > span,
-.category_pagination .redpre > span{
-  float: left; // Collapse white-space
-  padding: 4px 12px;
-  line-height: $line-height-base;
-  text-decoration: none;
-  background-color: $pagination-bg;
-  border: 1px solid $pagination-border;
-  border-left-width: 0;
-}
-.category_pagination ul > li > a:hover,
-.category_pagination ul > .active > a,
-.category_pagination ul > .active > span,
-.category_pagination a.redpagination-style:hover,
-.category_pagination .redpagination-enable-style,
-.category_pagination .redpre > a:hover,
-.category_pagination .rednext > a:hover {
-  background-color: $pagination-active-bg;
-}
-.category_pagination ul > .active > a,
-.category_pagination ul > .active > span,
-.category_pagination .redpagination-enable-style {
-  color: $gray-light;
-  cursor: default;
-}
-.category_pagination ul > .disabled > span,
-.category_pagination ul > .disabled > a,
-.category_pagination ul > .disabled > a:hover,
-.category_pagination .rednext > span,
-.category_pagination .redpre > span{
-  color: $gray-light;
-  background-color: transparent;
-  cursor: default;
-}
-.category_pagination ul > li:first-child > a,
-.category_pagination ul > li:first-child > span,
-.category_pagination a.redpagination-style:first-child,
-.category_pagination span.redpagination-enable-style:first-child
-{
-  border-left-width: 1px;
-  @include border-left-radius($border-radius-base);
-}
-.category_pagination ul > li:last-child > a,
-.category_pagination ul > li:last-child > span,
-.category_pagination .rednext > a,
-.category_pagination .rednext > span {
-  @include border-right-radius($border-radius-base);
+  > ul
+  {
+    display: inline-block;
+    padding-left: 0;
+    margin: $line-height-computed 0;
+    border-radius: $border-radius-base;
+
+    > li {
+      display: inline; // Remove list-style and block-level defaults
+      > a,
+      > span {
+        position: relative;
+        float: left; // Collapse white-space
+        padding: $padding-base-vertical $padding-base-horizontal;
+        line-height: $line-height-base;
+        text-decoration: none;
+        color: $pagination-color;
+        background-color: $pagination-bg;
+        border: 1px solid $pagination-border;
+        margin-left: -1px;
+      }
+      &:first-child {
+        > a,
+        > span {
+          margin-left: 0;
+          @include border-left-radius($border-radius-base);
+        }
+      }
+      &:last-child {
+        > a,
+        > span {
+          @include border-right-radius($border-radius-base);
+        }
+      }
+    }
+
+    > li > a,
+    {
+      &:hover,
+      &:focus {
+        z-index: 2;
+        color: $pagination-hover-color;
+        background-color: $pagination-hover-bg;
+        border-color: $pagination-hover-border;
+      }
+    }
+
+    > li > span {
+      &,
+      &:hover,
+      &:focus {
+        z-index: 3;
+        color: $pagination-active-color;
+        background-color: $pagination-active-bg;
+        border-color: $pagination-active-border;
+        cursor: default;
+      }
+    }
+
+    .pagination-start,
+    .pagination-prev,
+    .pagination-next,
+    .pagination-end {
+      > span,
+      > span:hover,
+      > span:focus {
+        color: $pagination-disabled-color;
+        background-color: $pagination-disabled-bg;
+        border-color: $pagination-disabled-border;
+        cursor: $cursor-disabled;
+      }
+    }
+
+  }
 }
 
 #system-message {
@@ -130,16 +133,6 @@ body {
       }
     }
 
-  }
-}
-
-/*.redSHOP_product_box {
-  .redSHOP_product_box_left {
-    @include row > .span6;
-  }
-
-  .redSHOP_product_box_right {
-    @include row > .span6;
   }
 }
 
@@ -174,18 +167,18 @@ body {
 
     > tr
     {
-      background-color: $tableBackgroundAccent;
+      background-color: $table-bg-accent;
 
 
       th:first-child
       {
-        @include border-radius(5px);
+        border-radius: $border-radius-base;
       }
     }
   }
 
   > tbody > tr {
-    border-bottom: 1px solid $tableBorder;
+    border-bottom: 1px solid $table-border-color;
   }
 
   th, td {
@@ -556,4 +549,15 @@ td span.required
 #sbox-window
 {
   @include box-sizing("content-box");
-}*/
+}
+
+.product-cart-link span.pdaddtocart_link, .cart-link span.pdaddtocart_link
+{
+   @extend .btn-primary;
+   height: auto;
+}
+
+.form-horizontal .control-label
+{
+  text-align: left;
+}
