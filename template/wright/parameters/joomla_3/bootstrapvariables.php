@@ -1,4 +1,11 @@
 <?php
+/**
+ * @package     Wright
+ * @subpackage  Parameters
+ *
+ * @copyright   Copyright (C) 2005 - 2015 redCOMPONENT.com.  All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 defined('_JEXEC') or die;
 
 jimport('joomla.filesystem.file');
@@ -8,10 +15,27 @@ JHtml::_('jquery.framework');
 JHtml::_('script', 'system/html5fallback.js', false, true);
 JHtml::_('behavior.colorpicker');
 
-class JFormFieldBootstrapVariables extends JFormFieldList
+/**
+ * Bootstrap variables
+ *
+ * @package     Wright
+ * @subpackage  Parameters
+ * @since       3.0
+ */
+class JFormFieldBootstrapVariables extends JFormField
 {
+	/**
+	 * Field type
+	 *
+	 * @var  string
+	 */
 	public $type = 'BootstrapVariables';
 
+	/**
+	 * Variables
+	 *
+	 * @var  array
+	 */
 	private $variables = array();
 
 	/**
@@ -21,17 +45,16 @@ class JFormFieldBootstrapVariables extends JFormFieldList
 	 */
 	protected function getInput()
 	{
-		$jinput = JFactory::getApplication()->input;
-		$templateId = $jinput->getInt('id', 0);
+		$input = JFactory::getApplication()->input;
+		$templateId = $input->getInt('id', 0);
 
 		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
+		$query = $db->getQuery(true)
+			->select($db->qn('template'))
+			->from($db->qn('#__template_styles'))
+			->where($db->qn('id') . ' = ' . (int) $templateId);
 
-		$query->select($db->quoteName('template'));
-		$query->from($db->quoteName('#__template_styles'));
-		$query->where($db->quoteName('id') . ' = ' . (int) $templateId);
-		$db->setQuery($query);
-		$templateName = $db->loadResult();
+		$templateName = $db->setQuery($query)->loadResult();
 
 		$variablesPath = JPATH_SITE . '/templates/' . $templateName . '/scss/variables.scss';
 
@@ -49,27 +72,27 @@ class JFormFieldBootstrapVariables extends JFormFieldList
 				{
 					if (!isset($titles[$i + 1]))
 					{
-						preg_match_all("/\/\/==(" . $titles[$i] . ")([\w\W]*)\/\/==/", $variablesContent, $pat_array);
+						preg_match_all("/\/\/==(" . $titles[$i] . ")([\w\W]*)\/\/==/", $variablesContent, $pats);
 					}
 					else
 					{
-						preg_match_all("/\/\/==(" . $titles[$i] . ")([\w\W]*)\/\/==" . $titles[$i + 1] . "/", $variablesContent, $pat_array);
+						preg_match_all("/\/\/==(" . $titles[$i] . ")([\w\W]*)\/\/==" . $titles[$i + 1] . "/", $variablesContent, $pats);
 					}
 
-					if (count($pat_array[2]) > 0 && !empty($pat_array[1][0]))
+					if (count($pats[2]) > 0 && !empty($pats[1][0]))
 					{
-						$groupName = str_replace("=", "", $pat_array[1][0]);
+						$groupName = str_replace("=", "", $pats[1][0]);
 						$groupName = trim($groupName);
 
-						$variables = $pat_array[2][0];
+						$variables = $pats[2][0];
 
-						preg_match_all("/[\$](.*)\:(.*)!/", $variables, $pat_array);
+						preg_match_all("/[\$](.*)\:(.*)!/", $variables, $pats);
 
-						if (count($pat_array[1]) > 0)
+						if (count($pats[1]) > 0)
 						{
-							foreach ($pat_array[1] as $key => $value)
+							foreach ($pats[1] as $key => $value)
 							{
-								$v = trim($pat_array[2][$key]);
+								$v = trim($pats[2][$key]);
 								$v = htmlspecialchars($v);
 
 								$this->variables[$groupName][$value] = trim($v);
@@ -80,12 +103,21 @@ class JFormFieldBootstrapVariables extends JFormFieldList
 			}
 		}
 
-		$html = '<div class="container-fluid bootstrapvariables">';
+		$tabs = array();
+		$contents = array();
+		$class = 'active';
+
+		ksort($this->variables);
 
 		foreach ($this->variables as $group => $set)
 		{
-			$html .= '<h2>' . $group . '</h2>';
-			$html .= '<div class="row-fluid">';
+			// Tab
+			$tabs[] = '<li class="' . $class . '">
+				<a href="#tab' . JFilterOutput::stringURLSafe($group) . '" data-toggle="tab">' . $group . '</a>
+			</li>';
+
+			// Content
+			$content = '<div class="tab-pane ' . $class . '" id="tab' . JFilterOutput::stringURLSafe($group) . '"><div class="row-fluid">';
 
 			$i = 0;
 
@@ -93,23 +125,32 @@ class JFormFieldBootstrapVariables extends JFormFieldList
 			{
 				if ($i > 0 && $i % 4 == 0)
 				{
-					$html .= '</div><div class="row-fluid">';
+					$content .= '</div><div class="row-fluid">';
 				}
 
 				$name = $this->name . '[' . $key . ']';
 
-				$html .= '<div class="span3">
-							<label for="input-' . $key . '">' . $key . '</label>
-							<input type="text" name="' . $name . '" class="input" value="' . $value . '" id="wb_bootstrapvariables-input-' . $key . '" placeholder="' . $value . '">
-						</div>';
+				$content .= '<div class="span3">
+					<div class="control-label">
+						<label for="input-' . $key . '">' . $key . '</label>
+					</div>
+					<div class="controls">
+						<input type="text" name="' . $name . '" class="input" value="' . $value . '" id="wb_bootstrapvariables-input-' . $key . '" placeholder="' . $value . '">
+					</div>
+				</div>';
 
 				$i++;
 			}
 
-			$html .= '</div>';
+			$content .= '</div></div>';
+			$class = '';
+			$contents[] = $content;
 		}
 
-		$html .= '</div>';
+		$tabs = '<ul class="nav nav-pills" id="bootstrapvariablesTab">' . implode('', $tabs) . '</ul>';
+		$contents = '<div class="tab-content">' . implode('', $contents) . '</div>';
+
+		$html = '<div class="container-fluid bootstrapvariables form-vertical">' . $tabs . $contents . '</div>';
 
 		return $html;
 	}
