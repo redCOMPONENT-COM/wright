@@ -49,7 +49,7 @@ defined('_JEXEC') or die('Restricted access');
 		<?php if ($this->countModules('featured')) : ?>
 			<!-- featured -->
 			<div id="featured">
-				<w:module type="none" name="featured" chrome="xhtml" />
+				<w:module type="none" name="featured" chrome="whtml" />
 			</div>
 		<?php endif; ?>
 
@@ -68,14 +68,14 @@ defined('_JEXEC') or die('Restricted access');
 		<div id="main-content" class="row">
 			<!-- sidebar1 -->
 			<aside id="sidebar1">
-				<w:module name="sidebar1" chrome="xhtml" />
+				<w:module name="sidebar1" chrome="whtml" />
 			</aside>
 			<!-- main -->
 			<section id="main">
 				<?php if ($this->countModules('above-content')) : ?>
 					<!-- above-content -->
 					<div id="above-content">
-						<w:module type="none" name="above-content" chrome="xhtml" />
+						<w:module type="none" name="above-content" chrome="whtml" />
 					</div>
 				<?php endif; ?>
 				<?php if ($this->countModules('breadcrumbs')) : ?>
@@ -89,13 +89,13 @@ defined('_JEXEC') or die('Restricted access');
 				<?php if ($this->countModules('below-content')) : ?>
 					<!-- below-content -->
 					<div id="below-content">
-						<w:module type="none" name="below-content" chrome="xhtml" />
+						<w:module type="none" name="below-content" chrome="whtml" />
 					</div>
 				<?php endif; ?>
 			</section>
 			<!-- sidebar2 -->
 			<aside id="sidebar2">
-				<w:module name="sidebar2" chrome="xhtml" />
+				<w:module name="sidebar2" chrome="whtml" />
 			</aside>
 		</div>
 		<?php if ($this->countModules('grid-bottom')) : ?>
