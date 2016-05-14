@@ -176,6 +176,7 @@
 					description="TPL_%%UPNAME%%_FIELD_COLUMNS_DESC" />
 
 				<field name="build" type="hidden" default="1" />
+				<field name="buildjs" type="hidden" default="1" />
                 <!-- End of default Wright params -->
 			</fieldset>
 			<fieldset name="browser">

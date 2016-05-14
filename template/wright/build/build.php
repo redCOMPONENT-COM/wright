@@ -30,7 +30,7 @@ class BuildBootstrap
 		// Check rebuild SCSS
 		$buildScss = $document->params->get('build', false);
 
-		if (is_file(JPATH_THEMES . '/' . $document->template . '/css/style.css'))
+		if ($buildScss == false && is_file(JPATH_THEMES . '/' . $document->template . '/css/style.css'))
 		{
 			$scss_path = JPATH_THEMES . '/' . $document->template . '/scss';
 
@@ -117,13 +117,13 @@ class BuildBootstrap
 		}
 
 		// Check rebuild JS
-		$buildJs = false;
+		$buildJs = $document->params->get('buildjs', false);
 
 		$js_path = JPATH_THEMES . '/' . $document->template . '/js';
 
 		$jsFiles = JFolder::files($js_path, '.js', true, true, array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'template.js'));
 
-		if (is_file(JPATH_THEMES . '/' . $document->template . '/js/template.js'))
+		if ($buildJs == false && is_file(JPATH_THEMES . '/' . $document->template . '/js/template.js'))
 		{
 			$cachetime = filemtime(JPATH_THEMES . '/' . $document->template . '/js/template.js');
 
@@ -160,6 +160,20 @@ class BuildBootstrap
 
 				file_put_contents($js_path . '/template.js', $this->compress($buffer));
 			}
+
+			$document->params->set('buildjs', false);
+
+			$newParams = new JRegistry(json_decode($document->params));
+
+			$templateId = JFactory::getApplication()->getTemplate(true)->id;
+
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+
+			$query->update($db->quoteName('#__template_styles'))->set($db->quoteName('params') . ' = ' . $db->q($newParams))->where($db->quoteName('id') . ' = ' . $db->q($templateId));
+
+			$db->setQuery($query);
+			$db->execute();
 		}
 	}
 
