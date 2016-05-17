@@ -1,48 +1,35 @@
-if (typeof jQuery != 'undefined' && typeof MooTools != 'undefined' ) {
-	(function($) {
-		$(document).ready(function(){
-			$('.carousel').each(function(index, element) {
-				$(this)[index].slide = null;
-			});
-		});
-	})(jQuery);
-}
+jQuery(document).ready(function($) {
+	$('.carousel').each(function(index, element) {
+		$(this)[index].slide = null;
+	});
 
-(function($) {
 	function wToolbar() {
 		if (typeof wrightWrapperToolbar === 'undefined')
 			wrightWrapperToolbar = '.wrapper-toolbar';
 
 		$(wrightWrapperToolbar).each(function() {
-			$(this).css('min-height',$(this).find('.navbar:first').height() + 'px');
+			$(this).css('min-height', $(this).find('.navbar:first').height() + 'px');
 		});
 
-		if ($(document).width() <= 767)
-		{
+		if ($(document).width() <= 767) {
 			$('li.dropdown').each(function() {
-				var a =  $(this).find('a').eq(0);
-				$(a.find('.caret')).click(function(event){
+				var a = $(this).find('a').eq(0);
+				$(a.find('.caret')).click(function(event) {
 					event.preventDefault();
 					var lipa = $(this).parent().parent();
 
-					if (lipa.hasClass('open'))
-					{
+					if (lipa.hasClass('open')) {
 						lipa.removeClass('open');
-					}
-					else
-					{
+					} else {
 						lipa.addClass('open');
 					}
 				});
 
-				if ($(this).hasClass('active'))
-				{
+				if ($(this).hasClass('active')) {
 					$(this).addClass('open');
 				}
 			});
-		}
-		else
-		{
+		} else {
 			$('li.dropdown').removeClass('open');
 			$('.navbar-collapse').removeClass('in');
 			$('.navbar-collapse').addClass('collapse');
@@ -62,4 +49,4 @@ if (typeof jQuery != 'undefined' && typeof MooTools != 'undefined' ) {
 	$(window).resize(function() {
 		wToolbar();
 	});
-})(jQuery);
+});

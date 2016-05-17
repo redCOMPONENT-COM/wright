@@ -240,8 +240,16 @@ abstract class HtmlAdapterAbstract
 	 */
 	public function getBodyclose($matches)
 	{
+		$js = "";
 		$doc = Wright::getInstance();
-		$js = $doc->generateJS();
+
+		$javascriptBottom = ($doc->params->get('javascriptBottom', 1) == 1 ? true : false);
+
+		if ($javascriptBottom)
+		{
+			$js = $doc->generateJS();
+		}
+
 		$browserWarning = '';
 
 		if ($doc->_showBrowserWarning)

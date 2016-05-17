@@ -721,43 +721,22 @@ class Wright
 	 */
 	public function generateJS()
 	{
-		$javascriptBottom = ($this->document->params->get('javascriptBottom', 1) == 1 ? true : false);
-
 		$templateJsUrl = JURI::root() . 'templates/' . $this->document->template . '/js/template.js';
+		$script = "<script src='" . $templateJsUrl . "' type='text/javascript'></script>\n";
 
-		if ($javascriptBottom)
+		if ($this->_jsDeclarations)
 		{
-			$script = "<script src='" . $templateJsUrl . "' type='text/javascript'></script>\n";
+			$script .= "<script type='text/javascript'>jQuery( document ).ready(function( $ ) {\n";
 
-			if ($this->_jsDeclarations)
+			foreach ($this->_jsDeclarations as $js)
 			{
-				$script .= "<script type='text/javascript'>jQuery( document ).ready(function( $ ) {\n";
-
-				foreach ($this->_jsDeclarations as $js)
-				{
-					$script .= "$js\n";
-				}
-
-				$script .= "});</script>\n";
+				$script .= "$js\n";
 			}
 
-			return $script;
-		}
-		else
-		{
-			$document = JFactory::getDocument();
-			$document->addScript($templateJsUrl);
-
-			if ($this->_jsDeclarations)
-			{
-				foreach ($this->_jsDeclarations as $script)
-				{
-					$document->addScriptDeclaration('jQuery( document ).ready(function( $ ) {' . $script . '});');
-				}
-			}
+			$script .= "});</script>\n";
 		}
 
-		return "";
+		return $script;
 	}
 
 	/**

@@ -77,7 +77,7 @@
 				<field name="javascriptBottom"
 					type="radio"
 					class="btn-group btn-group-yesno"
-					default="1"
+					default="0"
 					label="TPL_%%UPNAME%%_FIELD_JAVASCRIPT_BOTTOM"
 					description="TPL_%%UPNAME%%_FIELD_JAVASCRIPT_BOTTOM_DESC">
 					<option value="1">JYES</option>

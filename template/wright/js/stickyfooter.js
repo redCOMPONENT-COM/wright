@@ -1,18 +1,18 @@
-jQuery(document).ready(function() {
+jQuery(document).ready(function($) {
 	function stickyFooter() {
-		if (jQuery('#footer')) {
-			var h = jQuery('#footer').outerHeight();
-			jQuery('.wrapper-footer').height(h);
+		if ($('#footer')) {
+			var h = $('#footer').outerHeight();
+			$('.wrapper-footer').height(h);
 		}
 	}
-	jQuery(window).load(function () {
-		jQuery('#footer.sticky').css('bottom','0')
-			.css('position','absolute')
-			.css('z-index','1000');
+	$(window).load(function() {
+		$('#footer.sticky').css('bottom', '0')
+			.css('position', 'absolute')
+			.css('z-index', '1000');
 		stickyFooter();
 	});
 	stickyFooter();
-	jQuery(window).resize(function() {
+	$(window).resize(function() {
 		stickyFooter();
 	});
 });
