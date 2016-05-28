@@ -107,7 +107,7 @@ class Wright
 		}
 
 		// Urls
-		$this->_urlTemplate = JURI::root() . '/templates/' . $this->document->template;
+		$this->_urlTemplate = JURI::root() . 'templates/' . $this->document->template;
 		$this->_urlWright = $this->_urlTemplate . '/wright';
 		$this->_urlJS = $this->_urlWright . '/js';
 
