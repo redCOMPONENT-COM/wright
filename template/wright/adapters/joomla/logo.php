@@ -3,20 +3,18 @@
  * @package     Wright
  * @subpackage  Adapters
  *
- * @copyright   Copyright (C) 2005 - 2015 redCOMPONENT.com.  All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2016 redCOMPONENT.com.  All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- *
  */
 
-// No direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 /**
- * Logo adapter class
+ * Wright Adapters
  *
  * @package     Wright
- * @subpackage  Main Package
- * @since       2.0
+ * @subpackage  Adapters
+ * @since       3.0
  */
 class WrightAdapterJoomlaLogo
 {

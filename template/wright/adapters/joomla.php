@@ -1,19 +1,34 @@
 <?php
 /**
- * Abstract Adapter Class
+ * @package     Wright
+ * @subpackage  Adapters
  *
- * This class is to set the default platform parsing tags, and each subclass
- * can customize the output depending on the version of Joomla.
- *
- * @package Wright
- * @author Jeremy Wilken
+ * @copyright   Copyright (C) 2005 - 2016 redCOMPONENT.com.  All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+defined('_JEXEC') or die;
+
+/**
+ * Wright Adapters
+ *
+ * @package     Wright
+ * @subpackage  Adapters
+ * @since       3.0
+ */
 class WrightAdapterJoomla
 {
-
+	/**
+	 * Version
+	 *
+	 * @var  array
+	 */
 	protected $version;
 
+	/**
+	 * Construction
+	 *
+	 */
 	public function __construct($version)
 	{
 		$this->version = $version;
@@ -22,32 +37,30 @@ class WrightAdapterJoomla
 	/**
 	 * Handles the tag processing
 	 *
-	 * @param array $tag
-	 * @return string
+	 * @param   array  $config  Array
+	 *
+	 * @return class
 	 */
-
 	public function get($config)
 	{
 		$tag = key($config);
-		$file = dirname(__FILE__).'/'.'joomla'.'/'.$tag.'.php';
-		$class = 'WrightAdapterJoomla'.ucfirst($tag);
+		$file = dirname(__FILE__) . '/joomla/' . $tag . '.php';
+		$class = 'WrightAdapterJoomla' . ucfirst($tag);
 
-		if (is_file(dirname(__FILE__).'/'.'joomla'.'/'.'joomla_'.$this->getVersion().'/'.$tag.'.php'))
-		{
-			$file = dirname(__FILE__).'/'.'joomla'.'/'.'joomla_'.$this->getVersion().'/'.$tag.'.php';
-			$class = 'WrightAdapterJoomla'.$this->getVersion().ucfirst($tag);
-		}
-		
 		require_once $file;
 
-		$item = new $class();
+		$item = new $class;
 
 		return $item->render($config[$tag]);
 	}
 
+	/**
+	 * Get version
+	 *
+	 * @return string
+	 */
 	public function getVersion()
 	{
 		return $this->version;
 	}
-	
 }

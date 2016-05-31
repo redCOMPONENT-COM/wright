@@ -1,21 +1,20 @@
 <?php
 /**
  * @package     Wright
- * @subpackage  Parameters
+ * @subpackage  Adapters
  *
- * @copyright   Copyright (C) 2005 - 2015 redCOMPONENT.com.  All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2016 redCOMPONENT.com.  All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Restrict Access to within Joomla
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 /**
- * Class to create footer adapter
+ * Wright Adapters
  *
  * @package     Wright
- * @subpackage  Parameters
- * @since       2.0
+ * @subpackage  Adapters
+ * @since       3.0
  */
 class WrightAdapterJoomlaFooter
 {
@@ -24,7 +23,7 @@ class WrightAdapterJoomlaFooter
 	 *
 	 * @param   Array  $args  Args sent
 	 *
-	 * @return  JFormField  Formatted input
+	 * @return  string
 	 */
 	public function render($args)
 	{
