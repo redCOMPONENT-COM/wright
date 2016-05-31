@@ -1,0 +1,32 @@
+html {
+	height: 100%;
+}
+body {
+	min-height: 100%;
+	position: relative;
+	.element-invisible {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+img {
+	border: 0 none;
+	height: auto;
+	max-width: 100%;
+	vertical-align: middle;
+}
+
+#header {
+	margin-bottom: 10px;
+	#logo {
+		a.image {
+			h2 {
+				display: none;
+			}
+		}
+	}
+	#top, #top2 {
+		padding-top: 10px;
+	}
+}

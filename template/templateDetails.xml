@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="template" method="install" client="site">
+	<name>%%extention%%</name>
+	<creationDate>Dec 2013</creationDate>
+	<author>redCOMPONENT</author>
+	<authorEmail>mail@redcomponent.com</authorEmail>
+	<authorUrl>http://www.redcomponent.com</authorUrl>
+	<copyright>Copyright redComponent 2013. All rights reserved</copyright>
+	<license>GNU/GPL v.3 or later.</license>
+	<version>1.5</version>
+    <description>TPL_%%UPNAME%%_XML_DESCRIPTION</description>
+
+	<files>
+		<filename>component.php</filename>
+		<filename>functions.php</filename>
+		<filename>index.php</filename>
+		<filename>template.php</filename>
+		<filename>templateDetails.xml</filename>
+		<filename>template_thumbnail.png</filename>
+		<filename>wrighttemplate.php</filename>
+		<folder>css</folder>
+		<folder>favicons</folder>
+		<folder>html</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+        <folder>scss</folder>
+		<folder>wright</folder>
+	</files>
+
+	<positions>
+		<position>toolbar</position>
+		<position>logo</position>
+		<position>top</position>
+		<position>top2</position>
+		<position>menu</position>
+		<position>featured</position>
+		<position>grid-top</position>
+		<position>grid-top2</position>
+		<position>above-content</position>
+		<position>breadcrumbs</position>
+		<position>sidebar1</position>
+		<position>sidebar2</position>
+		<position>below-content</position>
+		<position>grid-bottom</position>
+		<position>grid-bottom2</position>
+		<position>bottom-menu</position>
+		<position>footer</position>
+	</positions>
+
+	<languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.tpl_%%lwname%%.ini</language>
+        <language tag="en-GB">en-GB/en-GB.tpl_%%lwname%%.sys.ini</language>
+    </languages>
+
+
+	<config>
+		<fields name="params" addfieldpath="/templates/%%lwname%%/wright/parameters/joomla_3">
+			<fieldset name="general">
+				<!-- Start of default Wright params -->
+				<field name="rebrand" type="hidden" default="yes" />
+				<field name="style" type="hidden" default="generic" />
+
+				<field type="note"
+					name="javascript"
+					class="text"
+					label="TPL_%%UPNAME%%_JAVASCRIPT_SPACER_LABEL"/>
+				<field name="modal"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="1"
+					label="TPL_%%UPNAME%%_FIELD_ENABLE_MODAL_LABEL"
+					description="TPL_%%UPNAME%%_FIELD_ENABLE_MODAL_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="javascriptBottom"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="0"
+					label="TPL_%%UPNAME%%_FIELD_JAVASCRIPT_BOTTOM"
+					description="TPL_%%UPNAME%%_FIELD_JAVASCRIPT_BOTTOM_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field type="spacer" name="" hr="false" />
+
+				<field type="note"
+					name="logospacer" class="text"
+					label="TPL_%%UPNAME%%_LOGO_SPACER_LABEL"/>
+				<field name="logo"
+					type="logo"
+					default="template"
+					label="TPL_%%UPNAME%%_FIELD_LOGO_IMAGE_LABEL"
+					description="TPL_%%UPNAME%%_FIELD_LOGO_IMAGE_DESC" />
+
+				<field name="logowidth"
+					type="grid"
+					default="4"
+					label="TPL_%%UPNAME%%_FIELD_LOGO_WIDTH_LABEL"
+					description="TPL_%%UPNAME%%_FIELD_LOGO_WIDTH_DESC" />
+				<field type="spacer" name="" hr="false" />
+
+				<field type="note"
+					name="fonts" class="text"
+					label="TPL_%%UPNAME%%_FONT_SPACER_LABEL"/>
+				<field name="body_font"
+					type="typography"
+					default="default"
+					label="TPL_%%UPNAME%%_FIELD_BODY_FONT_LABEL"
+					description="TPL_%%UPNAME%%_FIELD_BODY_FONT_DESC" />
+
+				<field name="header_font"
+					type="typography"
+					default="default"
+					label="TPL_%%UPNAME%%_FIELD_HEADING_FONT_LABEL"
+					description="TPL_%%UPNAME%%_FIELD_HEADING_FONT_DESC" />
+				<field type="spacer" name="" hr="false" />
+
+				<field type="note"
+					name="bootstrap" class="text"
+					label="TPL_%%UPNAME%%_BOOTSTRAP_SPACER_LABEL"/>
+				<field name="wright_bootstrap_images"
+					type="list" default=""
+					label="TPL_%%UPNAME%%_BOOTSTRAP_IMAGES"
+					description="TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_DESC">
+					<option value="">TPL_%%UPNAME%%_NONE</option>
+					<option value="img-rounded">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_ROUNDED</option>
+					<option value="img-circle">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_CIRCLE</option>
+					<option value="img-polaroid">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_POLAROID</option>
+				</field>
+
+				<field name="responsive"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="1"
+					label="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE"
+					description="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="stickyFooter"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="1"
+					label="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER"
+					description="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+			</fieldset>
+
+			<fieldset name="bootstrap">
+				<field name="bootstrapvariables"
+					label="TPL_%%UPNAME%%_FIELD_BOOTSTRAP_VARIABLES"
+					type="bootstrapvariables"
+					/>
+			</fieldset>
+
+			<fieldset name="layout">
+				<field name="columnsNumber"
+					type="text"
+					class="input-mini"
+					default="12"
+					label="TPL_%%UPNAME%%_COLUMNSNUMBER_LABEL"
+					description="TPL_%%UPNAME%%_COLUMNSNUMBER_DESC"
+					onchange="changeColumnsNumber(this.value)"
+					filter="integer" />
+
+				<field name="columns"
+					type="columns"
+					default="sidebar1:3;main:6;sidebar2:3"
+					sidebars="2"
+					label="TPL_%%UPNAME%%_FIELD_COLUMNS_LABEL"
+					description="TPL_%%UPNAME%%_FIELD_COLUMNS_DESC" />
+
+				<field name="build" type="hidden" default="1" />
+				<field name="buildjs" type="hidden" default="1" />
+                <!-- End of default Wright params -->
+			</fieldset>
+			<fieldset name="browser">
+				<field name="browsercompatibilityswitch"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="0"
+					label="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_SWITCH"
+					description="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_SWITCH_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="browsercompatibility"
+					label="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY"
+					description="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_DESC"
+					type="browsercompatibility" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>

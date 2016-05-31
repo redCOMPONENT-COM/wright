@@ -2,40 +2,37 @@
 <!-- ==================================================================  -->
 <!-- redCOMPONENT Template Framework packager                            -->
 <!-- ==================================================================  -->
-<project name="com_redshop" default="dist">
-    <!-- Do initialization stuff -->
-    <property file="build.properties" override="true" />
-
-    <property
-            name="extension"
-            value="${tpl.name}"
-            override="true" />
-
-    <!-- Folder where the redSHOP repository is located  -->
-    <property
-            name="extpath"
-            value="${repo.dir}/code"
-            override="true" />
-
-    <!-- Load extension property in XML file -->
-    <xmlproperty file="${extpath}/templateDetails.xml" prefix="extensionDetails" keepRoot="false" />
-
-    <!-- Get extension version from XML -->
-    <property
-            name="version"
-            value="${extensionDetails.version}"
-            override="true"/>
-
-     <!-- Target dir where packages will be created  -->
-    <property
-            name="targetdir"
-            value="${package.dir}/package-${extension}-v${version}"
-            override="true" />
+<project name="com_redshop" default="pack">
 
     <!-- ============================================  -->
     <!-- Create packages folder                        -->
     <!-- ============================================  -->
     <target name="prepare">
+
+        <property
+                name="extension"
+                value="${tpl.name}"
+                override="true" />
+
+        <property
+                name="extpath"
+                value="${repo.dir}/template"
+                override="true" />
+
+        <!-- Load extension property in XML file -->
+        <xmlproperty file="${extpath}/templateDetails.xml" prefix="extensionDetails" keepRoot="false" />
+
+        <!-- Get extension version from XML -->
+        <property
+                name="version"
+                value="${extensionDetails.version}"
+                override="true"/>
+
+        <!-- Target dir where packages will be created  -->
+        <property
+                name="targetdir"
+                value="${package.dir}/package-${extension}-v${version}"
+                override="true" />
         <!-- Check if the target folder exists. If not, create it -->
         <if>
             <available file="${targetdir}" type="dir" />
@@ -70,8 +67,8 @@
             </replaceregexp>
         </filterchain>
 
-        <echo msg="Copying CODE folder to build directory..." />
-        <copy todir="${targetdir}">
+        <echo msg="Copying TEMPLATE folder to build directory..." />
+        <copy todir="${targetdir}/template">
             <filterchain refid="file" />
             <fileset dir="${extpath}">
                 <include name="**" />
@@ -81,10 +78,23 @@
         </copy>
 
         <!-- Languages -->
-        <copy file="${extpath}/language/en-GB/en-GB.tpl_redcomponent.ini" tofile="${targetdir}/language/en-GB/en-GB.tpl_${nameLcwords}.ini" overwrite="true">
+        <copy file="${extpath}/language/en-GB/en-GB.tpl_redcomponent.ini" tofile="${targetdir}/template/language/en-GB/en-GB.tpl_${nameLcwords}.ini" overwrite="true">
             <filterchain refid="file" />
         </copy>
-        <copy file="${extpath}/language/en-GB/en-GB.tpl_redcomponent.sys.ini" tofile="${targetdir}/language/en-GB/en-GB.tpl_${nameLcwords}.sys.ini" overwrite="true">
+        <copy file="${extpath}/language/en-GB/en-GB.tpl_redcomponent.sys.ini" tofile="${targetdir}/template/language/en-GB/en-GB.tpl_${nameLcwords}.sys.ini" overwrite="true">
+            <filterchain refid="file" />
+        </copy>
+
+        <!-- Plugin -->
+        <echo message="Copying Plugin..." />
+        <copy todir="${targetdir}/plugin" overwrite="true">
+            <filterchain refid="file" />
+            <fileset dir="${extpath}/../plugin/extension/redcomponent" >
+                <include name="**" />
+            </fileset>
+        </copy>
+
+        <copy file="${extpath}/../pkg_wright.xml" tofile="${targetdir}/packages/pkg_${extension}.xml" overwrite="true">
             <filterchain refid="file" />
         </copy>
 
@@ -96,13 +106,80 @@
     <target name="dist" depends="build">
         <echo msg="Creating ZIP archive..." />
 
-        <zip destfile="${targetdir}/../tpl_${extension}-v${version}.zip">
-            <fileset dir="${targetdir}">
+        <zip destfile="${targetdir}/packages/tpl_${extension}.zip">
+            <fileset dir="${targetdir}/template">
                 <include name="**" />
                 <exclude name=".*" />
             </fileset>
         </zip>
 
+        <zip destfile="${targetdir}/packages/plg_extension_redcomponent.zip">
+            <fileset dir="${targetdir}/plugin">
+                <include name="**" />
+                <exclude name=".*" />
+            </fileset>
+        </zip>
+
+        <zip destfile="${package.dir}/${extension}-v${version}.zip">
+            <fileset dir="${targetdir}/packages" />
+        </zip>
+
         <echo msg="Files copied and compressed in build directory OK!" />
+    </target>
+
+
+    <target name="pack">
+        <!-- Do initialization stuff -->
+        <if>
+            <not>
+                <available file="build.properties" type="file" />
+            </not>
+            <then>
+                <fail msg="File not found: build.properties" />
+            </then>
+        </if>
+
+        <property file="build.properties" override="true"/>
+
+        <property
+                name="extension"
+                value="${comp.name}"
+                override="true"/>
+
+        <phingcall target="dist" />
+    </target>
+
+    <target name="autopack">
+        <property
+                name="package.dir"
+                value=".dist"
+                override="true"/>
+
+        <property
+                name="tpl.name"
+                value="redcomponent"
+                override="true"/>
+
+        <property
+                name="package.delete"
+                value="true"
+                override="false"/>
+
+        <property
+                name="repo.dir"
+                value="./"
+                override="false"/>
+        <if>
+            <and>
+                <available file="${package.dir}" type="dir"/>
+                <equals arg1="${package.delete}" arg2="1" />
+            </and>
+            <then>
+                <echo msg="Removing old autopack folder"/>
+                <delete dir="${package.dir}"/>
+            </then>
+        </if>
+
+        <phingcall target="dist" />
     </target>
 </project>
