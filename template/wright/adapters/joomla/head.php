@@ -54,7 +54,7 @@ class WrightAdapterJoomlaHead
 
 		$doc->setMetaData('msapplication-config', $faviconsurl . 'browserconfig.xml');
 
-		$doc->setMetaData('theme-color', '#ffffff');
+		$doc->setMetaData('theme-color', $doc->params->get('theme_color', '#ffffff'));
 
 		$head = '<jdoc:include type="head" />';
 		$head .= "\n";
