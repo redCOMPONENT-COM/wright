@@ -173,12 +173,6 @@ function modChrome_wrightflexgrid($module, &$params, &$attribs)
 	{
 		$class .= ' last';
 		$modulenumbera[$attribs['name']] = 0;
-
-		// For 5 modules with span2 first and last modules will have 3 columns width
-		if (count($robModules) == 5 && $spanWidth == 2)
-		{
-			$spanWidth = 3;
-		}
 	}
 
 	$modulenumbera[$attribs['name']]++;
