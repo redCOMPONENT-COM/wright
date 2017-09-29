@@ -5,9 +5,9 @@
 	<author>redCOMPONENT</author>
 	<authorEmail>mail@redcomponent.com</authorEmail>
 	<authorUrl>http://www.redcomponent.com</authorUrl>
-	<copyright>Copyright redComponent 2013. All rights reserved</copyright>
+	<copyright>Copyright redComponent 2013 - 2016. All rights reserved</copyright>
 	<license>GNU/GPL v.3 or later.</license>
-	<version>1.5</version>
+	<version>1.5.3.1</version>
     <description>TPL_%%UPNAME%%_XML_DESCRIPTION</description>
 
 	<files>
@@ -61,9 +61,47 @@
 				<field name="style" type="hidden" default="generic" />
 
 				<field type="note"
-					name="javascript"
-					class="text"
-					label="TPL_%%UPNAME%%_JAVASCRIPT_SPACER_LABEL"/>
+					name="bootstrap" class="text"
+					label="TPL_%%UPNAME%%_BOOTSTRAP_SPACER_LABEL"/>
+
+				<field name="theme_color"
+					type="color"
+					class="input-mini"
+					default="#ffffff"
+					label="TPL_%%UPNAME%%_THEME_COLOR_LABEL"
+					description="TPL_%%UPNAME%%_THEME_COLOR_DESC"
+				/>
+
+				<field name="wright_bootstrap_images"
+					type="list" default=""
+					label="TPL_%%UPNAME%%_BOOTSTRAP_IMAGES"
+					description="TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_DESC">
+					<option value="">TPL_%%UPNAME%%_NONE</option>
+					<option value="img-rounded">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_ROUNDED</option>
+					<option value="img-circle">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_CIRCLE</option>
+					<option value="img-polaroid">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_POLAROID</option>
+				</field>
+
+				<field name="responsive"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="1"
+					label="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE"
+					description="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="stickyFooter"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="1"
+					label="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER"
+					description="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
 				<field name="modal"
 					type="radio"
 					class="btn-group btn-group-yesno"
@@ -116,39 +154,6 @@
 					label="TPL_%%UPNAME%%_FIELD_HEADING_FONT_LABEL"
 					description="TPL_%%UPNAME%%_FIELD_HEADING_FONT_DESC" />
 				<field type="spacer" name="" hr="false" />
-
-				<field type="note"
-					name="bootstrap" class="text"
-					label="TPL_%%UPNAME%%_BOOTSTRAP_SPACER_LABEL"/>
-				<field name="wright_bootstrap_images"
-					type="list" default=""
-					label="TPL_%%UPNAME%%_BOOTSTRAP_IMAGES"
-					description="TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_DESC">
-					<option value="">TPL_%%UPNAME%%_NONE</option>
-					<option value="img-rounded">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_ROUNDED</option>
-					<option value="img-circle">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_CIRCLE</option>
-					<option value="img-polaroid">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_POLAROID</option>
-				</field>
-
-				<field name="responsive"
-					type="radio"
-					class="btn-group btn-group-yesno"
-					default="1"
-					label="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE"
-					description="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE_DESC">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
-
-				<field name="stickyFooter"
-					type="radio"
-					class="btn-group btn-group-yesno"
-					default="1"
-					label="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER"
-					description="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER_DESC">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
 			</fieldset>
 
 			<fieldset name="bootstrap">
