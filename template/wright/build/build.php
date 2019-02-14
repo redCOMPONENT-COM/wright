@@ -66,11 +66,10 @@ class BuildBootstrap
 				array(
 					JPATH_THEMES . '/' . $document->template . '/scss/',
 					JPATH_THEMES . '/' . $document->template . '/wright/build/',
-					JPATH_THEMES . '/' . $document->template . '/wright/build/libraries/bootstrap/stylesheets/',
+					JPATH_THEMES . '/' . $document->template . '/wright/build/libraries/bootstrap',
 					JPATH_THEMES . '/' . $document->template . '/wright/build/libraries/redcomponent/'
 				)
 			);
-
 
 			$columnsNumber = $document->params->get('columnsNumber', 12);
 
@@ -79,25 +78,17 @@ class BuildBootstrap
 				unlink(JPATH_THEMES . '/' . $document->template . '/css/style.css');
 			}
 
-			$ds = '@import "variables";';
+			$ds = '@import "scss/functions";';
+			$ds .= '@import "variables";';
 			$ds .= '$grid-columns: ' . $columnsNumber . ';';
 			$ds .= '@import "scss/bootstrap";';
 			$ds .= '@import "template"; ';
 
 			$ds .= '@import "scss/joomla";';
-
 			$ds .= '@import "scss/typography";';
-			$ds .= '@import "redcomponent"; ';
 
-			if ($document->params->get('responsive', 1))
-			{
-				$ds .= '@import "template-responsive"; ';
-				$ds .= '@import "redcomponent-responsive"; ';
-			}
-			else
-			{
-				$ds .= '.container{width:$container-desktop !important} .navbar-nav > li {float: left;} ';
-			}
+			$ds .= '@import "template-responsive"; ';
+
 
 			file_put_contents(JPATH_THEMES . '/' . $document->template . '/css/style.css', $scss->compile($ds));
 

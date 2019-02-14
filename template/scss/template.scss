@@ -8,4 +8,11 @@
 
 // Custom template
 @import "fontface.scss";
-@import "1_template.scss";
+
+@import "layouts/header";
+@import "layouts/footer";
+
+@import "modules/left";
+@import "modules/right";
+
+@import "pages/home";
