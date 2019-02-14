@@ -2,7 +2,7 @@
 	<extension type="package" version="1.6" method="install">
 	<name>redCOMPONENT template package</name>
 	<author>redCOMPONENT</author>
-	<creationDate>April 2016</creationDate>
+	<creationDate>Feb 2018</creationDate>
 	<packagename>redcomponent</packagename>
 	<version>%%version%%</version>
 	<packager>redCOMPONENT</packager>
