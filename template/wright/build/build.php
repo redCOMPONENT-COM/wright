@@ -94,6 +94,11 @@ class BuildBootstrap
 
 			$document->params->set('build', false);
 
+			// Version
+			$version = $document->params->get('version', 1);
+			$version++;
+			$document->params->set('version', $version);
+
 			$newParams = new JRegistry(json_decode($document->params));
 
 			$templateId = JFactory::getApplication()->getTemplate(true)->id;
@@ -153,6 +158,11 @@ class BuildBootstrap
 			}
 
 			$document->params->set('buildjs', false);
+
+			// Version
+			$versionjs = $document->params->get('versionjs', 1);
+			$versionjs++;
+			$document->params->set('versionjs', $versionjs);
 
 			$newParams = new JRegistry(json_decode($document->params));
 

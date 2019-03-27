@@ -429,10 +429,11 @@ class Wright
 		$browser = JBrowser::getInstance();
 		$doc = JFactory::getDocument();
 		$input = JFactory::getApplication()->input;
+		$version = $doc->params->get('version', 1);
 
 		$styles = Array();
 
-		$styles['template'][] = 'style.css';
+		$styles['template'][] = 'style.css?v=' . $version;
 		$styles['wrighttemplatecss'][] = 'font-awesome.min.css';
 
 		if (version_compare(JVERSION, '3.0', 'ge'))
@@ -721,7 +722,10 @@ class Wright
 	 */
 	public function generateJS()
 	{
-		$templateJsUrl = JURI::root() . 'templates/' . $this->document->template . '/js/template.js';
+		$versionjs = $this->document->params->get('versionjs', 1);
+
+		$templateJsUrl = JURI::root() . 'templates/' . $this->document->template . '/js/template.js?v=' . $versionjs;
+
 		$script = "<script src='" . $templateJsUrl . "' type='text/javascript'></script>\n";
 
 		if ($this->_jsDeclarations)

@@ -182,6 +182,8 @@
 
 				<field name="build" type="hidden" default="1" />
 				<field name="buildjs" type="hidden" default="1" />
+				<field name="version" type="hidden" default="1" />
+				<field name="versionjs" type="hidden" default="1" />
                 <!-- End of default Wright params -->
 			</fieldset>
 			<fieldset name="browser">
