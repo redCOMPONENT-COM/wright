@@ -5,6 +5,11 @@
  *
  */
 
+* {
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 // Custom template
 @import "fontface.scss";
