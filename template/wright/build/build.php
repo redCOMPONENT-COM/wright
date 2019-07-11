@@ -208,14 +208,11 @@ class BuildBootstrap
 
 	private function getJsContent($file)
 	{
-		$arrContextOptions=array(
-			"ssl"=>array(
-				"verify_peer"=>false,
-				"verify_peer_name"=>false,
-			),
-		);
+		$parseUrl = parse_url($file);
+		$pathFile = JPATH_SITE . $parseUrl['path'];
+
 		// Initialize the buffer
-		$buffer = file_get_contents($file, false, stream_context_create($arrContextOptions));
+		$buffer = file_get_contents($pathFile);
 		// Make sure the JS-content ends with ;
 		$buffer = trim($buffer);
 
