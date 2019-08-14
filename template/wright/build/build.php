@@ -208,23 +208,30 @@ class BuildBootstrap
 
 	private function getJsContent($file)
 	{
-		$arrContextOptions=array(
-			"ssl"=>array(
-				"verify_peer"=>false,
-				"verify_peer_name"=>false,
-			),
-		);
-		// Initialize the buffer
-		$buffer = file_get_contents($file, false, stream_context_create($arrContextOptions));
-		// Make sure the JS-content ends with ;
-		$buffer = trim($buffer);
-
-		if (preg_match('/;$/', $buffer) == false)
+		if (\JUri::isInternal($file))
 		{
-			$buffer .= ';' . "\n";
+			$p = parse_url($file);
+			$file = JPATH_SITE . $p['path'];
 		}
 
-		$buffer .= "\n";
+		$buffer = '';
+
+		if ($handle = fopen($file,"r")) 
+		{
+	        while (!feof($handle)) 
+	        {
+			    $buffer .= fread($handle, 8192);
+			}
+
+			$buffer = trim($buffer);
+
+			if (preg_match('/;$/', $buffer) == false)
+			{
+				$buffer .= ';' . "\n";
+			}
+
+			$buffer .= "\n";
+		}
 
 		return $buffer;
 	}
