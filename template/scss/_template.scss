@@ -5,42 +5,12 @@
  *
  */
 
-* {
-    font-smoothing: antialiased;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-html {
-	height: 100%;
-}
-body {
-	min-height: 100%;
-	position: relative;
-	.element-invisible {
-		display: none;
-		visibility: hidden;
-	}
-}
-
-#header {
-	#logo {
-		a.image {
-			h2 {
-				display: none;
-			}
-		}
-	}
-}
-
 // Bootstrap
 @import "lib/bootstrap";
 
-// Joomla
-@import "lib/joomla";
-
 // Template
 @import "common/fontface";
+@import "common/common";
 
 @import "layouts/header";
 @import "layouts/footer";

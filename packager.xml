@@ -85,10 +85,6 @@
             <filterchain refid="file" />
         </copy>
 
-        <copy file="${extpath}/../pkg_wright.xml" tofile="${targetdir}/packages/pkg_${extension}.xml" overwrite="true">
-            <filterchain refid="file" />
-        </copy>
-
     </target>
 
     <!-- ============================================  -->
@@ -97,22 +93,11 @@
     <target name="dist" depends="build">
         <echo msg="Creating ZIP archive..." />
 
-        <zip destfile="${targetdir}/packages/tpl_${extension}.zip">
+        <zip destfile="${package.dir}/tpl_${extension}-v${version}.zip">
             <fileset dir="${targetdir}/template">
                 <include name="**" />
                 <exclude name=".*" />
             </fileset>
-        </zip>
-
-        <zip destfile="${targetdir}/packages/plg_extension_redcomponent.zip">
-            <fileset dir="${targetdir}/plugin">
-                <include name="**" />
-                <exclude name=".*" />
-            </fileset>
-        </zip>
-
-        <zip destfile="${package.dir}/${extension}-v${version}.zip">
-            <fileset dir="${targetdir}/packages" />
         </zip>
 
         <echo msg="Files copied and compressed in build directory OK!" />

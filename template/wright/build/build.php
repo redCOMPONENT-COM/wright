@@ -31,11 +31,11 @@ class BuildBootstrap
 		// Check rebuild SCSS
 		$buildScss = $document->params->get('build', false);
 
-		if ($buildScss == false && is_file(JPATH_THEMES . '/' . $document->template . '/css/style.css'))
+		if ($buildScss == false && is_file(JPATH_THEMES . '/' . $document->template . '/dist/css/style.css'))
 		{
 			$scss_path = JPATH_THEMES . '/' . $document->template . '/scss';
 
-			$cachetime = filemtime(JPATH_THEMES . '/' . $document->template . '/css/style.css');
+			$cachetime = filemtime(JPATH_THEMES . '/' . $document->template . '/dist/css/style.css');
 
 			$files = JFolder::files($scss_path, '.scss', true, true);
 
@@ -72,14 +72,14 @@ class BuildBootstrap
 
 			$columnsNumber = $document->params->get('columnsNumber', 12);
 
-			if (is_file(JPATH_THEMES . '/' . $document->template . '/css/style.css'))
+			if (is_file(JPATH_THEMES . '/' . $document->template . '/dist/css/style.css'))
 			{
-				unlink(JPATH_THEMES . '/' . $document->template . '/css/style.css');
+				unlink(JPATH_THEMES . '/' . $document->template . '/dist/css/style.css');
 			}
 
 			$ds = '@import "template"; ';
 
-			file_put_contents(JPATH_THEMES . '/' . $document->template . '/css/style.css', $scss->compile($ds));
+			file_put_contents(JPATH_THEMES . '/' . $document->template . '/dist/css/style.css', $scss->compile($ds));
 
 			$document->params->set('build', false);
 
@@ -108,9 +108,9 @@ class BuildBootstrap
 
 		$jsFiles = JFolder::files($js_path, '.js', true, true, array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'template.js'));
 
-		if ($buildJs == false && is_file(JPATH_THEMES . '/' . $document->template . '/js/template.js'))
+		if ($buildJs == false && is_file(JPATH_THEMES . '/' . $document->template . '/dist/js/js.js'))
 		{
-			$cachetime = filemtime(JPATH_THEMES . '/' . $document->template . '/js/template.js');
+			$cachetime = filemtime(JPATH_THEMES . '/' . $document->template . '/dist/js/js.js');
 
 			if (count($jsFiles) > 0)
 			{
@@ -143,7 +143,7 @@ class BuildBootstrap
 					$buffer .= $this->getJsContent($file);
 				}
 
-				file_put_contents($js_path . '/template.js', $this->compress($buffer));
+				file_put_contents(JPATH_THEMES . '/' . $document->template . '/dist/js/js.js', $this->compress($buffer));
 			}
 
 			$document->params->set('buildjs', false);
@@ -197,12 +197,6 @@ class BuildBootstrap
 
 	private function getJsContent($file)
 	{
-		if (\JUri::isInternal($file))
-		{
-			$p = parse_url($file);
-			$file = JPATH_SITE . $p['path'];
-		}
-
 		$buffer = '';
 
 		if ($handle = fopen($file,"r")) 

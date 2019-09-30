@@ -1,0 +1,39 @@
+/**
+ * @copyright      Copyright (C) 2013 - 2016 redCOMPONENT
+ * @author         redCOMPONENT
+ * @package        Template
+ *
+ */
+
+* {
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	min-height: 100%;
+	position: relative;
+	.element-invisible {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+#header {
+	#logo {
+		a.image {
+			h2 {
+				display: none;
+			}
+		}
+	}
+}
+
+img {
+  @include img-fluid;
+}

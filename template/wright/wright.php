@@ -367,7 +367,7 @@ class Wright
 					}
 					else
 					{
-						$sheet = JURI::root() . 'templates/' . $this->document->template . '/css/' . $style;
+						$sheet = JURI::root() . 'templates/' . $this->document->template . '/dist/css/' . $style;
 					}
 
 					$css .= '<link rel="stylesheet" href="' . $sheet . '" type="text/css" />' . "\n";
@@ -666,7 +666,7 @@ class Wright
 	{
 		$versionjs = $this->document->params->get('versionjs', 1);
 
-		$templateJsUrl = JURI::root() . 'templates/' . $this->document->template . '/js/template.js?v=' . $versionjs;
+		$templateJsUrl = JURI::root() . 'templates/' . $this->document->template . '/dist/js/js.js?v=' . $versionjs;
 
 		$script = "<script src='" . $templateJsUrl . "' type='text/javascript'></script>\n";
 
