@@ -2,9 +2,10 @@
 
 defined('_JEXEC') or die('You are not allowed to directly access this file');
 
-require_once dirname(__FILE__) . '/scss.inc.php';
+$document = JFactory::getDocument();
+require_once JPATH_THEMES . '/' . $document->template . '/vendor/scssphp/scssphp/scss.inc.php';
 
-use Leafo\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Compiler;
 
 jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.folder');
@@ -60,14 +61,12 @@ class BuildBootstrap
 		{
 			$scss = new Compiler;
 
-			$scss->setFormatter("Leafo\ScssPhp\Formatter\Crunched");
+			$scss->setFormatter("ScssPhp\ScssPhp\Formatter\Crunched");
 
 			$scss->setImportPaths(
 				array(
 					JPATH_THEMES . '/' . $document->template . '/scss/',
-					JPATH_THEMES . '/' . $document->template . '/wright/build/',
-					JPATH_THEMES . '/' . $document->template . '/wright/build/libraries/bootstrap',
-					JPATH_THEMES . '/' . $document->template . '/wright/build/libraries/redcomponent/'
+					JPATH_THEMES . '/' . $document->template . '/vendor/twbs/bootstrap/scss',
 				)
 			);
 
@@ -78,15 +77,7 @@ class BuildBootstrap
 				unlink(JPATH_THEMES . '/' . $document->template . '/css/style.css');
 			}
 
-			$ds = '@import "scss/functions";';
-			$ds .= '@import "variables";';
-			$ds .= '$grid-columns: ' . $columnsNumber . ';';
-			$ds .= '@import "scss/bootstrap";';
-			$ds .= '@import "template"; ';
-
-			$ds .= '@import "scss/joomla";';
-			$ds .= '@import "scss/typography";';
-
+			$ds = '@import "template"; ';
 
 			file_put_contents(JPATH_THEMES . '/' . $document->template . '/css/style.css', $scss->compile($ds));
 
