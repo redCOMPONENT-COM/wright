@@ -61,21 +61,7 @@ class WrightAdapterJoomlaHead
 
 		$wr = Wright::getInstance();
 
-		$javascriptBottom = ($wr->params->get('javascriptBottom', 1) == 1 ? true : false);
-
-		if (!$javascriptBottom)
-		{
-			$head .= $wr->generateJS();
-		}
-
-		$browser = JBrowser::getInstance();
-
-		// Add responsive for IE
-		if ($browser->getBrowser() == 'msie' && (int) $browser->getMajor() <= 9)
-		{
-			$head .= '<script src="' . JURI::root() . 'templates/' . $doc->template . '/wright/js/respond.min.js" type="text/javascript"></script>';
-		}
-
+		$head .= $wr->generateJS();
 		$head .= $wr->generateCSS();
 
 		return $head;

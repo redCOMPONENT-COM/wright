@@ -211,23 +211,7 @@ class Wright
 			JHtml::_('bootstrap.framework', true);
 		}
 
-		if ($this->document->params->get('modal', '1') == '1')
-		{
-			JHtml::_('behavior.modal');
-		}
-
-		// Load bootstrap JS - Not load on edit module
-		if ($input->getString('option', '') != 'com_config')
-		{
-			$this->addJSScript($this->_urlJS . '/bootstrap-uncompressed.js');
-			$this->addJSScript($this->_urlJS . '/utils.js');
-
-			if ($this->document->params->get('stickyFooter', 1))
-			{
-				$this->addJSScript($this->_urlJS . '/stickyfooter.js');
-			}
-		}
-		else
+		if ($input->getString('option', '') == 'com_config')
 		{
 			$this->addJSScript($this->_urlJS . '/edit.js');
 		}
@@ -236,27 +220,6 @@ class Wright
 		if (trim($this->document->params->get('headerscript', '')) !== '')
 		{
 			$this->addJSScriptDeclaration($this->document->params->get('headerscript'));
-		}
-
-		if ($this->document->params->get('documentationMode', '0') == '1')
-		{
-			$this->addJSScript($this->_urlTemplate . '/js/prettify.js');
-			$this->addJSScriptDeclaration('$window = jQuery(window); $window.prettyPrint && prettyPrint();');
-		}
-
-		// Set custom template theme for user
-		if (!is_null($input->getVar('templateTheme', null)))
-		{
-			$user->setParam('theme', $input->getVar('templateTheme'));
-			$user->save(true);
-		}
-
-		$this->_selectedStyle = $input->getVar('templateTheme', $user->getParam('theme', $this->document->params->get('style', 'generic')));
-
-		if (!$this->checkStyleFiles())
-		{
-			$this->_selectedStyle = $this->document->params->get('style', 'generic');
-			$this->checkStyleFiles();
 		}
 
 		$this->browserCompatibilityCheck();
@@ -434,8 +397,7 @@ class Wright
 		$styles = Array();
 
 		$styles['template'][] = 'style.css?v=' . $version;
-		$styles['wrighttemplatecss'][] = 'font-awesome.min.css';
-
+		
 		if (version_compare(JVERSION, '3.0', 'ge'))
 		{
 			unset($doc->_styleSheets[$this->_urlTemplate . '/css/jui/bootstrap.min.css']);
@@ -446,26 +408,6 @@ class Wright
 		if ($this->document->params->get('documentationMode', '0') == '1')
 		{
 			$styles['template'][] = 'docs.css';
-		}
-
-		// Add some stuff for lovely IE if needed
-		if ($browser->getBrowser() == 'msie')
-		{
-			// Switch to allow specific versions of IE to have additional sheets
-			$major = $browser->getMajor();
-
-			if ((int) $major <= 9)
-			{
-				$this->document->addScript(JURI::root() . 'templates/' . $this->document->template . '/wright/js/html5shiv.min.js');
-			}
-
-			if (is_file(JPATH_SITE . '/templates/' . $this->document->template . '/css/ie.css'))
-			{
-				$styles['ie'][] = 'ie.css';
-			}
-
-			if (is_file(JPATH_SITE . '/templates/' . $this->document->template . '/css/ie' . $major . '.css'))
-				$styles['ie'][] = 'ie' . $major . '.css';
 		}
 
 		if ($this->document->direction == 'rtl' && is_file(JPATH_SITE . '/templates/' . $this->document->template . '/css/rtl.css'))

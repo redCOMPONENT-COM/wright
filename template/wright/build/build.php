@@ -87,8 +87,6 @@ class BuildBootstrap
 			$ds .= '@import "scss/joomla";';
 			$ds .= '@import "scss/typography";';
 
-			$ds .= '@import "template-responsive"; ';
-
 
 			file_put_contents(JPATH_THEMES . '/' . $document->template . '/css/style.css', $scss->compile($ds));
 

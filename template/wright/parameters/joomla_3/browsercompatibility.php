@@ -63,16 +63,8 @@ class JFormFieldBrowserCompatibility extends JFormField
 	{
 		$doc = JFactory::getDocument();
 
-		if (version_compare(JVERSION, '3', 'ge'))
-		{
-			JHtml::_('jquery.framework');
-		}
-		else
-		{
-			$doc->addScript(str_replace('/administrator/', '/', JURI::base()) . 'templates/' . $this->form->getValue('template') . '/wright/js/jquery.min.js');
-			$doc->addScriptDeclaration('jQuery.noConflict();');
-		}
-
+		JHtml::_('jquery.framework');
+		
 		$doc->addScript(str_replace('/administrator/', '/', JURI::base()) . 'templates/' . $this->form->getValue('template') . '/wright/parameters/assets/browsercompatibility/browsercompatibility.js');
 		$doc->addStylesheet(str_replace('/administrator/', '/', JURI::base()) . 'templates/' . $this->form->getValue('template') . '/wright/parameters/assets/browsercompatibility/browsercompatibility.css');
 

@@ -85,15 +85,6 @@
             <filterchain refid="file" />
         </copy>
 
-        <!-- Plugin -->
-        <echo message="Copying Plugin..." />
-        <copy todir="${targetdir}/plugin" overwrite="true">
-            <filterchain refid="file" />
-            <fileset dir="${extpath}/../plugin/extension/redcomponent" >
-                <include name="**" />
-            </fileset>
-        </copy>
-
         <copy file="${extpath}/../pkg_wright.xml" tofile="${targetdir}/packages/pkg_${extension}.xml" overwrite="true">
             <filterchain refid="file" />
         </copy>

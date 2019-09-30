@@ -71,56 +71,7 @@
 					label="TPL_%%UPNAME%%_THEME_COLOR_LABEL"
 					description="TPL_%%UPNAME%%_THEME_COLOR_DESC"
 				/>
-
-				<field name="wright_bootstrap_images"
-					type="list" default=""
-					label="TPL_%%UPNAME%%_BOOTSTRAP_IMAGES"
-					description="TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_DESC">
-					<option value="">TPL_%%UPNAME%%_NONE</option>
-					<option value="img-rounded">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_ROUNDED</option>
-					<option value="img-circle">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_CIRCLE</option>
-					<option value="img-polaroid">TPL_%%UPNAME%%_BOOTSTRAP_IMAGES_POLAROID</option>
-				</field>
-
-				<field name="responsive"
-					type="radio"
-					class="btn-group btn-group-yesno"
-					default="1"
-					label="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE"
-					description="TPL_%%UPNAME%%_FIELD_ENABLE_RESPONSIVE_DESC">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
-
-				<field name="stickyFooter"
-					type="radio"
-					class="btn-group btn-group-yesno"
-					default="1"
-					label="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER"
-					description="TPL_%%UPNAME%%_FIELD_STICKY_FOOTER_DESC">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
-
-				<field name="modal"
-					type="radio"
-					class="btn-group btn-group-yesno"
-					default="1"
-					label="TPL_%%UPNAME%%_FIELD_ENABLE_MODAL_LABEL"
-					description="TPL_%%UPNAME%%_FIELD_ENABLE_MODAL_DESC">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
-
-				<field name="javascriptBottom"
-					type="radio"
-					class="btn-group btn-group-yesno"
-					default="0"
-					label="TPL_%%UPNAME%%_FIELD_JAVASCRIPT_BOTTOM"
-					description="TPL_%%UPNAME%%_FIELD_JAVASCRIPT_BOTTOM_DESC">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
+				
 				<field type="spacer" name="" hr="false" />
 
 				<field type="note"
@@ -139,29 +90,9 @@
 					description="TPL_%%UPNAME%%_FIELD_LOGO_WIDTH_DESC" />
 				<field type="spacer" name="" hr="false" />
 
-				<field type="note"
-					name="fonts" class="text"
-					label="TPL_%%UPNAME%%_FONT_SPACER_LABEL"/>
-				<field name="body_font"
-					type="typography"
-					default="default"
-					label="TPL_%%UPNAME%%_FIELD_BODY_FONT_LABEL"
-					description="TPL_%%UPNAME%%_FIELD_BODY_FONT_DESC" />
-
-				<field name="header_font"
-					type="typography"
-					default="default"
-					label="TPL_%%UPNAME%%_FIELD_HEADING_FONT_LABEL"
-					description="TPL_%%UPNAME%%_FIELD_HEADING_FONT_DESC" />
-				<field type="spacer" name="" hr="false" />
+			
 			</fieldset>
 
-			<fieldset name="bootstrap">
-				<field name="bootstrapvariables"
-					label="TPL_%%UPNAME%%_FIELD_BOOTSTRAP_VARIABLES"
-					type="bootstrapvariables"
-					/>
-			</fieldset>
 
 			<fieldset name="layout">
 				<field name="columnsNumber"

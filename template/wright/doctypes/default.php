@@ -163,56 +163,7 @@ abstract class HtmlAdapterAbstract
 		{
 			$class .= ' ' . $theme[0]['type'];
 		}
-		else
-		{
-		}
-
-		// If user has custom typography selected, we need to add the classes to trigger it
-		if ($this->params->get('body_font', 'default') !== 'default')
-		{
-			if ($this->params->get('body_font') == 'googlefonts')
-			{
-				if (strpos($this->params->get('body_googlefont'), ','))
-				{
-					$gfont = substr($this->params->get('body_googlefont', 'Cuprum'), 0, strpos($this->params->get('body_googlefont', 'Cuprum'), ','));
-				}
-				else
-				{
-					$gfont = $this->params->get('body_googlefont', 'Cuprum');
-				}
-
-				$class .= ' b_' . strtolower(str_replace('+', '', $gfont));
-			}
-			else
-			{
-				$class .= ' b_' . $this->params->get('body_font', 'verdana');
-			}
-		}
-		else
-		{
-		}
-
-		if ($this->params->get('header_font', 'default') !== 'default')
-		{
-			if ($this->params->get('header_font') == 'googlefonts')
-			{
-				if (strpos($this->params->get('header_googlefont'), ','))
-				{
-					$gfont = substr($this->params->get('header_googlefont', 'Cuprum'), 0, strpos($this->params->get('header_googlefont', 'Cuprum'), ','));
-				}
-				else
-				{
-					$gfont = $this->params->get('header_googlefont', 'Cuprum');
-				}
-
-				$class .= ' h_' . strtolower(str_replace('+', '', $gfont));
-			}
-			else
-			{
-				$class .= ' h_' . $this->params->get('header_font', 'helvetica');
-			}
-		}
-
+		
 		if (JRequest::getVar('Itemid'))
 		{
 			$class .= ' id_' . JRequest::getVar('Itemid');
@@ -242,13 +193,6 @@ abstract class HtmlAdapterAbstract
 	{
 		$js = "";
 		$doc = Wright::getInstance();
-
-		$javascriptBottom = ($doc->params->get('javascriptBottom', 1) == 1 ? true : false);
-
-		if ($javascriptBottom)
-		{
-			$js = $doc->generateJS();
-		}
 
 		$browserWarning = '';
 

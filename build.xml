@@ -71,15 +71,5 @@
 		<copy file="${src}/language/en-GB/en-GB.tpl_redcomponent.sys.ini" tofile="${www.dir}/language/en-GB/en-GB.tpl_${nameLcwords}.sys.ini" overwrite="true">
 			<filterchain refid="file" />
 		</copy>
-
-		<!-- Plugin -->
-		<echo message="Copying Plugin..." />
-		<copy todir="${www.dir}/plugins" overwrite="true">
-			<filterchain refid="file" />
-			<fileset dir="${plugin}" >
-				<include name="**" />
-			</fileset>
-		</copy>
-
 	</target>
 </project>

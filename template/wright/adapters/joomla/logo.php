@@ -182,12 +182,12 @@ class WrightAdapterJoomlaLogo
 		$module2name = (isset($args['name2']) ? $args['name2'] : "");
 		$module2name2 = (isset($args['name2']) ? $args['name2'] . 2 : "");
 
-		if ($logowidth !== '12' && ($doc->countModules($modulename) || $doc->countModules($module2name)))
+		if ($logowidth !== '12' && ($doc->countModules($modulename) || ($module2name && $doc->countModules($module2name))))
 		{
 			$modules++;
 		}
 
-		if ($logowidth !== '12' && ($doc->countModules($modulename2) || $doc->countModules($module2name2)))
+		if ($logowidth !== '12' && ($doc->countModules($modulename2) || ($module2name2 && $doc->countModules($module2name2))))
 		{
 			$modules++;
 		}

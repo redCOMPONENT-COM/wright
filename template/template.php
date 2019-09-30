@@ -10,7 +10,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 ?>
-<!DOCTYPE html>
+<!doctype html>
 	<html>
 	<head>
 		<!--

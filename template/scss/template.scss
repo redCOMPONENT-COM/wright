@@ -11,7 +11,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-// Custom template
+// Template
 @import "fontface.scss";
 
 @import "layouts/header";
@@ -21,3 +21,6 @@
 @import "modules/right";
 
 @import "pages/home";
+
+// Responsive
+@import "responsive.scss"
