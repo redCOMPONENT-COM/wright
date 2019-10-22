@@ -2,8 +2,7 @@
 
 defined('_JEXEC') or die('You are not allowed to directly access this file');
 
-$document = JFactory::getDocument();
-require_once JPATH_THEMES . '/' . $document->template . '/vendor/scssphp/scssphp/scss.inc.php';
+require_once dirname(__FILE__) . '../../../vendor/scssphp/scssphp/scss.inc.php';
 
 use ScssPhp\ScssPhp\Compiler;
 
