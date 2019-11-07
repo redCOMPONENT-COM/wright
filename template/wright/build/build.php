@@ -2,8 +2,6 @@
 
 defined('_JEXEC') or die('You are not allowed to directly access this file');
 
-require_once dirname(__FILE__) . '../../../vendor/scssphp/scssphp/scss.inc.php';
-
 use ScssPhp\ScssPhp\Compiler;
 
 jimport('joomla.filesystem.file');

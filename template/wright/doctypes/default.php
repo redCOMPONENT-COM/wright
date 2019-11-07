@@ -191,19 +191,7 @@ abstract class HtmlAdapterAbstract
 	 */
 	public function getBodyclose($matches)
 	{
-		$js = "";
-		$doc = Wright::getInstance();
-
-		$browserWarning = '';
-
-		if ($doc->_showBrowserWarning)
-		{
-			ob_start();
-			include JPATH_SITE . '/templates/' . $doc->document->template . '/wright/includes/browserwarning.php';
-			$browserWarning = ob_get_clean();
-		}
-
-		return $browserWarning . $js . '</body>';
+		return '</body>';
 	}
 
 	/**

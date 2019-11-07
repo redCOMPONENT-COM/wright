@@ -1430,6 +1430,35 @@ class Compiler
         $this->popEnv();
     }
 
+
+    /**
+     * Compile the value of a comment that can have interpolation
+     * @param $value
+     * @param bool $pushEnv
+     * @return array|mixed|string
+     */
+    protected function compileCommentValue($value, $pushEnv = false)
+    {
+        $c = $value[1];
+        if (isset($value[2])) {
+            if ($pushEnv) {
+                $this->pushEnv();
+                $storeEnv = $this->storeEnv;
+                $this->storeEnv = $this->env;
+            }
+            try {
+                $c = $this->compileValue($value[2]);
+            } catch (\Exception $e) {
+                // ignore error in comment compilation which are only interpolation
+            }
+            if ($pushEnv) {
+                $this->storeEnv = $storeEnv;
+                $this->popEnv();
+            }
+        }
+        return $c;
+    }
+
     /**
      * Compile root level comment
      *
@@ -1438,7 +1467,7 @@ class Compiler
     protected function compileComment($block)
     {
         $out = $this->makeOutputBlock(Type::T_COMMENT);
-        $out->lines[] = is_string($block[1]) ? $block[1] : $this->compileValue($block[1]);
+        $out->lines[] = $this->compileCommentValue($block, true);
 
         $this->scope->children[] = $out;
     }
@@ -2205,10 +2234,6 @@ class Compiler
             if (end($parent->children) !== $out) {
                 $outWrite = &$parent->children[count($parent->children) - 1];
             }
-
-            if (! is_string($line)) {
-                $line = $this->compileValue($line);
-            }
         }
 
         // check if it's a flat output or not
@@ -2371,7 +2396,8 @@ class Compiler
                     break;
                 }
 
-                $this->appendOutputLine($out, Type::T_COMMENT, $child[1]);
+                $line = $this->compileCommentValue($child, true);
+                $this->appendOutputLine($out, Type::T_COMMENT, $line);
                 break;
 
             case Type::T_MIXIN:
@@ -3615,6 +3641,9 @@ class Compiler
             case Type::T_NULL:
                 return 'null';
 
+            case Type::T_COMMENT:
+                return $this->compileCommentValue($value);
+
             default:
                 $this->throwError("unknown value type: ".json_encode($value));
         }
@@ -4478,6 +4507,10 @@ class Compiler
     protected function handleImportLoop($name)
     {
         for ($env = $this->env; $env; $env = $env->parent) {
+            if (! $env->block) {
+                continue;
+            }
+
             $file = $this->sourceNames[$env->block->sourceIndex];
 
             if (realpath($file) === $name) {

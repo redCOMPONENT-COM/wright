@@ -118,21 +118,7 @@
 				<field name="versionjs" type="hidden" default="1" />
                 <!-- End of default Wright params -->
 			</fieldset>
-			<fieldset name="browser">
-				<field name="browsercompatibilityswitch"
-					type="radio"
-					class="btn-group btn-group-yesno"
-					default="0"
-					label="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_SWITCH"
-					description="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_SWITCH_DESC">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
-				<field name="browsercompatibility"
-					label="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY"
-					description="TPL_%%UPNAME%%_BROWSER_COMPATIBILITY_DESC"
-					type="browsercompatibility" />
-			</fieldset>
+			
 		</fields>
 	</config>
 </extension>

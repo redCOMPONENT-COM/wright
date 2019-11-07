@@ -30,11 +30,10 @@ else
 	}
 }
 
+require_once dirname(__FILE__) . '/../vendor/autoload.php';
+
 // Includes WrightTemplateBase class for customizations to the template
 require_once dirname(__FILE__) . '/template/wrighttemplatebase.php';
-
-// Mobile Detect
-require_once dirname(__FILE__) . '/includes/mobile_detect.php';
 
 // Build LESS via PHP
 require_once dirname(__FILE__) . '/build/build.php';
@@ -81,10 +80,6 @@ class Wright
 
 	private $_baseVersion = '';
 
-	public $_showBrowserWarning = false;
-
-	public $_browserCompatibility = null;
-
 	/**
 	 * Main Wright function called to create the index.php file read by Joomla
 	 *
@@ -98,8 +93,7 @@ class Wright
 		$this->params = $document->params;
 		$this->baseurl = $document->baseurl;
 		$this->language = $document->language;
-		$this->browser = new WMobile_Detect;
-
+	
 		if ($app->isAdmin())
 		{
 			// If Wright is instanciated in backend, it stops loading
@@ -110,10 +104,6 @@ class Wright
 		$this->_urlTemplate = JURI::root() . 'templates/' . $this->document->template;
 		$this->_urlWright = $this->_urlTemplate . '/wright';
 		$this->_urlJS = $this->_urlWright . '/js';
-
-
-		// Browser library
-		include_once JPATH_SITE . '/templates/' . $this->document->template . '/wright/includes/browser.php';
 
 		$this->author = simplexml_load_file(JPATH_BASE . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->document->template . DIRECTORY_SEPARATOR . 'templateDetails.xml')->author;
 
@@ -222,56 +212,8 @@ class Wright
 			$this->addJSScriptDeclaration($this->document->params->get('headerscript'));
 		}
 
-		$this->browserCompatibilityCheck();
-
 		// Build css
 		$this->css();
-	}
-
-	/**
-	 * Adds browser compatibility check if it's selected in the backed
-	 *
-	 * @return  void
-	 */
-	private function browserCompatibilityCheck()
-	{
-		if ($this->document->params->get('browsercompatibilityswitch', '0') == '1')
-		{
-			$session = JFactory::getSession();
-			$hideWarning = $session->get('hideWarning', 0, 'WrightTemplate_' . $this->document->template);
-
-			if (!$hideWarning)
-			{
-				$browser = new Browser;
-				$browserName = $browser->getBrowser();
-				$browserVersion = $browser->getVersion();
-
-				$this->_browserCompatibility = json_decode($this->document->params->get('browsercompatibility', ''));
-
-				if ($this->_browserCompatibility == '')
-				{
-					$this->_browserCompatibility = $this->setupDefaultBrowserCompatibility();
-				}
-
-				if (property_exists($this->_browserCompatibility, $browserName))
-				{
-					if (version_compare($browserVersion, $this->_browserCompatibility->$browserName->minimumVersion, 'lt'))
-					{
-						$this->_showBrowserWarning = true;
-					}
-				}
-				else
-				{
-					$this->_showBrowserWarning = true;
-				}
-			}
-
-			if ($this->_showBrowserWarning)
-			{
-				$this->addJSScriptDeclaration('jQuery("#wrightBCW").modal();');
-				$session->set('hideWarning', 1, 'WrightTemplate_' . $this->document->template);
-			}
-		}
 	}
 
 	/**
@@ -387,9 +329,7 @@ class Wright
 	{
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
-		jimport('joomla.environment.browser');
 
-		$browser = JBrowser::getInstance();
 		$doc = JFactory::getDocument();
 		$input = JFactory::getApplication()->input;
 		$version = $doc->params->get('version', 1);

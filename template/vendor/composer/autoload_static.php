@@ -20,11 +20,16 @@ class ComposerStaticInit3fa1f1015655471f3dc26658677fdd18
         ),
     );
 
+    public static $classMap = array (
+        'Browser' => __DIR__ . '/..' . '/cbschuld/browser.php/lib/Browser.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit3fa1f1015655471f3dc26658677fdd18::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit3fa1f1015655471f3dc26658677fdd18::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit3fa1f1015655471f3dc26658677fdd18::$classMap;
 
         }, null, ClassLoader::class);
     }
