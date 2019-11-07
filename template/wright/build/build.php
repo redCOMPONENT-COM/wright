@@ -164,32 +164,9 @@ class BuildBootstrap
 		}
 	}
 
-	private function compress($string)
+	private function compress($js)
 	{
-		$string = str_replace('/// ', '///', $string);
-		$string = str_replace(',//', ', //', $string);
-		$string = str_replace('{//', '{ //', $string);
-		$string = str_replace('}//', '} //', $string);
-		$string = str_replace('/**/', '/*  */', $string);
-		$string = preg_replace("/\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n/", "", $string);
-		$string = preg_replace("/\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n/", "", $string);
-		$string = preg_replace("/\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n/", "", $string);
-		$string = preg_replace("/\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n/", "", $string);
-		$string = preg_replace("/\/\/.*\n\/\/.*\n\/\/.*\n\/\/.*\n/", "", $string);
-		$string = preg_replace("/\/\/.*\n\/\/.*\n\/\/.*\n/", "", $string);
-		$string = preg_replace('/\/\/.*\/\/\n/', '', $string);
-		$string = preg_replace("/\s\/\/\".*/", "", $string);
-		$string = preg_replace("/\/\/\n/", "\n", $string);
-		$string = preg_replace("/\/\/\s.*.\n/", "\n  \n", $string);
-		$string = preg_replace('/\/\/w[^w].*/', '', $string);
-		$string = preg_replace('/\/\/s[^s].*/', '', $string);
-		$string = preg_replace('/\/\/\*\*\*.*/', '', $string);
-		$string = preg_replace('/\/\/\*\s\*\s\*.*/', '', $string);
-		$string = preg_replace('!/\*[^\'."].*?\*/!s', '', $string);
-		$string = preg_replace('/\n\s*\n/', "\n", $string);
-		$string = preg_replace("/<!--.*-->/Us", "", $string);
-
-		return $string;
+		return \JShrink\Minifier::minify($js, array('flaggedComments' => false));
 	}
 
 	private function getJsContent($file)
