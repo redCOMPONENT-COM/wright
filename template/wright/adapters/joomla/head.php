@@ -28,12 +28,9 @@ class WrightAdapterJoomlaHead
 	public function render($args)
 	{
 		$doc = JFactory::getDocument();
-
-		if ($doc->params->get('responsive', 1))
-		{
-			// Add viewport meta for tablets
-			$doc->setMetaData('viewport', 'width=device-width, initial-scale=1, shrink-to-fit=no');
-		}
+		
+		// Add viewport meta for tablets
+		$doc->setMetaData('viewport', 'width=device-width, initial-scale=1, shrink-to-fit=no');
 
 		$doc->setMetaData('X-UA-Compatible', 'IE=edge', true);
 
