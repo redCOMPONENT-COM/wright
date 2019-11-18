@@ -278,7 +278,7 @@ class Wright
 							$sheet = $this->_urlWright . '/css/' . $style;
 							break;
 						default:
-							$sheet = JURI::root() . 'templates/' . $this->document->template . '/css/' . $style;
+							$sheet = JURI::root() . 'templates/' . $this->document->template . '/dist/css/' . $style;
 					}
 
 					$this->document->addStyleSheet($sheet);
@@ -359,7 +359,7 @@ class Wright
 			$styles['template'][] = 'custom.css';
 		}
 
-		if (is_file(JPATH_THEMES . '/' . $this->document->template . '/css/editor.css'))
+		if (is_file(JPATH_THEMES . '/' . $this->document->template . '/dist/css/editor.css'))
 		{
 			$styles['template'][] = 'editor.css';
 		}
