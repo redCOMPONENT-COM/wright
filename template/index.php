@@ -19,5 +19,5 @@ $tpl = Wright::getInstance();
 // Bootstrap JS
 $tpl->addJSScript(JURI::root() . 'templates/' . $this->template . '/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js');
 
-$tpl->addJSScript(JURI::root() . 'templates/' . $this->template . '/js/js.js');
+$tpl->addJSScript(JURI::root() . 'templates/' . $this->template . '/src/js/app.js');
 $tpl->display();

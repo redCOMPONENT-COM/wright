@@ -30,7 +30,7 @@ class BuildBootstrap
 
 		if ($buildScss == false && is_file(JPATH_THEMES . '/' . $document->template . '/dist/css/style.css'))
 		{
-			$scss_path = JPATH_THEMES . '/' . $document->template . '/scss';
+			$scss_path = JPATH_THEMES . '/' . $document->template . '/src/scss';
 
 			$cachetime = filemtime(JPATH_THEMES . '/' . $document->template . '/dist/css/style.css');
 
@@ -62,7 +62,7 @@ class BuildBootstrap
 
 			$scss->setImportPaths(
 				array(
-					JPATH_THEMES . '/' . $document->template . '/scss/',
+					JPATH_THEMES . '/' . $document->template . '/src/scss/',
 					JPATH_THEMES . '/' . $document->template . '/vendor/twbs/bootstrap/scss',
 				)
 			);
@@ -77,6 +77,10 @@ class BuildBootstrap
 			$ds = '@import "template"; ';
 
 			file_put_contents(JPATH_THEMES . '/' . $document->template . '/dist/css/style.css', $scss->compile($ds));
+
+			$ds = '@import "editor"; ';
+
+			file_put_contents(JPATH_THEMES . '/' . $document->template . '/dist/css/editor.css', $scss->compile($ds));
 
 			$document->params->set('build', false);
 
@@ -101,7 +105,7 @@ class BuildBootstrap
 		// Check rebuild JS
 		$buildJs = $document->params->get('buildjs', false);
 
-		$js_path = JPATH_THEMES . '/' . $document->template . '/js';
+		$js_path = JPATH_THEMES . '/' . $document->template . '/src/js';
 
 		$jsFiles = JFolder::files($js_path, '.js', true, true, array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'template.js'));
 
