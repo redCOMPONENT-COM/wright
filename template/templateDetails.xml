@@ -22,6 +22,7 @@
 		<folder>html</folder>
 		<folder>images</folder>
 		<folder>src</folder>
+		<folder>dist</folder>
         <folder>vendor</folder>
 		<folder>wright</folder>
 	</files>
