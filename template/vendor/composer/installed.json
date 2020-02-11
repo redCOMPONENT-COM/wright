@@ -54,17 +54,17 @@
     },
     {
         "name": "scssphp/scssphp",
-        "version": "1.0.5",
-        "version_normalized": "1.0.5.0",
+        "version": "1.0.7",
+        "version_normalized": "1.0.7.0",
         "source": {
             "type": "git",
             "url": "https://github.com/scssphp/scssphp.git",
-            "reference": "98e10149058102817b493c5a147fa582cb62d46e"
+            "reference": "e2dadd21ef6188f038aaf72cd2d55d0e1b522741"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/scssphp/scssphp/zipball/98e10149058102817b493c5a147fa582cb62d46e",
-            "reference": "98e10149058102817b493c5a147fa582cb62d46e",
+            "url": "https://api.github.com/repos/scssphp/scssphp/zipball/e2dadd21ef6188f038aaf72cd2d55d0e1b522741",
+            "reference": "e2dadd21ef6188f038aaf72cd2d55d0e1b522741",
             "shasum": ""
         },
         "require": {
@@ -78,7 +78,7 @@
             "twbs/bootstrap": "~4.3",
             "zurb/foundation": "~6.5"
         },
-        "time": "2019-10-03T17:09:15+00:00",
+        "time": "2020-01-31T16:45:58+00:00",
         "bin": [
             "bin/pscss"
         ],
@@ -165,23 +165,23 @@
     },
     {
         "name": "twbs/bootstrap",
-        "version": "v4.3.1",
-        "version_normalized": "4.3.1.0",
+        "version": "v4.4.1",
+        "version_normalized": "4.4.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/twbs/bootstrap.git",
-            "reference": "8fa0d3010112dca5dd6dd501173415856001ba8b"
+            "reference": "dca1ab7d877bc4b664b43604657a2b5fbe2b4ecb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/twbs/bootstrap/zipball/8fa0d3010112dca5dd6dd501173415856001ba8b",
-            "reference": "8fa0d3010112dca5dd6dd501173415856001ba8b",
+            "url": "https://api.github.com/repos/twbs/bootstrap/zipball/dca1ab7d877bc4b664b43604657a2b5fbe2b4ecb",
+            "reference": "dca1ab7d877bc4b664b43604657a2b5fbe2b4ecb",
             "shasum": ""
         },
         "replace": {
             "twitter/bootstrap": "self.version"
         },
-        "time": "2019-02-13T16:01:40+00:00",
+        "time": "2019-11-28T12:59:49+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -195,12 +195,12 @@
         ],
         "authors": [
             {
-                "name": "Jacob Thornton",
-                "email": "jacobthornton@gmail.com"
-            },
-            {
                 "name": "Mark Otto",
                 "email": "markdotto@gmail.com"
+            },
+            {
+                "name": "Jacob Thornton",
+                "email": "jacobthornton@gmail.com"
             }
         ],
         "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
