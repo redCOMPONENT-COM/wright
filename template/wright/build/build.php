@@ -28,6 +28,8 @@ class BuildBootstrap
 		// Check rebuild SCSS
 		$buildScss = $document->params->get('build', false);
 
+		JFolder::create(JPATH_THEMES . '/' . $document->template . '/dist/css');
+
 		if ($buildScss == false && is_file(JPATH_THEMES . '/' . $document->template . '/dist/css/style.css'))
 		{
 			$scss_path = JPATH_THEMES . '/' . $document->template . '/src/scss';
@@ -106,6 +108,8 @@ class BuildBootstrap
 		$buildJs = $document->params->get('buildjs', false);
 
 		$js_path = JPATH_THEMES . '/' . $document->template . '/src/js';
+
+		JFolder::create(JPATH_THEMES . '/' . $document->template . '/dist/js');
 
 		$jsFiles = JFolder::files($js_path, '.js', true, true, array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'template.js'));
 
