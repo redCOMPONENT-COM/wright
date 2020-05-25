@@ -60,13 +60,13 @@ class BuildBootstrap
 		{
 			$scss = new Compiler;
 
-			$scss->setFormatter("ScssPhp\ScssPhp\Formatter\Crunched");
 			$scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
 			$scss->setSourceMapOptions([
 				'sourceMapWriteTo'  => JPATH_THEMES . '/' . $document->template . '/dist/css/style.map',
 				'sourceMapURL'      => JURI::root() . 'templates/' . $document->template . '/dist/css/style.map',
+				'sourceRoot' 		=> JURI::root() . 'templates/' . $document->template . '/src/',
+				'sourceMapBasepath' => JPATH_THEMES . '/' . $document->template . '/src/',
 			]);
-
 
 			$scss->setImportPaths(
 				array(
