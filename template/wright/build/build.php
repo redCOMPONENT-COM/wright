@@ -54,7 +54,7 @@ class BuildBootstrap
 		{
 			$buildScss = true;
 		}
-		$buildScss = true;
+
 		// Build SCSS
 		if ($buildScss)
 		{
