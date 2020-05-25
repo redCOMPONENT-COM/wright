@@ -17,7 +17,7 @@ require dirname(__FILE__) . '/wright/wright.php';
 $tpl = Wright::getInstance();
 
 // Bootstrap JS
-$tpl->addJSScript(JURI::root() . 'templates/' . $this->template . '/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js');
+$tpl->addJSScript(JURI::root() . 'templates/' . $this->template . '/node_modules/bootstrap/dist/js/bootstrap.bundle.js');
 
 $tpl->addJSScript(JURI::root() . 'templates/' . $this->template . '/src/js/app.js');
 $tpl->display();

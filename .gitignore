@@ -23,6 +23,7 @@ Thumbs.db
 nbproject
 *.sublime-project
 *.sublime-workspace
+*.code-workspace
 
 # Komodo
 *.komodoproject
@@ -33,8 +34,6 @@ nbproject
 .svn
 .CVS
 .idea
-node_modules
-dist
 
 # Phing build script
 build.properties

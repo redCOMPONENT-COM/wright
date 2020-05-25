@@ -54,13 +54,19 @@ class BuildBootstrap
 		{
 			$buildScss = true;
 		}
-
+		$buildScss = true;
 		// Build SCSS
 		if ($buildScss)
 		{
 			$scss = new Compiler;
 
 			$scss->setFormatter("ScssPhp\ScssPhp\Formatter\Crunched");
+			$scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
+			$scss->setSourceMapOptions([
+				'sourceMapWriteTo'  => JPATH_THEMES . '/' . $document->template . '/dist/css/style.map',
+				'sourceMapURL'      => JURI::root() . 'templates/' . $document->template . '/dist/css/style.map',
+			]);
+
 
 			$scss->setImportPaths(
 				array(
@@ -68,8 +74,6 @@ class BuildBootstrap
 					JPATH_THEMES . '/' . $document->template . '/vendor/twbs/bootstrap/scss',
 				)
 			);
-
-			$columnsNumber = $document->params->get('columnsNumber', 12);
 
 			if (is_file(JPATH_THEMES . '/' . $document->template . '/dist/css/style.css'))
 			{

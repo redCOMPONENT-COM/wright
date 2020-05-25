@@ -31,7 +31,7 @@ class ComposerStaticInit3fa1f1015655471f3dc26658677fdd18
     );
 
     public static $classMap = array (
-        'Browser' => __DIR__ . '/..' . '/cbschuld/browser.php/lib/Browser.php',
+        'Browser' => __DIR__ . '/..' . '/cbschuld/browser.php/src/Browser.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

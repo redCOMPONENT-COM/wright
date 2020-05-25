@@ -18,11 +18,12 @@
 		<filename>templateDetails.xml</filename>
 		<filename>template_thumbnail.png</filename>
 		<filename>wrighttemplate.php</filename>
+		<folder>dist</folder>
 		<folder>favicons</folder>
 		<folder>html</folder>
 		<folder>images</folder>
+		<folder>node_modules</folder>
 		<folder>src</folder>
-		<folder>dist</folder>
         <folder>vendor</folder>
 		<folder>wright</folder>
 	</files>
@@ -95,15 +96,7 @@
 
 
 			<fieldset name="layout">
-				<field name="columnsNumber"
-					type="text"
-					class="input-mini"
-					default="12"
-					label="TPL_%%UPNAME%%_COLUMNSNUMBER_LABEL"
-					description="TPL_%%UPNAME%%_COLUMNSNUMBER_DESC"
-					onchange="changeColumnsNumber(this.value)"
-					filter="integer" />
-
+			
 				<field name="columns"
 					type="columns"
 					default="sidebar1:3;main:6;sidebar2:3"

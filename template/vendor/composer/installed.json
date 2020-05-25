@@ -1,17 +1,17 @@
 [
     {
         "name": "cbschuld/browser.php",
-        "version": "1.9.4",
-        "version_normalized": "1.9.4.0",
+        "version": "v1.9.6",
+        "version_normalized": "1.9.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/cbschuld/Browser.php.git",
-            "reference": "3d0f74bd975c51fd07b02d68dbfb5b3fc9d93c72"
+            "reference": "9d07d6410977d494d7b8ecc2f3c877645c5477d9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/cbschuld/Browser.php/zipball/3d0f74bd975c51fd07b02d68dbfb5b3fc9d93c72",
-            "reference": "3d0f74bd975c51fd07b02d68dbfb5b3fc9d93c72",
+            "url": "https://api.github.com/repos/cbschuld/Browser.php/zipball/9d07d6410977d494d7b8ecc2f3c877645c5477d9",
+            "reference": "9d07d6410977d494d7b8ecc2f3c877645c5477d9",
             "shasum": ""
         },
         "require": {
@@ -20,7 +20,7 @@
         "require-dev": {
             "phpunit/phpunit": "^8"
         },
-        "time": "2019-07-09T23:55:12+00:00",
+        "time": "2020-04-14T18:46:44+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -30,7 +30,7 @@
         "installation-source": "dist",
         "autoload": {
             "classmap": [
-                "lib/Browser.php"
+                "src/Browser.php"
             ]
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -41,10 +41,10 @@
             {
                 "name": "Chris Schuld",
                 "email": "chris@chrisschuld.com",
-                "homepage": "http://chrisschuld.com"
+                "homepage": "https://chrisschuld.com"
             }
         ],
-        "description": "A PHP Class to detect a user's Browser",
+        "description": "A PHP Class to detect a user's Browser.  This encapsulation provides a breakdown of the browser and the version of the browser using the browser's user-agent string.  This is not a guaranteed solution but provides an overall accurate way to detect what browser a user is using.",
         "homepage": "https://chrisschuld.com/projects/browser-php-detecting-a-users-browser-from-php/",
         "keywords": [
             "browser",
@@ -54,17 +54,17 @@
     },
     {
         "name": "scssphp/scssphp",
-        "version": "1.0.7",
-        "version_normalized": "1.0.7.0",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/scssphp/scssphp.git",
-            "reference": "e2dadd21ef6188f038aaf72cd2d55d0e1b522741"
+            "reference": "4363ddce8d750f055c436833dd77d83517946532"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/scssphp/scssphp/zipball/e2dadd21ef6188f038aaf72cd2d55d0e1b522741",
-            "reference": "e2dadd21ef6188f038aaf72cd2d55d0e1b522741",
+            "url": "https://api.github.com/repos/scssphp/scssphp/zipball/4363ddce8d750f055c436833dd77d83517946532",
+            "reference": "4363ddce8d750f055c436833dd77d83517946532",
             "shasum": ""
         },
         "require": {
@@ -74,11 +74,11 @@
         },
         "require-dev": {
             "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.3",
-            "squizlabs/php_codesniffer": "~2.5",
+            "squizlabs/php_codesniffer": "~3.5",
             "twbs/bootstrap": "~4.3",
             "zurb/foundation": "~6.5"
         },
-        "time": "2020-01-31T16:45:58+00:00",
+        "time": "2020-04-21T15:53:32+00:00",
         "bin": [
             "bin/pscss"
         ],
@@ -161,59 +161,6 @@
         "keywords": [
             "javascript",
             "minifier"
-        ]
-    },
-    {
-        "name": "twbs/bootstrap",
-        "version": "v4.4.1",
-        "version_normalized": "4.4.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/twbs/bootstrap.git",
-            "reference": "dca1ab7d877bc4b664b43604657a2b5fbe2b4ecb"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/twbs/bootstrap/zipball/dca1ab7d877bc4b664b43604657a2b5fbe2b4ecb",
-            "reference": "dca1ab7d877bc4b664b43604657a2b5fbe2b4ecb",
-            "shasum": ""
-        },
-        "replace": {
-            "twitter/bootstrap": "self.version"
-        },
-        "time": "2019-11-28T12:59:49+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.3.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Mark Otto",
-                "email": "markdotto@gmail.com"
-            },
-            {
-                "name": "Jacob Thornton",
-                "email": "jacobthornton@gmail.com"
-            }
-        ],
-        "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
-        "homepage": "https://getbootstrap.com/",
-        "keywords": [
-            "JS",
-            "css",
-            "framework",
-            "front-end",
-            "mobile-first",
-            "responsive",
-            "sass",
-            "web"
         ]
     }
 ]

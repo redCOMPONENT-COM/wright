@@ -1,6 +1,5 @@
 {
     "require": {
-        "twbs/bootstrap": "^4.3",
         "scssphp/scssphp": "^1.0",
         "cbschuld/browser.php": "^1.9",
         "tedivm/jshrink": "^1.0"

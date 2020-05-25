@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Browser' => $vendorDir . '/cbschuld/browser.php/lib/Browser.php',
+    'Browser' => $vendorDir . '/cbschuld/browser.php/src/Browser.php',
 );
